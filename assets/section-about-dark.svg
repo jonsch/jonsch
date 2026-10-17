@@ -15,8 +15,8 @@
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.line{stroke-dashoffset:0}}
   </style>
   <defs>
-    <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
-    <linearGradient id="fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".6" stop-color="#22d3ee"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+    <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#3390e3"/><stop offset="1" stop-color="#2aa04a"/></linearGradient>
+    <linearGradient id="fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0"><stop offset="0" stop-color="#3390e3"/><stop offset=".6" stop-color="#2aa04a"/><stop offset="1" stop-color="#2aa04a" stop-opacity="0"/></linearGradient>
   </defs>
   <g class="badge">
     <rect x="2" y="8" width="40" height="40" rx="11" fill="url(#g)"/>
@@ -27,5 +27,5 @@
     <text class="sans" x="56" y="36" font-size="27" font-weight="700" fill="#e6edf3">About me</text>
   </g>
   <path class="line" d="M2 56 H 598" stroke="url(#fade)" stroke-width="2" stroke-linecap="round"/>
-  <circle class="dot" cx="30" cy="56" r="3" fill="#22d3ee" opacity=".9"/>
+  <circle class="dot" cx="30" cy="56" r="3" fill="#3390e3" opacity=".9"/>
 </svg>

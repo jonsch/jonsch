@@ -31,21 +31,16 @@ const CONFIG = {
     { id: "connect", n: "05", title: "Let's connect" },
   ],
   stack: [
-    { group: "Core", items: [
-      ["C#", "#a78bfa"], [".NET", "#8b5cf6"], ["TypeScript", "#3b82f6"], ["JavaScript", "#facc15"],
-      ["React", "#22d3ee"], ["Node.js", "#4ade80"], ["Azure", "#38bdf8"], ["Azure Functions", "#fbbf24"],
-      ["Edge functions", "#fb923c"], ["Stripe", "#818cf8"], ["Docker", "#2dd4bf"], ["Electron", "#67e8f9"],
-      ["REST APIs", "#34d399"], ["Git", "#f05032"], ["VS Code", "#0ea5e9"],
+    { group: "Core", color: "#3390e3", light: "#1d6eaf", items: [
+      "C#", ".NET", "TypeScript", "JavaScript", "React", "Node.js", "Azure", "Azure Functions",
+      "Edge functions", "Stripe", "Docker", "Electron", "REST APIs", "Git", "VS Code",
     ]},
-    { group: "AI", items: [
-      ["OpenAI", "#10a37f"], ["Azure AI Foundry", "#0ea5e9"], ["Amazon Bedrock", "#ff9900"], ["Claude", "#d97757"],
-      ["Ollama", "#e2e8f0"], ["Semantic Kernel", "#a78bfa"], ["MCP", "#c084fc"], ["RAG + pgvector", "#60a5fa"],
-      ["AI agents", "#f472b6"], ["Vector search", "#2dd4bf"],
+    { group: "AI", color: "#2aa04a", light: "#1f8a3e", items: [
+      "OpenAI", "Azure AI Foundry", "Amazon Bedrock", "Claude", "Ollama", "Semantic Kernel", "MCP",
+      "RAG + pgvector", "AI agents", "Vector search",
     ]},
-    { group: "Databases", items: [
-      ["PostgreSQL", "#60a5fa"], ["SQL Server", "#f87171"], ["MySQL", "#38bdf8"], ["MariaDB", "#a16207"],
-      ["SQLite", "#7dd3fc"], ["MongoDB", "#4ade80"], ["Cosmos DB", "#22d3ee"], ["DynamoDB", "#818cf8"],
-      ["Redis", "#ef4444"], ["Elasticsearch", "#fbbf24"],
+    { group: "Databases", color: "#fccd26", light: "#c9a000", items: [
+      "PostgreSQL", "SQL Server", "MySQL", "MariaDB", "SQLite", "MongoDB", "Cosmos DB", "DynamoDB", "Redis", "Elasticsearch",
     ]},
   ],
 };
@@ -56,11 +51,13 @@ const CONFIG = {
 const FOCUS = {
   title: "Where the time goes",
   subtitle: "Rough split of a typical month",
+  // One blue ramp stepped by share (darker = larger on light, lighter = larger on dark).
+  // Validated as an ordinal ramp in both modes; keep the steps if you change labels.
   items: [
-    { label: "Product & APIs", value: 40, light: "#7c3aed", dark: "#8b5cf6" },
-    { label: "AI inference", value: 30, light: "#d97706", dark: "#c98500" },
-    { label: "Integrations & data", value: 20, light: "#0891b2", dark: "#0891b2" },
-    { label: "Infra & ops", value: 10, light: "#db2777", dark: "#db2777" },
+    { label: "Product & APIs", value: 40, light: "#1c5cab", dark: "#b7d3f6" },
+    { label: "AI inference", value: 30, light: "#2a78d6", dark: "#6da7ec" },
+    { label: "Integrations & data", value: 20, light: "#5598e7", dark: "#3987e5" },
+    { label: "Infra & ops", value: 10, light: "#86b6ef", dark: "#184f95" },
   ],
 };
 
@@ -252,8 +249,8 @@ function section({ n, title }, theme) {
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.line{stroke-dashoffset:0}}
   </style>
   <defs>
-    <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
-    <linearGradient id="fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="0"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".6" stop-color="#22d3ee"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+    <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#3390e3"/><stop offset="1" stop-color="#2aa04a"/></linearGradient>
+    <linearGradient id="fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="0"><stop offset="0" stop-color="#3390e3"/><stop offset=".6" stop-color="#2aa04a"/><stop offset="1" stop-color="#2aa04a" stop-opacity="0"/></linearGradient>
   </defs>
   <g class="badge">
     <rect x="2" y="8" width="40" height="40" rx="11" fill="url(#g)"/>
@@ -264,7 +261,7 @@ function section({ n, title }, theme) {
     <text class="sans" x="56" y="36" font-size="27" font-weight="700" fill="${text}">${esc(title)}</text>
   </g>
   <path class="line" d="M2 56 H ${W - 2}" stroke="url(#fade)" stroke-width="2" stroke-linecap="round"/>
-  <circle class="dot" cx="30" cy="56" r="3" fill="#22d3ee" opacity=".9"/>
+  <circle class="dot" cx="30" cy="56" r="3" fill="#3390e3" opacity=".9"/>
 </svg>`;
 }
 
@@ -278,16 +275,17 @@ function stack(theme) {
   const chips = [], clips = [], labels = [], all = [];
   CONFIG.stack.forEach((g, gi) => {
     if (gi > 0) y += H_CHIP + GROUP_GAP;
-    labels.push(`<text class="mono lbl" x="2" y="${y + 13}" font-size="11" font-weight="600" fill="${label}" letter-spacing=".16em" style="animation-delay:${r(0.05 + i * 0.07)}s">${esc(g.group.toUpperCase())}</text>`);
+    labels.push(`<g class="lbl" style="animation-delay:${r(0.05 + i * 0.07)}s"><rect x="2" y="${y + 4}" width="3" height="11" rx="1.5" fill="${dark ? g.color : g.light}"/><text class="mono" x="13" y="${y + 13}" font-size="11" font-weight="600" fill="${label}" letter-spacing=".16em">${esc(g.group.toUpperCase())}</text></g>`);
     y += LABEL_H; x = 0;
-    g.items.forEach(([name, color]) => {
+    const gcolor = dark ? g.color : g.light;
+    g.items.forEach((name) => {
+      const color = gcolor;
       all.push(name);
       const tw = name.length * CHAR;
       const w = PAD + 10 + 10 + tw + PAD;
       if (x + w > W) { x = 0; y += H_CHIP + GAP; }
       const delay = r(0.1 + i * 0.045);
-      // light theme: keep near-white chip colors legible
-      const c = !dark && color === "#e2e8f0" ? "#64748b" : color;
+      const c = color;
       clips.push(`<rect x="${x}" y="${y}" width="${r(w)}" height="${H_CHIP}" rx="20"/>`);
       chips.push(`
   <g class="chip" style="animation-delay:${delay}s">
@@ -367,7 +365,7 @@ function cards(items, theme) {
     <path class="top" d="M${r(x + 16)} 0.5 H${r(x + CW - 16)}" stroke="url(#acc)" stroke-width="2" stroke-linecap="round" style="animation-delay:${r(0.35 + i * 0.14)}s"/>
     <rect x="${r(x + PAD)}" y="${PAD}" width="40" height="40" rx="11" fill="url(#acc)" fill-opacity="${dark ? 0.18 : 0.14}"/>
     <rect class="glow" x="${r(x + PAD)}" y="${PAD}" width="40" height="40" rx="11" fill="none" stroke="url(#acc)" stroke-opacity=".7" style="animation-delay:${r(-i * 0.9)}s"/>
-    <g transform="translate(${r(x + PAD + 8)} ${PAD + 8})" fill="none" stroke="${dark ? "#c4b5fd" : "#6d28d9"}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[c.icon]}</g>
+    <g transform="translate(${r(x + PAD + 8)} ${PAD + 8})" fill="none" stroke="${dark ? "#7cb9ee" : "#1d6eaf"}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[c.icon]}</g>
     ${title}${text}
   </g>`;
   }).join("");
@@ -383,7 +381,7 @@ function cards(items, theme) {
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.card{opacity:1}.top{stroke-dashoffset:0}}
   </style>
   <defs>
-    <linearGradient id="acc" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+    <linearGradient id="acc" x1="0" x2="1"><stop offset="0" stop-color="#3390e3"/><stop offset="1" stop-color="#2aa04a"/></linearGradient>
   </defs>${body}
 </svg>`;
 }
@@ -435,7 +433,7 @@ function focus(theme, idp = "f") {
     @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.arc{stroke-dashoffset:0!important}.center,.row,.hd{opacity:1}}
   </style>
-  <defs><linearGradient id="${idp}acc" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+  <defs><linearGradient id="${idp}acc" x1="0" x2="1"><stop offset="0" stop-color="#3390e3"/><stop offset="1" stop-color="#2aa04a"/></linearGradient></defs>
   <g class="panel">
     <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="16" fill="${fill}" fill-opacity="${fillOp}" stroke="${line}" stroke-opacity=".12"/>
     <circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${line}" stroke-opacity=".06" stroke-width="${SW}"/>
@@ -467,8 +465,8 @@ function footer(theme) {
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.txt{opacity:1}}
   </style>
   <defs>
-    <linearGradient id="base" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity="0"/><stop offset=".5" stop-color="#8b5cf6" stop-opacity=".5"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
-    <linearGradient id="pulse" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity="0"/><stop offset=".5" stop-color="#ffffff" stop-opacity="${dark ? 0.9 : 0.6}"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+    <linearGradient id="base" x1="0" x2="1"><stop offset="0" stop-color="#3390e3" stop-opacity="0"/><stop offset=".5" stop-color="#3390e3" stop-opacity=".5"/><stop offset="1" stop-color="#2aa04a" stop-opacity="0"/></linearGradient>
+    <linearGradient id="pulse" x1="0" x2="1"><stop offset="0" stop-color="#2aa04a" stop-opacity="0"/><stop offset=".5" stop-color="#ffffff" stop-opacity="${dark ? 0.9 : 0.6}"/><stop offset="1" stop-color="#2aa04a" stop-opacity="0"/></linearGradient>
     <clipPath id="c"><rect width="${W}" height="${H}"/></clipPath>
   </defs>
   <rect y="12" width="${W}" height="1.5" fill="url(#base)"/>

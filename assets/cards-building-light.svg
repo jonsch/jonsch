@@ -10,14 +10,14 @@
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.card{opacity:1}.top{stroke-dashoffset:0}}
   </style>
   <defs>
-    <linearGradient id="acc" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+    <linearGradient id="acc" x1="0" x2="1"><stop offset="0" stop-color="#3390e3"/><stop offset="1" stop-color="#2aa04a"/></linearGradient>
   </defs>
   <g class="card" style="animation-delay:0.1s">
     <rect x="0" y="0" width="442" height="190" rx="16" fill="#0f172a" fill-opacity="0.03" stroke="#0f172a" stroke-opacity="0.12"/>
     <path class="top" d="M16 0.5 H426" stroke="url(#acc)" stroke-width="2" stroke-linecap="round" style="animation-delay:0.35s"/>
     <rect x="22" y="22" width="40" height="40" rx="11" fill="url(#acc)" fill-opacity="0.14"/>
     <rect class="glow" x="22" y="22" width="40" height="40" rx="11" fill="none" stroke="url(#acc)" stroke-opacity=".7" style="animation-delay:0s"/>
-    <g transform="translate(30 30)" fill="none" stroke="#6d28d9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19.5 16.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></g>
+    <g transform="translate(30 30)" fill="none" stroke="#1d6eaf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19.5 16.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></g>
     <text class="sans" x="22" y="93" font-size="17" font-weight="700" fill="#1f2328">AI inference apps</text><text class="sans" x="22" y="132" font-size="14" fill="#59636e">Products built around model inference: LLM-powered</text><text class="sans" x="22" y="153" font-size="14" fill="#59636e">features, pipelines, and automations that do real work</text><text class="sans" x="22" y="174" font-size="14" fill="#59636e">instead of demos.</text>
   </g>
   <g class="card" style="animation-delay:0.24s">
@@ -25,7 +25,7 @@
     <path class="top" d="M474 0.5 H884" stroke="url(#acc)" stroke-width="2" stroke-linecap="round" style="animation-delay:0.49s"/>
     <rect x="480" y="22" width="40" height="40" rx="11" fill="url(#acc)" fill-opacity="0.14"/>
     <rect class="glow" x="480" y="22" width="40" height="40" rx="11" fill="none" stroke="url(#acc)" stroke-opacity=".7" style="animation-delay:-0.9s"/>
-    <g transform="translate(488 30)" fill="none" stroke="#6d28d9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16M2 13h20"/></g>
+    <g transform="translate(488 30)" fill="none" stroke="#1d6eaf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16M2 13h20"/></g>
     <text class="sans" x="480" y="93" font-size="17" font-weight="700" fill="#1f2328">Tools for small businesses &amp; solopreneurs</text><text class="sans" x="480" y="132" font-size="14" fill="#59636e">Focused products that give small teams and one-person</text><text class="sans" x="480" y="153" font-size="14" fill="#59636e">companies the leverage usually reserved for big ones.</text>
   </g>
 </svg>

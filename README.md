@@ -16,8 +16,8 @@
 -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg?v=ac311588">
-  <img src="assets/section-about-light.svg?v=cea9569d" width="600" alt="01 · About me">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg?v=46e8dfd8">
+  <img src="assets/section-about-light.svg?v=886b4ece" width="600" alt="01 · About me">
 </picture>
 
 Full-stack engineer who likes owning the whole thing: the data model, the API, the payments, and the interface on top. I build products end to end, mostly in .NET and TypeScript on Azure, and lately around AI inference. Most of that work lives in private repositories, which is why the activity graph here is quiet.
@@ -28,43 +28,43 @@ Full-stack engineer who likes owning the whole thing: the data model, the API, t
 **Since**&nbsp;&nbsp;&nbsp; 2012 on GitHub
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/focus-dark.svg?v=835e2772">
-  <img src="assets/focus-light.svg?v=54a72c74" width="100%" alt="Where the time goes, rough split of a typical month: Product and APIs 40%, AI inference 30%, Integrations and data 20%, Infra and ops 10%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/focus-dark.svg?v=ae6e8775">
+  <img src="assets/focus-light.svg?v=a262e7bd" width="100%" alt="Where the time goes, rough split of a typical month: Product and APIs 40%, AI inference 30%, Integrations and data 20%, Infra and ops 10%">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg?v=3e61f439">
-  <img src="assets/section-strengths-light.svg?v=4c72342d" width="600" alt="02 · Strengths">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg?v=2ca09454">
+  <img src="assets/section-strengths-light.svg?v=03105dac" width="600" alt="02 · Strengths">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/cards-strengths-dark.svg?v=7b5080ce">
-  <img src="assets/cards-strengths-light.svg?v=22b775e9" width="100%" alt="Distributed systems. Systems integration. AI inference and architecture.">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/cards-strengths-dark.svg?v=3dc642a4">
+  <img src="assets/cards-strengths-light.svg?v=31b9c578" width="100%" alt="Distributed systems. Systems integration. AI inference and architecture.">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=9ac2e86e">
-  <img src="assets/section-now-light.svg?v=19de9b93" width="600" alt="03 · What I'm building">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=99c92360">
+  <img src="assets/section-now-light.svg?v=912352b5" width="600" alt="03 · What I'm building">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/cards-building-dark.svg?v=da71d32a">
-  <img src="assets/cards-building-light.svg?v=f31f5cc2" width="100%" alt="AI inference apps. Tools for small businesses and solopreneurs.">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/cards-building-dark.svg?v=8dc12f05">
+  <img src="assets/cards-building-light.svg?v=291fb388" width="100%" alt="AI inference apps. Tools for small businesses and solopreneurs.">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-toolbox-dark.svg?v=5202201b">
-  <img src="assets/section-toolbox-light.svg?v=fe3aeafe" width="600" alt="04 · Toolbox">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-toolbox-dark.svg?v=fc6a4363">
+  <img src="assets/section-toolbox-light.svg?v=1827b868" width="600" alt="04 · Toolbox">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg?v=c637f8ec">
-  <img src="assets/stack-light.svg?v=a298984a" width="100%" alt="Core: C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, Edge functions, Stripe, Docker, Electron, REST APIs, Git, VS Code. AI: OpenAI, Azure AI Foundry, Amazon Bedrock, Claude, Ollama, Semantic Kernel, MCP, RAG + pgvector, AI agents, Vector search. Databases: PostgreSQL, SQL Server, MySQL, MariaDB, SQLite, MongoDB, Cosmos DB, DynamoDB, Redis, Elasticsearch">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg?v=881239ab">
+  <img src="assets/stack-light.svg?v=d418c397" width="100%" alt="Core: C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, Edge functions, Stripe, Docker, Electron, REST APIs, Git, VS Code. AI: OpenAI, Azure AI Foundry, Amazon Bedrock, Claude, Ollama, Semantic Kernel, MCP, RAG + pgvector, AI agents, Vector search. Databases: PostgreSQL, SQL Server, MySQL, MariaDB, SQLite, MongoDB, Cosmos DB, DynamoDB, Redis, Elasticsearch">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg?v=33ecc5b2">
-  <img src="assets/section-connect-light.svg?v=d96fe34e" width="600" alt="05 · Let's connect">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg?v=2fcce8b5">
+  <img src="assets/section-connect-light.svg?v=b60660fa" width="600" alt="05 · Let's connect">
 </picture>
 
 Interesting problem, odd integration, or a tool that should exist but doesn't? I'd like to hear about it.
@@ -79,6 +79,6 @@ Interesting problem, odd integration, or a tool that should exist but doesn't? I
 </p>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/footer-dark.svg?v=3531a876">
-  <img src="assets/footer-light.svg?v=40a6a200" width="100%" alt="github.com/jonsch">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/footer-dark.svg?v=31f7be76">
+  <img src="assets/footer-light.svg?v=a7a4982a" width="100%" alt="github.com/jonsch">
 </picture>

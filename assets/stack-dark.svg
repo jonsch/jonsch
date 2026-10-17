@@ -16,183 +16,183 @@
     <clipPath id="chips"><rect x="0" y="26" width="68.8" height="40" rx="20"/><rect x="80.8" y="26" width="85.6" height="40" rx="20"/><rect x="178.39999999999998" y="26" width="136" height="40" rx="20"/><rect x="326.4" y="26" width="136" height="40" rx="20"/><rect x="474.4" y="26" width="94" height="40" rx="20"/><rect x="580.4" y="26" width="110.8" height="40" rx="20"/><rect x="703.2" y="26" width="94" height="40" rx="20"/><rect x="0" y="78" width="178" height="40" rx="20"/><rect x="190" y="78" width="169.6" height="40" rx="20"/><rect x="371.6" y="78" width="102.4" height="40" rx="20"/><rect x="486" y="78" width="102.4" height="40" rx="20"/><rect x="600.4" y="78" width="119.2" height="40" rx="20"/><rect x="731.5999999999999" y="78" width="127.6" height="40" rx="20"/><rect x="0" y="130" width="77.2" height="40" rx="20"/><rect x="89.2" y="130" width="110.8" height="40" rx="20"/><rect x="0" y="218" width="102.4" height="40" rx="20"/><rect x="114.4" y="218" width="186.4" height="40" rx="20"/><rect x="312.8" y="218" width="169.6" height="40" rx="20"/><rect x="494.40000000000003" y="218" width="102.4" height="40" rx="20"/><rect x="608.8000000000001" y="218" width="102.4" height="40" rx="20"/><rect x="0" y="270" width="178" height="40" rx="20"/><rect x="190" y="270" width="77.2" height="40" rx="20"/><rect x="279.2" y="270" width="169.6" height="40" rx="20"/><rect x="460.8" y="270" width="127.6" height="40" rx="20"/><rect x="600.4000000000001" y="270" width="161.2" height="40" rx="20"/><rect x="0" y="358" width="136" height="40" rx="20"/><rect x="148" y="358" width="136" height="40" rx="20"/><rect x="296" y="358" width="94" height="40" rx="20"/><rect x="402" y="358" width="110.8" height="40" rx="20"/><rect x="524.8" y="358" width="102.4" height="40" rx="20"/><rect x="639.1999999999999" y="358" width="110.8" height="40" rx="20"/><rect x="762" y="358" width="127.6" height="40" rx="20"/><rect x="0" y="410" width="119.2" height="40" rx="20"/><rect x="131.2" y="410" width="94" height="40" rx="20"/><rect x="237.2" y="410" width="161.2" height="40" rx="20"/></clipPath>
     <linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity="0.22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
   </defs>
-  <text class="mono lbl" x="2" y="13" font-size="11" font-weight="600" fill="#8b949e" letter-spacing=".16em" style="animation-delay:0.05s">CORE</text>
-  <text class="mono lbl" x="2" y="205" font-size="11" font-weight="600" fill="#8b949e" letter-spacing=".16em" style="animation-delay:1.1s">AI</text>
-  <text class="mono lbl" x="2" y="345" font-size="11" font-weight="600" fill="#8b949e" letter-spacing=".16em" style="animation-delay:1.8s">DATABASES</text>
+  <g class="lbl" style="animation-delay:0.05s"><rect x="2" y="4" width="3" height="11" rx="1.5" fill="#3390e3"/><text class="mono" x="13" y="13" font-size="11" font-weight="600" fill="#8b949e" letter-spacing=".16em">CORE</text></g>
+  <g class="lbl" style="animation-delay:1.1s"><rect x="2" y="196" width="3" height="11" rx="1.5" fill="#2aa04a"/><text class="mono" x="13" y="205" font-size="11" font-weight="600" fill="#8b949e" letter-spacing=".16em">AI</text></g>
+  <g class="lbl" style="animation-delay:1.8s"><rect x="2" y="336" width="3" height="11" rx="1.5" fill="#fccd26"/><text class="mono" x="13" y="345" font-size="11" font-weight="600" fill="#8b949e" letter-spacing=".16em">DATABASES</text></g>
   
   <g class="chip" style="animation-delay:0.1s">
-    <rect x="0" y="26" width="68.8" height="40" rx="20" fill="#a78bfa" fill-opacity="0.16" stroke="#a78bfa" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="21" cy="46" r="5" fill="#a78bfa" style="animation-delay:0s"/>
+    <rect x="0" y="26" width="68.8" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="46" r="5" fill="#3390e3" style="animation-delay:0s"/>
     <text class="sans" x="36" y="51.4" font-size="15" font-weight="600" fill="#e6edf3">C#</text>
   </g>
   <g class="chip" style="animation-delay:0.145s">
-    <rect x="80.8" y="26" width="85.6" height="40" rx="20" fill="#8b5cf6" fill-opacity="0.16" stroke="#8b5cf6" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="101.8" cy="46" r="5" fill="#8b5cf6" style="animation-delay:-0.31s"/>
+    <rect x="80.8" y="26" width="85.6" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="101.8" cy="46" r="5" fill="#3390e3" style="animation-delay:-0.31s"/>
     <text class="sans" x="116.8" y="51.4" font-size="15" font-weight="600" fill="#e6edf3">.NET</text>
   </g>
   <g class="chip" style="animation-delay:0.19s">
-    <rect x="178.39999999999998" y="26" width="136" height="40" rx="20" fill="#3b82f6" fill-opacity="0.16" stroke="#3b82f6" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="199.39999999999998" cy="46" r="5" fill="#3b82f6" style="animation-delay:-0.62s"/>
+    <rect x="178.39999999999998" y="26" width="136" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="199.39999999999998" cy="46" r="5" fill="#3390e3" style="animation-delay:-0.62s"/>
     <text class="sans" x="214.39999999999998" y="51.4" font-size="15" font-weight="600" fill="#e6edf3">TypeScript</text>
   </g>
   <g class="chip" style="animation-delay:0.235s">
-    <rect x="326.4" y="26" width="136" height="40" rx="20" fill="#facc15" fill-opacity="0.16" stroke="#facc15" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="347.4" cy="46" r="5" fill="#facc15" style="animation-delay:-0.93s"/>
+    <rect x="326.4" y="26" width="136" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="347.4" cy="46" r="5" fill="#3390e3" style="animation-delay:-0.93s"/>
     <text class="sans" x="362.4" y="51.4" font-size="15" font-weight="600" fill="#e6edf3">JavaScript</text>
   </g>
   <g class="chip" style="animation-delay:0.28s">
-    <rect x="474.4" y="26" width="94" height="40" rx="20" fill="#22d3ee" fill-opacity="0.16" stroke="#22d3ee" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="495.4" cy="46" r="5" fill="#22d3ee" style="animation-delay:-1.24s"/>
+    <rect x="474.4" y="26" width="94" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="495.4" cy="46" r="5" fill="#3390e3" style="animation-delay:-1.24s"/>
     <text class="sans" x="510.4" y="51.4" font-size="15" font-weight="600" fill="#e6edf3">React</text>
   </g>
   <g class="chip" style="animation-delay:0.325s">
-    <rect x="580.4" y="26" width="110.8" height="40" rx="20" fill="#4ade80" fill-opacity="0.16" stroke="#4ade80" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="601.4" cy="46" r="5" fill="#4ade80" style="animation-delay:-1.55s"/>
+    <rect x="580.4" y="26" width="110.8" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="601.4" cy="46" r="5" fill="#3390e3" style="animation-delay:-1.55s"/>
     <text class="sans" x="616.4" y="51.4" font-size="15" font-weight="600" fill="#e6edf3">Node.js</text>
   </g>
   <g class="chip" style="animation-delay:0.37s">
-    <rect x="703.2" y="26" width="94" height="40" rx="20" fill="#38bdf8" fill-opacity="0.16" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="724.2" cy="46" r="5" fill="#38bdf8" style="animation-delay:-1.86s"/>
+    <rect x="703.2" y="26" width="94" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="724.2" cy="46" r="5" fill="#3390e3" style="animation-delay:-1.86s"/>
     <text class="sans" x="739.2" y="51.4" font-size="15" font-weight="600" fill="#e6edf3">Azure</text>
   </g>
   <g class="chip" style="animation-delay:0.415s">
-    <rect x="0" y="78" width="178" height="40" rx="20" fill="#fbbf24" fill-opacity="0.16" stroke="#fbbf24" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="21" cy="98" r="5" fill="#fbbf24" style="animation-delay:-2.17s"/>
+    <rect x="0" y="78" width="178" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="98" r="5" fill="#3390e3" style="animation-delay:-2.17s"/>
     <text class="sans" x="36" y="103.4" font-size="15" font-weight="600" fill="#e6edf3">Azure Functions</text>
   </g>
   <g class="chip" style="animation-delay:0.46s">
-    <rect x="190" y="78" width="169.6" height="40" rx="20" fill="#fb923c" fill-opacity="0.16" stroke="#fb923c" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="211" cy="98" r="5" fill="#fb923c" style="animation-delay:-2.48s"/>
+    <rect x="190" y="78" width="169.6" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="211" cy="98" r="5" fill="#3390e3" style="animation-delay:-2.48s"/>
     <text class="sans" x="226" y="103.4" font-size="15" font-weight="600" fill="#e6edf3">Edge functions</text>
   </g>
   <g class="chip" style="animation-delay:0.505s">
-    <rect x="371.6" y="78" width="102.4" height="40" rx="20" fill="#818cf8" fill-opacity="0.16" stroke="#818cf8" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="392.6" cy="98" r="5" fill="#818cf8" style="animation-delay:-2.79s"/>
+    <rect x="371.6" y="78" width="102.4" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="392.6" cy="98" r="5" fill="#3390e3" style="animation-delay:-2.79s"/>
     <text class="sans" x="407.6" y="103.4" font-size="15" font-weight="600" fill="#e6edf3">Stripe</text>
   </g>
   <g class="chip" style="animation-delay:0.55s">
-    <rect x="486" y="78" width="102.4" height="40" rx="20" fill="#2dd4bf" fill-opacity="0.16" stroke="#2dd4bf" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="507" cy="98" r="5" fill="#2dd4bf" style="animation-delay:-3.1s"/>
+    <rect x="486" y="78" width="102.4" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="507" cy="98" r="5" fill="#3390e3" style="animation-delay:-3.1s"/>
     <text class="sans" x="522" y="103.4" font-size="15" font-weight="600" fill="#e6edf3">Docker</text>
   </g>
   <g class="chip" style="animation-delay:0.595s">
-    <rect x="600.4" y="78" width="119.2" height="40" rx="20" fill="#67e8f9" fill-opacity="0.16" stroke="#67e8f9" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="621.4" cy="98" r="5" fill="#67e8f9" style="animation-delay:-3.41s"/>
+    <rect x="600.4" y="78" width="119.2" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="621.4" cy="98" r="5" fill="#3390e3" style="animation-delay:-3.41s"/>
     <text class="sans" x="636.4" y="103.4" font-size="15" font-weight="600" fill="#e6edf3">Electron</text>
   </g>
   <g class="chip" style="animation-delay:0.64s">
-    <rect x="731.5999999999999" y="78" width="127.6" height="40" rx="20" fill="#34d399" fill-opacity="0.16" stroke="#34d399" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="752.5999999999999" cy="98" r="5" fill="#34d399" style="animation-delay:-3.72s"/>
+    <rect x="731.5999999999999" y="78" width="127.6" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="752.5999999999999" cy="98" r="5" fill="#3390e3" style="animation-delay:-3.72s"/>
     <text class="sans" x="767.5999999999999" y="103.4" font-size="15" font-weight="600" fill="#e6edf3">REST APIs</text>
   </g>
   <g class="chip" style="animation-delay:0.685s">
-    <rect x="0" y="130" width="77.2" height="40" rx="20" fill="#f05032" fill-opacity="0.16" stroke="#f05032" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="21" cy="150" r="5" fill="#f05032" style="animation-delay:-4.03s"/>
+    <rect x="0" y="130" width="77.2" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="150" r="5" fill="#3390e3" style="animation-delay:-4.03s"/>
     <text class="sans" x="36" y="155.4" font-size="15" font-weight="600" fill="#e6edf3">Git</text>
   </g>
   <g class="chip" style="animation-delay:0.73s">
-    <rect x="89.2" y="130" width="110.8" height="40" rx="20" fill="#0ea5e9" fill-opacity="0.16" stroke="#0ea5e9" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="110.2" cy="150" r="5" fill="#0ea5e9" style="animation-delay:-4.34s"/>
+    <rect x="89.2" y="130" width="110.8" height="40" rx="20" fill="#3390e3" fill-opacity="0.16" stroke="#3390e3" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="110.2" cy="150" r="5" fill="#3390e3" style="animation-delay:-4.34s"/>
     <text class="sans" x="125.2" y="155.4" font-size="15" font-weight="600" fill="#e6edf3">VS Code</text>
   </g>
   <g class="chip" style="animation-delay:0.775s">
-    <rect x="0" y="218" width="102.4" height="40" rx="20" fill="#10a37f" fill-opacity="0.16" stroke="#10a37f" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="21" cy="238" r="5" fill="#10a37f" style="animation-delay:-4.65s"/>
+    <rect x="0" y="218" width="102.4" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="238" r="5" fill="#2aa04a" style="animation-delay:-4.65s"/>
     <text class="sans" x="36" y="243.4" font-size="15" font-weight="600" fill="#e6edf3">OpenAI</text>
   </g>
   <g class="chip" style="animation-delay:0.82s">
-    <rect x="114.4" y="218" width="186.4" height="40" rx="20" fill="#0ea5e9" fill-opacity="0.16" stroke="#0ea5e9" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="135.4" cy="238" r="5" fill="#0ea5e9" style="animation-delay:-4.96s"/>
+    <rect x="114.4" y="218" width="186.4" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="135.4" cy="238" r="5" fill="#2aa04a" style="animation-delay:-4.96s"/>
     <text class="sans" x="150.4" y="243.4" font-size="15" font-weight="600" fill="#e6edf3">Azure AI Foundry</text>
   </g>
   <g class="chip" style="animation-delay:0.865s">
-    <rect x="312.8" y="218" width="169.6" height="40" rx="20" fill="#ff9900" fill-opacity="0.16" stroke="#ff9900" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="333.8" cy="238" r="5" fill="#ff9900" style="animation-delay:-5.27s"/>
+    <rect x="312.8" y="218" width="169.6" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="333.8" cy="238" r="5" fill="#2aa04a" style="animation-delay:-5.27s"/>
     <text class="sans" x="348.8" y="243.4" font-size="15" font-weight="600" fill="#e6edf3">Amazon Bedrock</text>
   </g>
   <g class="chip" style="animation-delay:0.91s">
-    <rect x="494.40000000000003" y="218" width="102.4" height="40" rx="20" fill="#d97757" fill-opacity="0.16" stroke="#d97757" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="515.4000000000001" cy="238" r="5" fill="#d97757" style="animation-delay:-5.58s"/>
+    <rect x="494.40000000000003" y="218" width="102.4" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="515.4000000000001" cy="238" r="5" fill="#2aa04a" style="animation-delay:-5.58s"/>
     <text class="sans" x="530.4000000000001" y="243.4" font-size="15" font-weight="600" fill="#e6edf3">Claude</text>
   </g>
   <g class="chip" style="animation-delay:0.955s">
-    <rect x="608.8000000000001" y="218" width="102.4" height="40" rx="20" fill="#e2e8f0" fill-opacity="0.16" stroke="#e2e8f0" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="629.8000000000001" cy="238" r="5" fill="#e2e8f0" style="animation-delay:-5.89s"/>
+    <rect x="608.8000000000001" y="218" width="102.4" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="629.8000000000001" cy="238" r="5" fill="#2aa04a" style="animation-delay:-5.89s"/>
     <text class="sans" x="644.8000000000001" y="243.4" font-size="15" font-weight="600" fill="#e6edf3">Ollama</text>
   </g>
   <g class="chip" style="animation-delay:1s">
-    <rect x="0" y="270" width="178" height="40" rx="20" fill="#a78bfa" fill-opacity="0.16" stroke="#a78bfa" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="21" cy="290" r="5" fill="#a78bfa" style="animation-delay:-6.2s"/>
+    <rect x="0" y="270" width="178" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="290" r="5" fill="#2aa04a" style="animation-delay:-6.2s"/>
     <text class="sans" x="36" y="295.4" font-size="15" font-weight="600" fill="#e6edf3">Semantic Kernel</text>
   </g>
   <g class="chip" style="animation-delay:1.045s">
-    <rect x="190" y="270" width="77.2" height="40" rx="20" fill="#c084fc" fill-opacity="0.16" stroke="#c084fc" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="211" cy="290" r="5" fill="#c084fc" style="animation-delay:-6.51s"/>
+    <rect x="190" y="270" width="77.2" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="211" cy="290" r="5" fill="#2aa04a" style="animation-delay:-6.51s"/>
     <text class="sans" x="226" y="295.4" font-size="15" font-weight="600" fill="#e6edf3">MCP</text>
   </g>
   <g class="chip" style="animation-delay:1.09s">
-    <rect x="279.2" y="270" width="169.6" height="40" rx="20" fill="#60a5fa" fill-opacity="0.16" stroke="#60a5fa" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="300.2" cy="290" r="5" fill="#60a5fa" style="animation-delay:-6.82s"/>
+    <rect x="279.2" y="270" width="169.6" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="300.2" cy="290" r="5" fill="#2aa04a" style="animation-delay:-6.82s"/>
     <text class="sans" x="315.2" y="295.4" font-size="15" font-weight="600" fill="#e6edf3">RAG + pgvector</text>
   </g>
   <g class="chip" style="animation-delay:1.135s">
-    <rect x="460.8" y="270" width="127.6" height="40" rx="20" fill="#f472b6" fill-opacity="0.16" stroke="#f472b6" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="481.8" cy="290" r="5" fill="#f472b6" style="animation-delay:-7.13s"/>
+    <rect x="460.8" y="270" width="127.6" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="481.8" cy="290" r="5" fill="#2aa04a" style="animation-delay:-7.13s"/>
     <text class="sans" x="496.8" y="295.4" font-size="15" font-weight="600" fill="#e6edf3">AI agents</text>
   </g>
   <g class="chip" style="animation-delay:1.18s">
-    <rect x="600.4000000000001" y="270" width="161.2" height="40" rx="20" fill="#2dd4bf" fill-opacity="0.16" stroke="#2dd4bf" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="621.4000000000001" cy="290" r="5" fill="#2dd4bf" style="animation-delay:-7.44s"/>
+    <rect x="600.4000000000001" y="270" width="161.2" height="40" rx="20" fill="#2aa04a" fill-opacity="0.16" stroke="#2aa04a" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="621.4000000000001" cy="290" r="5" fill="#2aa04a" style="animation-delay:-7.44s"/>
     <text class="sans" x="636.4000000000001" y="295.4" font-size="15" font-weight="600" fill="#e6edf3">Vector search</text>
   </g>
   <g class="chip" style="animation-delay:1.225s">
-    <rect x="0" y="358" width="136" height="40" rx="20" fill="#60a5fa" fill-opacity="0.16" stroke="#60a5fa" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="21" cy="378" r="5" fill="#60a5fa" style="animation-delay:-7.75s"/>
+    <rect x="0" y="358" width="136" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="378" r="5" fill="#fccd26" style="animation-delay:-7.75s"/>
     <text class="sans" x="36" y="383.4" font-size="15" font-weight="600" fill="#e6edf3">PostgreSQL</text>
   </g>
   <g class="chip" style="animation-delay:1.27s">
-    <rect x="148" y="358" width="136" height="40" rx="20" fill="#f87171" fill-opacity="0.16" stroke="#f87171" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="169" cy="378" r="5" fill="#f87171" style="animation-delay:-8.06s"/>
+    <rect x="148" y="358" width="136" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="169" cy="378" r="5" fill="#fccd26" style="animation-delay:-8.06s"/>
     <text class="sans" x="184" y="383.4" font-size="15" font-weight="600" fill="#e6edf3">SQL Server</text>
   </g>
   <g class="chip" style="animation-delay:1.315s">
-    <rect x="296" y="358" width="94" height="40" rx="20" fill="#38bdf8" fill-opacity="0.16" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="317" cy="378" r="5" fill="#38bdf8" style="animation-delay:-8.37s"/>
+    <rect x="296" y="358" width="94" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="317" cy="378" r="5" fill="#fccd26" style="animation-delay:-8.37s"/>
     <text class="sans" x="332" y="383.4" font-size="15" font-weight="600" fill="#e6edf3">MySQL</text>
   </g>
   <g class="chip" style="animation-delay:1.36s">
-    <rect x="402" y="358" width="110.8" height="40" rx="20" fill="#a16207" fill-opacity="0.16" stroke="#a16207" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="423" cy="378" r="5" fill="#a16207" style="animation-delay:-8.68s"/>
+    <rect x="402" y="358" width="110.8" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="423" cy="378" r="5" fill="#fccd26" style="animation-delay:-8.68s"/>
     <text class="sans" x="438" y="383.4" font-size="15" font-weight="600" fill="#e6edf3">MariaDB</text>
   </g>
   <g class="chip" style="animation-delay:1.405s">
-    <rect x="524.8" y="358" width="102.4" height="40" rx="20" fill="#7dd3fc" fill-opacity="0.16" stroke="#7dd3fc" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="545.8" cy="378" r="5" fill="#7dd3fc" style="animation-delay:-8.99s"/>
+    <rect x="524.8" y="358" width="102.4" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="545.8" cy="378" r="5" fill="#fccd26" style="animation-delay:-8.99s"/>
     <text class="sans" x="560.8" y="383.4" font-size="15" font-weight="600" fill="#e6edf3">SQLite</text>
   </g>
   <g class="chip" style="animation-delay:1.45s">
-    <rect x="639.1999999999999" y="358" width="110.8" height="40" rx="20" fill="#4ade80" fill-opacity="0.16" stroke="#4ade80" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="660.1999999999999" cy="378" r="5" fill="#4ade80" style="animation-delay:-9.3s"/>
+    <rect x="639.1999999999999" y="358" width="110.8" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="660.1999999999999" cy="378" r="5" fill="#fccd26" style="animation-delay:-9.3s"/>
     <text class="sans" x="675.1999999999999" y="383.4" font-size="15" font-weight="600" fill="#e6edf3">MongoDB</text>
   </g>
   <g class="chip" style="animation-delay:1.495s">
-    <rect x="762" y="358" width="127.6" height="40" rx="20" fill="#22d3ee" fill-opacity="0.16" stroke="#22d3ee" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="783" cy="378" r="5" fill="#22d3ee" style="animation-delay:-9.61s"/>
+    <rect x="762" y="358" width="127.6" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="783" cy="378" r="5" fill="#fccd26" style="animation-delay:-9.61s"/>
     <text class="sans" x="798" y="383.4" font-size="15" font-weight="600" fill="#e6edf3">Cosmos DB</text>
   </g>
   <g class="chip" style="animation-delay:1.54s">
-    <rect x="0" y="410" width="119.2" height="40" rx="20" fill="#818cf8" fill-opacity="0.16" stroke="#818cf8" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="21" cy="430" r="5" fill="#818cf8" style="animation-delay:-9.92s"/>
+    <rect x="0" y="410" width="119.2" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="430" r="5" fill="#fccd26" style="animation-delay:-9.92s"/>
     <text class="sans" x="36" y="435.4" font-size="15" font-weight="600" fill="#e6edf3">DynamoDB</text>
   </g>
   <g class="chip" style="animation-delay:1.585s">
-    <rect x="131.2" y="410" width="94" height="40" rx="20" fill="#ef4444" fill-opacity="0.16" stroke="#ef4444" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="152.2" cy="430" r="5" fill="#ef4444" style="animation-delay:-10.23s"/>
+    <rect x="131.2" y="410" width="94" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="152.2" cy="430" r="5" fill="#fccd26" style="animation-delay:-10.23s"/>
     <text class="sans" x="167.2" y="435.4" font-size="15" font-weight="600" fill="#e6edf3">Redis</text>
   </g>
   <g class="chip" style="animation-delay:1.63s">
-    <rect x="237.2" y="410" width="161.2" height="40" rx="20" fill="#fbbf24" fill-opacity="0.16" stroke="#fbbf24" stroke-opacity="0.6" stroke-width="1.2"/>
-    <circle class="dot" cx="258.2" cy="430" r="5" fill="#fbbf24" style="animation-delay:-10.54s"/>
+    <rect x="237.2" y="410" width="161.2" height="40" rx="20" fill="#fccd26" fill-opacity="0.16" stroke="#fccd26" stroke-opacity="0.6" stroke-width="1.2"/>
+    <circle class="dot" cx="258.2" cy="430" r="5" fill="#fccd26" style="animation-delay:-10.54s"/>
     <text class="sans" x="273.2" y="435.4" font-size="15" font-weight="600" fill="#e6edf3">Elasticsearch</text>
   </g>
   <g clip-path="url(#chips)"><rect class="sheen" x="0" y="-10" width="140" height="472" fill="url(#sh)"/></g>
