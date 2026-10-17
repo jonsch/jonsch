@@ -20,9 +20,9 @@
 
 - 🧑‍💻 Full-stack engineer who likes owning the whole thing: data model, API, payments, and the UI on top
 - 🛠️ Happiest in **.NET** and **TypeScript**, deployed to **Azure**, usually with Stripe wired in somewhere
-- 🧩 Weakness for small, sharp tools: CLI utilities, VS Code extensions, and browser automation
-- 🎧 Side projects tend to involve audio, links, or making a workflow one click shorter
-- 💬 Ask me about shipping a SaaS MVP solo, Azure Functions, or wrangling SQL Server
+- 🤖 Lately building apps around AI inference: models doing real work inside real products
+- 🧩 Weakness for small, sharp tools: CLI utilities, integrations, and anything that makes a workflow one click shorter
+- 💬 Ask me about shipping a SaaS MVP solo, wiring systems together, or wrangling SQL Server
 
 <details>
   <summary>⚡ A few more things</summary>
@@ -42,34 +42,52 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-  <img src="assets/stack-light.svg" width="100%" alt="C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, SQL Server, PostgreSQL, Stripe, Docker, Electron, REST APIs, Git, VS Code">
+  <img src="assets/stack-light.svg" width="100%" alt="C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, SQL Server, PostgreSQL, LLM APIs, Stripe, Docker, Electron, REST APIs, Git, VS Code">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg">
-  <img src="assets/section-now-light.svg" width="600" alt="03 · What I'm building">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg">
+  <img src="assets/section-strengths-light.svg" width="600" alt="03 · Strengths">
 </picture>
 
 <table>
   <tr>
     <td width="33%" valign="top">
+      <h3>🕸️ Distributed systems</h3>
+      Services that stay fast and correct when the traffic, the data, and the failure modes all grow at once.
+    </td>
+    <td width="33%" valign="top">
+      <h3>🔌 Systems integration</h3>
+      Getting APIs, databases, payment providers, and legacy systems to agree with each other.
+    </td>
+    <td width="33%" valign="top">
+      <h3>⌨️ CLI tools</h3>
+      Small, sharp command-line tools that remove friction from boring systems.
+    </td>
+  </tr>
+</table>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg">
+  <img src="assets/section-now-light.svg" width="600" alt="04 · What I'm building">
+</picture>
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🤖 AI inference apps</h3>
+      Products built around model inference: LLM-powered features, pipelines, and automations that do real work instead of demos.
+    </td>
+    <td width="50%" valign="top">
       <h3>🔗 Link tooling</h3>
       Short links, click analytics, and the backend that keeps redirects fast.
-    </td>
-    <td width="33%" valign="top">
-      <h3>🎛️ Audio workflows</h3>
-      Pipelines that turn raw recordings into something publishable with as few clicks as possible.
-    </td>
-    <td width="33%" valign="top">
-      <h3>🧰 Developer tools</h3>
-      VS Code extensions, CLI helpers, and integrations that remove friction from the boring parts.
     </td>
   </tr>
 </table>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg">
-  <img src="assets/section-connect-light.svg" width="600" alt="04 · Let's connect">
+  <img src="assets/section-connect-light.svg" width="600" alt="05 · Let's connect">
 </picture>
 
 <p>

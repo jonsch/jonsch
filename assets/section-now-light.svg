@@ -21,7 +21,7 @@
   <g class="badge">
     <rect x="2" y="8" width="40" height="40" rx="11" fill="url(#g)"/>
     <rect class="glow" x="2" y="8" width="40" height="40" rx="11" fill="none" stroke="#fff" stroke-opacity=".5"/>
-    <text class="mono" x="22" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">03</text>
+    <text class="mono" x="22" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">04</text>
   </g>
   <g class="in">
     <text class="sans" x="56" y="36" font-size="27" font-weight="700" fill="#1f2328">What I'm building</text>

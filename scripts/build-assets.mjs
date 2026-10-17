@@ -19,14 +19,15 @@ const CONFIG = {
     "Full-stack engineer",
     ".NET + TypeScript",
     "Shipping indie SaaS products",
+    "Building AI inference apps",
     "Azure · APIs · Stripe",
-    "Always tinkering",
   ],
   sections: [
     { id: "about", n: "01", title: "About me" },
     { id: "toolbox", n: "02", title: "Toolbox" },
-    { id: "now", n: "03", title: "What I'm building" },
-    { id: "connect", n: "04", title: "Let's connect" },
+    { id: "strengths", n: "03", title: "Strengths" },
+    { id: "now", n: "04", title: "What I'm building" },
+    { id: "connect", n: "05", title: "Let's connect" },
   ],
   stack: [
     ["C#", "#a78bfa"],
@@ -39,6 +40,7 @@ const CONFIG = {
     ["Azure Functions", "#fbbf24"],
     ["SQL Server", "#f87171"],
     ["PostgreSQL", "#60a5fa"],
+    ["LLM APIs", "#f472b6"],
     ["Stripe", "#818cf8"],
     ["Docker", "#2dd4bf"],
     ["Electron", "#67e8f9"],
@@ -67,49 +69,32 @@ function hero() {
     )
     .join("");
 
-  // Typing effect with exact character widths: textLength forces every glyph
-  // to occupy exactly CW units so a clip-rect can reveal it one char at a time.
+  // Typing effect. Every character is its own <tspan> whose fill-opacity is
+  // switched on/off by SMIL, so no animated clip-path is needed (WebKit does not
+  // repaint those reliably). textLength pins every glyph to exactly CW units so
+  // the cursor position is predictable regardless of which monospace font loads.
   const FS = 21, CW = 12.6, TX = 82, TY = 212;
   const TYPE = 0.07, HOLD = 1.7, DEL = 0.035, GAP = 0.45;
-  const slots = CONFIG.phrases.map((p) => ({
-    p, type: p.length * TYPE, hold: HOLD, del: p.length * DEL, gap: GAP,
-    total: p.length * TYPE + HOLD + p.length * DEL + GAP,
-  }));
+  const slots = CONFIG.phrases.map((p) => ({ p, total: p.length * (TYPE + DEL) + HOLD + GAP }));
   const cycle = slots.reduce((a, s) => a + s.total, 0);
+  const k = (time) => r(Math.min(1, time / cycle));
 
   let t = 0;
-  const cursorVals = [], cursorKeys = [];
+  const cursorEvents = [[0, 0]];
   const phraseSvgs = [];
-  slots.forEach((s, idx) => {
+  slots.forEach((s) => {
     const n = s.p.length;
-    const vals = [], keys = [];
-    const push = (v, k) => { vals.push(v); keys.push(r(k / cycle)); };
-    push(0, 0);
-    if (t > 0) push(0, t);
-    for (let i = 1; i <= n; i++) push(i * CW, t + i * TYPE);
-    push(n * CW, t + s.type + s.hold);
-    for (let i = n - 1; i >= 0; i--) push(i * CW, t + s.type + s.hold + (n - i) * DEL);
-    push(0, cycle);
-    // merge into the shared cursor timeline (skip duplicated leading zero)
-    vals.forEach((v, i) => {
-      if (keys[i] === 1 && idx !== slots.length - 1) return;
-      if (idx > 0 && i === 0) return;
-      cursorVals.push(v); cursorKeys.push(keys[i]);
-    });
-    phraseSvgs.push(`
-    <clipPath id="tc${idx}"><rect x="${TX}" y="${TY - FS}" height="${FS * 1.5}" width="0">
-      <animate attributeName="width" calcMode="discrete" dur="${r(cycle)}s" repeatCount="indefinite"
-        values="${vals.map(r).join(";")}" keyTimes="${keys.join(";")}"/>
-    </rect></clipPath>
-    <text class="type" x="${TX}" y="${TY}" textLength="${r(n * CW)}" lengthAdjust="spacing" clip-path="url(#tc${idx})">${esc(s.p)}</text>`);
+    const spans = [...s.p].map((ch, i) => {
+      const on = t + (i + 1) * TYPE;                       // appears when typed
+      const off = t + n * TYPE + HOLD + (n - i) * DEL;     // disappears on backspace (last char first)
+      cursorEvents.push([on, (i + 1) * CW], [off, i * CW]);
+      return `<tspan fill-opacity="0">${esc(ch)}<animate attributeName="fill-opacity" calcMode="discrete" values="0;1;0;0" keyTimes="0;${k(on)};${k(off)};1" dur="${r(cycle)}s" repeatCount="indefinite"/></tspan>`;
+    }).join("");
+    phraseSvgs.push(`<text class="type" x="${TX}" y="${TY}" textLength="${r(n * CW)}" lengthAdjust="spacing">${spans}</text>`);
     t += s.total;
   });
-  // cursor timeline: make keyTimes strictly non-decreasing and end at 1
-  const cv = [], ck = [];
-  for (let i = 0; i < cursorVals.length; i++) {
-    if (i > 0 && cursorKeys[i] < ck[ck.length - 1]) continue;
-    cv.push(cursorVals[i]); ck.push(cursorKeys[i]);
-  }
+  cursorEvents.sort((a, b) => a[0] - b[0]);
+  const cv = cursorEvents.map((e) => e[1]), ck = cursorEvents.map((e) => k(e[0]));
   if (ck[ck.length - 1] !== 1) { cv.push(0); ck.push(1); }
 
   const particles = Array.from({ length: 14 }, (_, i) => {
@@ -128,7 +113,6 @@ function hero() {
     .name{font-size:54px;font-weight:700;fill:url(#nameGrad);letter-spacing:-.01em}
     .l{fill-opacity:0;animation:lin .55s cubic-bezier(.2,.8,.2,1) forwards}
     @keyframes lin{from{fill-opacity:0}to{fill-opacity:1}}
-    .prompt{fill:#a78bfa;font-size:${FS}px;font-weight:700}
     .type{fill:#e2e8f0;font-size:${FS}px}
     .cursor{fill:#67e8f9;animation:blink 1.1s steps(2,start) infinite}
     @keyframes blink{to{opacity:0}}
@@ -190,7 +174,7 @@ function hero() {
     <g class="enter">
       <text class="sans hi" x="56" y="96">${esc(CONFIG.greeting)}</text>
       <text class="sans name" x="54" y="152">${letters}</text>
-      <text class="mono prompt" x="56" y="${TY}">❯</text>
+      <path class="chev" d="M58 ${TY - 15} l7 7 -7 7" fill="none" stroke="#a78bfa" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
       ${phraseSvgs.join("")}
       <rect class="cursor" x="${TX}" y="${TY - FS + 3}" width="10" height="${FS + 2}" rx="1.5">
         <animate attributeName="x" calcMode="discrete" dur="${r(cycle)}s" repeatCount="indefinite"

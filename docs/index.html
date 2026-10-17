@@ -95,7 +95,8 @@
 
   /* cards */
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;perspective:1200px}
-  @media (max-width:760px){.cards{grid-template-columns:1fr}}
+  .cards.two{grid-template-columns:repeat(2,1fr)}
+  @media (max-width:760px){.cards,.cards.two{grid-template-columns:1fr}}
   .card{padding:26px;border-radius:22px;border:1px solid var(--line);background:var(--card);position:relative;transform-style:preserve-3d;transition:transform .15s ease-out,border-color .3s;overflow:hidden}
   .card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 22%,transparent),transparent 45%);opacity:0;transition:opacity .3s}
   .card:hover::before{opacity:1}
@@ -154,9 +155,9 @@
       <div>
         <p class="lead" data-reveal style="--d:160ms">Full-stack engineer who likes owning the whole thing: data model, API, payments, and the UI on top. Happiest in .NET and TypeScript, deployed to Azure, usually with Stripe wired in somewhere.</p>
         <ul class="facts" data-reveal-group>
-          <li data-reveal="left">🧩 <span>Weakness for small, sharp tools: CLI utilities, VS Code extensions, browser automation.</span></li>
-          <li data-reveal="left">🎧 <span>Side projects tend to involve audio, links, or making a workflow one click shorter.</span></li>
-          <li data-reveal="left">💬 <span>Ask me about shipping a SaaS MVP solo, Azure Functions, or wrangling SQL Server.</span></li>
+          <li data-reveal="left">🤖 <span>Lately building apps around AI inference: models doing real work inside real products.</span></li>
+          <li data-reveal="left">🧩 <span>Weakness for small, sharp tools: CLI utilities, integrations, and anything that makes a workflow one click shorter.</span></li>
+          <li data-reveal="left">💬 <span>Ask me about shipping a SaaS MVP solo, wiring systems together, or wrangling SQL Server.</span></li>
           <li data-reveal="left">🔒 <span>The interesting work lives in private repos, so the contribution graph stays intentionally quiet.</span></li>
         </ul>
       </div>
@@ -176,19 +177,28 @@
     <div class="chips" data-reveal-group data-stagger="60"></div>
   </section>
 
+  <section id="strengths">
+    <div class="eyebrow" data-reveal>Where I'm strongest</div>
+    <h2 data-reveal style="--d:80ms"><span class="num">03</span>Strengths</h2>
+    <div class="cards" data-reveal-group data-stagger="120">
+      <article class="card" data-reveal="scale"><span class="icon">🕸️</span><h3>Distributed systems</h3><p>Services that stay fast and correct when the traffic, the data, and the failure modes all grow at once.</p></article>
+      <article class="card" data-reveal="scale"><span class="icon">🔌</span><h3>Systems integration</h3><p>Getting APIs, databases, payment providers, and legacy systems to agree with each other.</p></article>
+      <article class="card" data-reveal="scale"><span class="icon">⌨️</span><h3>CLI tools</h3><p>Small, sharp command-line tools that remove friction from boring systems.</p></article>
+    </div>
+  </section>
+
   <section id="now">
     <div class="eyebrow" data-reveal>Now</div>
-    <h2 data-reveal style="--d:80ms"><span class="num">03</span>What I'm building</h2>
-    <div class="cards" data-reveal-group data-stagger="120">
+    <h2 data-reveal style="--d:80ms"><span class="num">04</span>What I'm building</h2>
+    <div class="cards two" data-reveal-group data-stagger="120">
+      <article class="card" data-reveal="scale"><span class="icon">🤖</span><h3>AI inference apps</h3><p>Products built around model inference: LLM-powered features, pipelines, and automations that do real work instead of demos.</p></article>
       <article class="card" data-reveal="scale"><span class="icon">🔗</span><h3>Link tooling</h3><p>Short links, click analytics, and the backend that keeps redirects fast.</p></article>
-      <article class="card" data-reveal="scale"><span class="icon">🎛️</span><h3>Audio workflows</h3><p>Pipelines that turn raw recordings into something publishable with as few clicks as possible.</p></article>
-      <article class="card" data-reveal="scale"><span class="icon">🧰</span><h3>Developer tools</h3><p>VS Code extensions, CLI helpers, and integrations that remove friction from the boring parts.</p></article>
     </div>
   </section>
 
   <section id="connect" class="connect">
     <div class="eyebrow" data-reveal>Say hi</div>
-    <h2 data-reveal style="--d:80ms"><span class="num">04</span>Let's connect</h2>
+    <h2 data-reveal style="--d:80ms"><span class="num">05</span>Let's connect</h2>
     <p class="lead" data-reveal style="--d:160ms;margin:0 auto">Interesting problem, odd integration, or a tool that should exist but doesn't? I'd like to hear about it.</p>
     <div class="cta" data-reveal style="--d:260ms">
       <a class="btn primary" href="https://github.com/jonsch">GitHub · @jonsch</a>
@@ -221,7 +231,7 @@
   });
 
   // typing
-  const phrases = ['Full-stack engineer', '.NET + TypeScript', 'Shipping indie SaaS products', 'Azure · APIs · Stripe', 'Always tinkering'];
+  const phrases = ['Full-stack engineer', '.NET + TypeScript', 'Shipping indie SaaS products', 'Building AI inference apps', 'Azure · APIs · Stripe'];
   const out = document.getElementById('typed');
   if (reduce) out.textContent = phrases[0];
   else { let p = 0, i = 0, del = false;
@@ -237,7 +247,7 @@
   }
 
   // chips
-  const stack = [['C#','#a78bfa'],['.NET','#8b5cf6'],['TypeScript','#3b82f6'],['JavaScript','#facc15'],['React','#22d3ee'],['Node.js','#4ade80'],['Azure','#38bdf8'],['Azure Functions','#fbbf24'],['SQL Server','#f87171'],['PostgreSQL','#60a5fa'],['Stripe','#818cf8'],['Docker','#2dd4bf'],['Electron','#67e8f9'],['REST APIs','#34d399'],['Git','#fb923c'],['VS Code','#0ea5e9']];
+  const stack = [['C#','#a78bfa'],['.NET','#8b5cf6'],['TypeScript','#3b82f6'],['JavaScript','#facc15'],['React','#22d3ee'],['Node.js','#4ade80'],['Azure','#38bdf8'],['Azure Functions','#fbbf24'],['SQL Server','#f87171'],['PostgreSQL','#60a5fa'],['LLM APIs','#f472b6'],['Stripe','#818cf8'],['Docker','#2dd4bf'],['Electron','#67e8f9'],['REST APIs','#34d399'],['Git','#fb923c'],['VS Code','#0ea5e9']];
   const chips = document.querySelector('.chips');
   stack.forEach(([l, c]) => { const s = document.createElement('span'); s.className = 'chip'; s.style.setProperty('--c', c); s.dataset.reveal = 'scale'; s.innerHTML = '<i></i>' + l; chips.appendChild(s); });
 
