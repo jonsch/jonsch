@@ -83,8 +83,11 @@ const r = (n) => Math.round(n * 1000) / 1000;
 const BRAND = { red: "#ca1c21", blue: "#3390e3", yellow: "#fccd26", green: "#2aa04a",
   stage: "#0b1016", stage2: "#151d26", onStage: "#f5f7f8", onStageMuted: "#a3afba", stageLine: "#2c3946" };
 
-function hero() {
-  const W = 900, H = 300;
+function hero(theme = "dark") {
+  const W = 900, H = 300, dark = theme === "dark";
+  const T = dark
+    ? { bg0: BRAND.stage, bg1: BRAND.stage2, ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 1, veil: BRAND.stage, veilOp: [0.85, 0.45, 0], op: 1 }
+    : { bg0: "#ffffff", bg1: "#f5f7f8", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0.9, veil: "#ffffff", veilOp: [0.9, 0.55, 0], op: 0.62 };
 
   // Aurora ribbons: wavy bands whose path data morphs between three phases via SMIL.
   // Every phase shares the same command structure so the morph is smooth.
@@ -107,8 +110,8 @@ function hero() {
   const ribbon = (color, yTop, yBot, amp, tilt, op, dur, seed) => {
     const phases = [0, 2.1, 4.2].map((ph) => band(ph + seed, yTop, yBot, amp, tilt));
     const anim = `<animate attributeName="d" dur="${dur}s" repeatCount="indefinite" values="${[...phases, phases[0]].join(";")}"/>`;
-    return `<path class="glow" fill="url(#g-${color})" opacity="${op}">${anim}</path>
-      <path class="core" fill="url(#g-${color})" opacity="${r(op * 0.55)}">${anim}</path>`;
+    return `<path class="glow" fill="url(#g-${color})" opacity="${r(op * T.op)}">${anim}</path>
+      <path class="core" fill="url(#g-${color})" opacity="${r(op * T.op * 0.55)}">${anim}</path>`;
   };
   const grad = (name, hex) => `<linearGradient id="g-${name}" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="${hex}" stop-opacity="0"/><stop offset=".72" stop-color="${hex}" stop-opacity="1"/><stop offset="1" stop-color="${hex}" stop-opacity=".2"/>
@@ -156,18 +159,18 @@ function hero() {
     @keyframes card{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
     .enter{animation:enter .9s cubic-bezier(.2,.8,.2,1) both}
     @keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-    .hi{fill:${BRAND.onStageMuted};font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;opacity:0;animation:fade .7s .15s ease-out forwards}
+    .hi{fill:${T.muted};font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;opacity:0;animation:fade .7s .15s ease-out forwards}
     @keyframes fade{to{opacity:1}}
-    .name{font-size:54px;font-weight:700;fill:${BRAND.onStage};letter-spacing:-.025em}
+    .name{font-size:54px;font-weight:700;fill:${T.ink};letter-spacing:-.025em}
     .l{fill-opacity:0;animation:lin .55s cubic-bezier(.2,.8,.2,1) forwards}
     @keyframes lin{to{fill-opacity:1}}
     .period{fill:${BRAND.red};fill-opacity:0;animation:lin .5s 1.15s cubic-bezier(.2,.8,.2,1) forwards}
     .q{transform-box:fill-box;transform-origin:left center;transform:scaleX(0);animation:q .5s cubic-bezier(.2,.8,.2,1) forwards}
     @keyframes q{to{transform:scaleX(1)}}
-    .type{fill:${BRAND.onStage};font-size:${FS}px}
+    .type{fill:${T.ink};font-size:${FS}px}
     .cursor{fill:${BRAND.blue};animation:blink 1.1s steps(2,start) infinite}
     @keyframes blink{to{opacity:0}}
-    .star{fill:#fff;animation:tw ease-in-out infinite}
+    .star{fill:#fff;animation:tw ease-in-out infinite;display:${dark ? "inline" : "none"}}
     @keyframes tw{0%,100%{opacity:.2}50%{opacity:.95}}
     .glow{filter:url(#soft)}
     .core{filter:url(#tight)}
@@ -181,9 +184,9 @@ function hero() {
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
     <filter id="soft" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="20"/></filter>
     <filter id="tight" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
-    <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${BRAND.stage}"/><stop offset="1" stop-color="${BRAND.stage2}"/></linearGradient>
+    <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.bg0}"/><stop offset="1" stop-color="${T.bg1}"/></linearGradient>
     ${grad("green", BRAND.green)}${grad("blue", BRAND.blue)}${grad("red", BRAND.red)}${grad("yellow", BRAND.yellow)}
-    <linearGradient id="veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${BRAND.stage}" stop-opacity=".85"/><stop offset=".45" stop-color="${BRAND.stage}" stop-opacity=".45"/><stop offset=".75" stop-color="${BRAND.stage}" stop-opacity="0"/></linearGradient>
+    <linearGradient id="veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${T.veil}" stop-opacity="${T.veilOp[0]}"/><stop offset=".45" stop-color="${T.veil}" stop-opacity="${T.veilOp[1]}"/><stop offset=".75" stop-color="${T.veil}" stop-opacity="${T.veilOp[2]}"/></linearGradient>
     <pattern id="ray" width="34" height="${H}" patternUnits="userSpaceOnUse">
       <rect x="0" width="3" height="${H}" fill="#fff" fill-opacity=".9"/><rect x="13" width="1.5" height="${H}" fill="#fff" fill-opacity=".45"/><rect x="24" width="2" height="${H}" fill="#fff" fill-opacity=".65"/>
     </pattern>
@@ -217,10 +220,10 @@ function hero() {
       <rect class="cursor" x="${TX}" y="${TY - FS + 3}" width="9" height="${FS + 2}" rx="1.5">
         <animate attributeName="x" calcMode="discrete" dur="${r(cycle)}s" repeatCount="indefinite" values="${cv.map((v) => r(TX + v)).join(";")}" keyTimes="${ck.join(";")}"/>
       </rect>
-      <text class="mono" x="56" y="262" fill="${BRAND.onStageMuted}" font-size="12" letter-spacing=".06em">@jonsch  ·  switchcasestudios.com</text>
+      <text class="mono" x="56" y="262" fill="${T.muted}" font-size="12" letter-spacing=".06em">@jonsch  ·  switchcasestudios.com</text>
     </g>
 
-    <rect width="${W}" height="${H}" rx="22" fill="none" stroke="${BRAND.stageLine}"/>
+    <rect width="${W}" height="${H}" rx="22" fill="none" stroke="${T.line}" stroke-opacity="${T.lineOp}"/>
     <rect x="0" y="${H - 3}" width="${W}" height="3" fill="url(#quadbar)"/>
   </g>
 </svg>`;
@@ -477,7 +480,8 @@ function footer(theme) {
 
 // ───────────────────────────── write ─────────────────────────────
 const files = {
-  "hero.svg": hero(),
+  "hero-dark.svg": hero("dark"),
+  "hero-light.svg": hero("light"),
   "stack-dark.svg": stack("dark"),
   "stack-light.svg": stack("light"),
   "cards-strengths-dark.svg": cards(CARDS.strengths, "dark"),

@@ -6,7 +6,10 @@
   GitHub's image cache picks up changes.
 -->
 
-<img src="assets/hero.svg?v=d6191b55" width="100%" alt="Hi, I'm Jonathan Schroeder, full-stack engineer">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg?v=688adc17">
+  <img src="assets/hero-light.svg?v=729b7669" width="100%" alt="Hi, I'm Jonathan Schroeder, full-stack engineer">
+</picture>
 
 <!--
   Once GitHub Pages is enabled for this repo (Settings → Pages → Deploy from branch → main, /docs),
