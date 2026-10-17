@@ -61,8 +61,8 @@
       Getting APIs, databases, payment providers, and legacy systems to agree with each other.
     </td>
     <td width="33%" valign="top">
-      <h3>⌨️ CLI tools</h3>
-      Small, sharp command-line tools that remove friction from boring systems.
+      <h3>🧠 AI inference &amp; architecture</h3>
+      Designing systems around model inference: picking the right model, grounding it in real data, and keeping it fast, observable, and affordable.
     </td>
   </tr>
 </table>
@@ -79,8 +79,8 @@
       Products built around model inference: LLM-powered features, pipelines, and automations that do real work instead of demos.
     </td>
     <td width="50%" valign="top">
-      <h3>🔗 Link tooling</h3>
-      Short links, click analytics, and the backend that keeps redirects fast.
+      <h3>🏪 Tools for small businesses &amp; solopreneurs</h3>
+      Focused products that give small teams and one-person companies the leverage usually reserved for big ones.
     </td>
   </tr>
 </table>
