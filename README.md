@@ -7,8 +7,8 @@
 -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg?v=8ad4873f">
-  <img src="assets/hero-light.svg?v=4a9bc015" width="100%" alt="Hi, I'm Jonathan Schroeder, full-stack engineer">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg?v=08f94087">
+  <img src="assets/hero-light.svg?v=bf37eb9e" width="100%" alt="Hi, I'm Jonathan Schroeder, full-stack engineer">
 </picture>
 
 <!--

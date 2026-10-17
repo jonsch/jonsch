@@ -87,8 +87,8 @@ function hero(theme = "dark") {
   const W = 900, H = 300, dark = theme === "dark";
   const T = dark
     // Backgrounds match GitHub's own page colors so the edges can fade into them.
-    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.85, 0.45, 0], op: 1.4 }
-    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.88, 0.5, 0], op: 1.0, speed: 0.55, sway: 60 };
+    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.82, 0.38, 0], op: 1.3 }
+    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.86, 0.42, 0], op: 1.0, speed: 0.55, sway: 60 };
   T.speed ??= 1; T.sway ??= 30;
 
   // Aurora ribbons: wavy bands whose path data morphs between three phases via SMIL.
@@ -191,7 +191,7 @@ function hero(theme = "dark") {
     @keyframes tw{0%,100%{opacity:.2}50%{opacity:.95}}
     .curtain{transform-origin:450px 150px;animation-name:drift,breathe;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
     @keyframes drift{from{transform:translate(-${T.sway}px,-6px) scaleY(.94)}to{transform:translate(${T.sway}px,6px) scaleY(1.08)}}
-    @keyframes breathe{from{opacity:1}to{opacity:.45}}
+    @keyframes breathe{from{opacity:1}to{opacity:.6}}
     .rays{animation:rays ${r(30 * T.speed)}s linear infinite}
     @keyframes rays{to{transform:translateX(-136px)}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}}
@@ -200,7 +200,7 @@ function hero(theme = "dark") {
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
     <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.bg0}"/><stop offset="1" stop-color="${T.bg1}"/></linearGradient>
     ${grad("green", BRAND.green)}${grad("blue", BRAND.blue)}${grad("red", BRAND.red)}${grad("yellow", BRAND.yellow)}
-    <linearGradient id="veilR" x1="0" y1="0" x2="1" y2="0"><stop offset=".58" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".82" stop-color="${T.veil}" stop-opacity=".55"/><stop offset="1" stop-color="${T.veil}" stop-opacity="1"/></linearGradient>
+    <linearGradient id="veilR" x1="0" y1="0" x2="1" y2="0"><stop offset=".66" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".86" stop-color="${T.veil}" stop-opacity=".55"/><stop offset="1" stop-color="${T.veil}" stop-opacity="1"/></linearGradient>
     <linearGradient id="veilT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.veil}" stop-opacity=".9"/><stop offset=".22" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".8" stop-color="${T.veil}" stop-opacity="0"/><stop offset="1" stop-color="${T.veil}" stop-opacity=".7"/></linearGradient>
     <linearGradient id="veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${T.veil}" stop-opacity="${T.veilOp[0]}"/><stop offset=".45" stop-color="${T.veil}" stop-opacity="${T.veilOp[1]}"/><stop offset=".75" stop-color="${T.veil}" stop-opacity="${T.veilOp[2]}"/></linearGradient>
     <linearGradient id="rayfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="0"/><stop offset=".35" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="1"/><stop offset=".7" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="0"/></linearGradient>
@@ -214,10 +214,10 @@ function hero(theme = "dark") {
     <rect width="${W}" height="${H}" fill="url(#stage)"/>
     ${stars}
     <!-- aurora curtains (gradient-softened, no filters) -->
-    ${ribbon("yellow", -14, 30, 22, 95, 0.22, 27, 3.2)}
-    ${ribbon("green", 18, 96, 40, 110, 0.62, 17, 0)}
-    ${ribbon("blue", 92, 162, 46, 80, 0.42, 23, 1.6)}
-    ${ribbon("red", 168, 218, 28, 50, 0.2, 20, 4.5)}
+    ${ribbon("yellow", -14, 34, 24, 95, 0.45, 27, 3.2)}
+    ${ribbon("green", 18, 100, 40, 110, 0.95, 17, 0)}
+    ${ribbon("blue", 92, 166, 46, 80, 0.8, 23, 1.6)}
+    ${ribbon("red", 168, 222, 28, 50, 0.4, 20, 4.5)}
     <!-- faint drifting rays -->
     <g class="rays" opacity="${dark ? 0.08 : 0.05}"><rect x="0" y="0" width="${W + 136}" height="${H}" fill="url(#ray)"/></g>
     <!-- keep the left side readable, and fade the right, top and bottom into the page -->
