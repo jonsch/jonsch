@@ -7,8 +7,8 @@
 -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg?v=08f94087">
-  <img src="assets/hero-light.svg?v=bf37eb9e" width="100%" alt="Hi, I'm Jonathan Schroeder, full-stack engineer">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg?v=fdcf3319">
+  <img src="assets/hero-light.svg?v=620839f3" width="100%" alt="Hi, I'm Jonathan Schroeder, full-stack engineer">
 </picture>
 
 <!--
@@ -19,8 +19,8 @@
 -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg?v=46e8dfd8">
-  <img src="assets/section-about-light.svg?v=886b4ece" width="600" alt="01 · About me">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg?v=1ce5b0f6">
+  <img src="assets/section-about-light.svg?v=74a5fc19" width="600" alt="01 · About me">
 </picture>
 
 Full-stack engineer who likes owning the whole thing: the data model, the API, the payments, and the interface on top. I build products end to end, mostly in .NET and TypeScript on Azure, and lately around AI inference. Most of that work lives in private repositories, which is why the activity graph here is quiet.
@@ -36,8 +36,8 @@ Full-stack engineer who likes owning the whole thing: the data model, the API, t
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg?v=2ca09454">
-  <img src="assets/section-strengths-light.svg?v=03105dac" width="600" alt="02 · Strengths">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg?v=4568baa0">
+  <img src="assets/section-strengths-light.svg?v=990b160d" width="600" alt="02 · Strengths">
 </picture>
 
 <picture>
@@ -46,8 +46,8 @@ Full-stack engineer who likes owning the whole thing: the data model, the API, t
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=99c92360">
-  <img src="assets/section-now-light.svg?v=912352b5" width="600" alt="03 · What I'm building">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=be7b46a9">
+  <img src="assets/section-now-light.svg?v=8f8d77a8" width="600" alt="03 · What I'm building">
 </picture>
 
 <picture>
@@ -56,8 +56,8 @@ Full-stack engineer who likes owning the whole thing: the data model, the API, t
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-toolbox-dark.svg?v=fc6a4363">
-  <img src="assets/section-toolbox-light.svg?v=1827b868" width="600" alt="04 · Toolbox">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-toolbox-dark.svg?v=7a3a9e17">
+  <img src="assets/section-toolbox-light.svg?v=2f8b2ab8" width="600" alt="04 · Toolbox">
 </picture>
 
 <picture>
@@ -66,8 +66,8 @@ Full-stack engineer who likes owning the whole thing: the data model, the API, t
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg?v=2fcce8b5">
-  <img src="assets/section-connect-light.svg?v=b60660fa" width="600" alt="05 · Let's connect">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg?v=14cf6585">
+  <img src="assets/section-connect-light.svg?v=0cda5869" width="600" alt="05 · Let's connect">
 </picture>
 
 Interesting problem, odd integration, or a tool that should exist but doesn't? I'd like to hear about it.

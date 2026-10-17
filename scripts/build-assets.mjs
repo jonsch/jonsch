@@ -87,8 +87,8 @@ function hero(theme = "dark") {
   const W = 900, H = 300, dark = theme === "dark";
   const T = dark
     // Backgrounds match GitHub's own page colors so the edges can fade into them.
-    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.82, 0.38, 0], op: 1.3 }
-    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.86, 0.42, 0], op: 1.0, speed: 0.55, sway: 60 };
+    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.8, 0.34, 0], op: 1.6 }
+    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.84, 0.38, 0], op: 1.15, speed: 0.55, sway: 60 };
   T.speed ??= 1; T.sway ??= 30;
 
   // Aurora ribbons: wavy bands whose path data morphs between three phases via SMIL.
@@ -118,11 +118,13 @@ function hero(theme = "dark") {
     const N = 7, EXT = 30, t = yBot - yTop;
     const d = r(dur * T.speed);
     const alpha = r(1 - Math.pow(1 - Math.min(0.97, op * T.op), 1 / N));
+    const mix = (hex, amt) => "#" + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * (1 - amt) + 255 * amt).toString(16).padStart(2, "0")).join("");
     const slices = Array.from({ length: N }, (_, j) => {
       const k = j / (N - 1);
       const yT = yTop - EXT + k * (EXT + t * 0.42), yB = yBot + EXT - k * (EXT + t * 0.42);
       const ps = [0, 2.1, 4.2].map((ph) => band(ph + seed, yT, yB, amp, tilt));
-      return `<path fill="${BRAND[color]}" opacity="${alpha}"><animate attributeName="d" dur="${d}s" repeatCount="indefinite" values="${[...ps, ps[0]].join(";")}"/></path>`;
+      const fill = j === N - 1 ? mix(BRAND[color], dark ? 0.35 : 0.1) : BRAND[color];
+      return `<path fill="${fill}" opacity="${alpha}"><animate attributeName="d" dur="${d}s" repeatCount="indefinite" values="${[...ps, ps[0]].join(";")}"/></path>`;
     }).join("");
     const i = rib++;
     return `<g class="curtain" style="animation-duration:${r(d * 0.6)}s,${r(d * 0.45)}s;animation-delay:${r(-i * 3.7)}s,${r(-i * 2.9)}s">${slices}</g>`;
@@ -214,10 +216,10 @@ function hero(theme = "dark") {
     <rect width="${W}" height="${H}" fill="url(#stage)"/>
     ${stars}
     <!-- aurora curtains (gradient-softened, no filters) -->
-    ${ribbon("yellow", -14, 34, 24, 95, 0.45, 27, 3.2)}
-    ${ribbon("green", 18, 100, 40, 110, 0.95, 17, 0)}
-    ${ribbon("blue", 92, 166, 46, 80, 0.8, 23, 1.6)}
-    ${ribbon("red", 168, 222, 28, 50, 0.4, 20, 4.5)}
+    ${ribbon("yellow", -14, 36, 24, 95, 0.6, 27, 3.2)}
+    ${ribbon("green", 18, 102, 40, 110, 1, 17, 0)}
+    ${ribbon("blue", 92, 168, 46, 80, 0.95, 23, 1.6)}
+    ${ribbon("red", 168, 224, 28, 50, 0.55, 20, 4.5)}
     <!-- faint drifting rays -->
     <g class="rays" opacity="${dark ? 0.08 : 0.05}"><rect x="0" y="0" width="${W + 136}" height="${H}" fill="url(#ray)"/></g>
     <!-- keep the left side readable, and fade the right, top and bottom into the page -->
@@ -244,9 +246,13 @@ function hero(theme = "dark") {
 }
 
 // ───────────────────────────── section headers ─────────────────────────────
-function section({ n, title }, theme) {
+function section({ n, title }, theme, idx = 0) {
   const W = 600, H = 60;
   const dark = theme === "dark";
+  // Alternate the brand quad: odd sections red -> yellow, even sections green -> blue.
+  const warm = idx % 2 === 0;
+  const c1 = warm ? BRAND.red : BRAND.green, c2 = warm ? BRAND.yellow : BRAND.blue;
+  const numInk = warm ? "#0b1016" : "#ffffff";
   const text = dark ? "#e6edf3" : "#1f2328";
   const sub = dark ? "#8b949e" : "#656d76";
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(title)}">
@@ -266,19 +272,19 @@ function section({ n, title }, theme) {
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.line{stroke-dashoffset:0}}
   </style>
   <defs>
-    <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#3390e3"/><stop offset="1" stop-color="#2aa04a"/></linearGradient>
-    <linearGradient id="fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="0"><stop offset="0" stop-color="#3390e3"/><stop offset=".6" stop-color="#2aa04a"/><stop offset="1" stop-color="#2aa04a" stop-opacity="0"/></linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient>
+    <linearGradient id="fade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="0"><stop offset="0" stop-color="${c1}"/><stop offset=".6" stop-color="${c2}"/><stop offset="1" stop-color="${c2}" stop-opacity="0"/></linearGradient>
   </defs>
   <g class="badge">
     <rect x="2" y="8" width="40" height="40" rx="11" fill="url(#g)"/>
     <rect class="glow" x="2" y="8" width="40" height="40" rx="11" fill="none" stroke="#fff" stroke-opacity=".5"/>
-    <text class="mono" x="22" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">${esc(n)}</text>
+    <text class="mono" x="22" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="${numInk}">${esc(n)}</text>
   </g>
   <g class="in">
     <text class="sans" x="56" y="36" font-size="27" font-weight="700" fill="${text}">${esc(title)}</text>
   </g>
   <path class="line" d="M2 56 H ${W - 2}" stroke="url(#fade)" stroke-width="2" stroke-linecap="round"/>
-  <circle class="dot" cx="30" cy="56" r="3" fill="#3390e3" opacity=".9"/>
+  <circle class="dot" cx="30" cy="56" r="3" fill="${c2}" opacity=".9"/>
 </svg>`;
 }
 
@@ -507,10 +513,10 @@ const files = {
   "footer-dark.svg": footer("dark"),
   "footer-light.svg": footer("light"),
 };
-for (const s of CONFIG.sections) {
-  files[`section-${s.id}-dark.svg`] = section(s, "dark");
-  files[`section-${s.id}-light.svg`] = section(s, "light");
-}
+CONFIG.sections.forEach((s, i) => {
+  files[`section-${s.id}-dark.svg`] = section(s, "dark", i);
+  files[`section-${s.id}-light.svg`] = section(s, "light", i);
+});
 for (const [name, svg] of Object.entries(files)) {
   writeFileSync(join(OUT, name), svg.trim() + "\n");
   console.log("wrote assets/" + name);
