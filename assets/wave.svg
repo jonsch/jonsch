@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 110" width="900" height="110" role="img" aria-label="Thanks for stopping by">
+  <style>
+    .w{animation:w linear infinite}
+    @keyframes w{to{transform:translateX(-900px)}}
+    .sans{font-family:'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif}
+    .txt{animation:fade 1s .3s both}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .arrow{animation:bob 1.6s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+  </style>
+  <defs>
+    <linearGradient id="w1" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".5" stop-color="#22d3ee"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
+    <linearGradient id="w2" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+    <clipPath id="c"><rect width="900" height="110" rx="18"/></clipPath>
+  </defs>
+  <g clip-path="url(#c)">
+    <path class="w" d="M0 63 C150 23 300 87 450 55 S750 23 900 55 S1200 87 1350 55 S1650 23 1800 55 V110 H0 Z" fill="url(#w2)" opacity=".45" style="animation-duration:11s"/>
+    <path class="w" d="M0 55 C150 15 300 95 450 55 S750 15 900 55 S1200 95 1350 55 S1650 15 1800 55 V110 H0 Z" fill="url(#w1)" opacity=".9" style="animation-duration:7s"/>
+    <g class="txt">
+      <text class="sans" x="450" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" fill-opacity=".95" letter-spacing=".08em">THANKS FOR STOPPING BY</text>
+    </g>
+  </g>
+</svg>

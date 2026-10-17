@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 146" width="900" height="146" role="img" aria-label="Toolbox: C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, SQL Server, PostgreSQL, Stripe, Docker, Electron, REST APIs, Git, VS Code">
+  <style>
+    .sans{font-family:'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif}
+    .chip{opacity:0;animation:pop .6s cubic-bezier(.2,.8,.2,1.25) forwards;transform-box:fill-box;transform-origin:center}
+    @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.8)}to{opacity:1;transform:none}}
+    .dot{animation:breathe 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+    @keyframes breathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.35);opacity:1}}
+    .sheen{animation:sheen 5.5s 1.6s ease-in-out infinite both}
+    @keyframes sheen{0%{transform:translateX(-260px) skewX(-18deg)}35%,100%{transform:translateX(1160px) skewX(-18deg)}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.chip{opacity:1}}
+  </style>
+  <defs>
+    <clipPath id="chips"><rect x="0" y="0" width="68.8" height="40" rx="20"/><rect x="80.8" y="0" width="85.6" height="40" rx="20"/><rect x="178.39999999999998" y="0" width="136" height="40" rx="20"/><rect x="326.4" y="0" width="136" height="40" rx="20"/><rect x="474.4" y="0" width="94" height="40" rx="20"/><rect x="580.4" y="0" width="110.8" height="40" rx="20"/><rect x="703.2" y="0" width="94" height="40" rx="20"/><rect x="0" y="52" width="178" height="40" rx="20"/><rect x="190" y="52" width="136" height="40" rx="20"/><rect x="338" y="52" width="136" height="40" rx="20"/><rect x="486" y="52" width="102.4" height="40" rx="20"/><rect x="600.4" y="52" width="102.4" height="40" rx="20"/><rect x="714.8" y="52" width="119.2" height="40" rx="20"/><rect x="0" y="104" width="127.6" height="40" rx="20"/><rect x="139.60000000000002" y="104" width="77.2" height="40" rx="20"/><rect x="228.8" y="104" width="110.8" height="40" rx="20"/></clipPath>
+    <linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity="0.55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  </defs>
+  
+  <g class="chip" style="animation-delay:0.1s">
+    <rect x="0" y="0" width="68.8" height="40" rx="20" fill="#a78bfa" fill-opacity="0.13" stroke="#a78bfa" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="20" r="5" fill="#a78bfa" style="animation-delay:0s"/>
+    <text class="sans" x="36" y="25.4" font-size="15" font-weight="600" fill="#1f2328">C#</text>
+  </g>
+  <g class="chip" style="animation-delay:0.17s">
+    <rect x="80.8" y="0" width="85.6" height="40" rx="20" fill="#8b5cf6" fill-opacity="0.13" stroke="#8b5cf6" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="101.8" cy="20" r="5" fill="#8b5cf6" style="animation-delay:-0.31s"/>
+    <text class="sans" x="116.8" y="25.4" font-size="15" font-weight="600" fill="#1f2328">.NET</text>
+  </g>
+  <g class="chip" style="animation-delay:0.24s">
+    <rect x="178.39999999999998" y="0" width="136" height="40" rx="20" fill="#3b82f6" fill-opacity="0.13" stroke="#3b82f6" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="199.39999999999998" cy="20" r="5" fill="#3b82f6" style="animation-delay:-0.62s"/>
+    <text class="sans" x="214.39999999999998" y="25.4" font-size="15" font-weight="600" fill="#1f2328">TypeScript</text>
+  </g>
+  <g class="chip" style="animation-delay:0.31s">
+    <rect x="326.4" y="0" width="136" height="40" rx="20" fill="#facc15" fill-opacity="0.13" stroke="#facc15" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="347.4" cy="20" r="5" fill="#facc15" style="animation-delay:-0.93s"/>
+    <text class="sans" x="362.4" y="25.4" font-size="15" font-weight="600" fill="#1f2328">JavaScript</text>
+  </g>
+  <g class="chip" style="animation-delay:0.38s">
+    <rect x="474.4" y="0" width="94" height="40" rx="20" fill="#22d3ee" fill-opacity="0.13" stroke="#22d3ee" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="495.4" cy="20" r="5" fill="#22d3ee" style="animation-delay:-1.24s"/>
+    <text class="sans" x="510.4" y="25.4" font-size="15" font-weight="600" fill="#1f2328">React</text>
+  </g>
+  <g class="chip" style="animation-delay:0.45s">
+    <rect x="580.4" y="0" width="110.8" height="40" rx="20" fill="#4ade80" fill-opacity="0.13" stroke="#4ade80" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="601.4" cy="20" r="5" fill="#4ade80" style="animation-delay:-1.55s"/>
+    <text class="sans" x="616.4" y="25.4" font-size="15" font-weight="600" fill="#1f2328">Node.js</text>
+  </g>
+  <g class="chip" style="animation-delay:0.52s">
+    <rect x="703.2" y="0" width="94" height="40" rx="20" fill="#38bdf8" fill-opacity="0.13" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="724.2" cy="20" r="5" fill="#38bdf8" style="animation-delay:-1.86s"/>
+    <text class="sans" x="739.2" y="25.4" font-size="15" font-weight="600" fill="#1f2328">Azure</text>
+  </g>
+  <g class="chip" style="animation-delay:0.59s">
+    <rect x="0" y="52" width="178" height="40" rx="20" fill="#fbbf24" fill-opacity="0.13" stroke="#fbbf24" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="72" r="5" fill="#fbbf24" style="animation-delay:-2.17s"/>
+    <text class="sans" x="36" y="77.4" font-size="15" font-weight="600" fill="#1f2328">Azure Functions</text>
+  </g>
+  <g class="chip" style="animation-delay:0.66s">
+    <rect x="190" y="52" width="136" height="40" rx="20" fill="#f87171" fill-opacity="0.13" stroke="#f87171" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="211" cy="72" r="5" fill="#f87171" style="animation-delay:-2.48s"/>
+    <text class="sans" x="226" y="77.4" font-size="15" font-weight="600" fill="#1f2328">SQL Server</text>
+  </g>
+  <g class="chip" style="animation-delay:0.73s">
+    <rect x="338" y="52" width="136" height="40" rx="20" fill="#60a5fa" fill-opacity="0.13" stroke="#60a5fa" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="359" cy="72" r="5" fill="#60a5fa" style="animation-delay:-2.79s"/>
+    <text class="sans" x="374" y="77.4" font-size="15" font-weight="600" fill="#1f2328">PostgreSQL</text>
+  </g>
+  <g class="chip" style="animation-delay:0.8s">
+    <rect x="486" y="52" width="102.4" height="40" rx="20" fill="#818cf8" fill-opacity="0.13" stroke="#818cf8" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="507" cy="72" r="5" fill="#818cf8" style="animation-delay:-3.1s"/>
+    <text class="sans" x="522" y="77.4" font-size="15" font-weight="600" fill="#1f2328">Stripe</text>
+  </g>
+  <g class="chip" style="animation-delay:0.87s">
+    <rect x="600.4" y="52" width="102.4" height="40" rx="20" fill="#2dd4bf" fill-opacity="0.13" stroke="#2dd4bf" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="621.4" cy="72" r="5" fill="#2dd4bf" style="animation-delay:-3.41s"/>
+    <text class="sans" x="636.4" y="77.4" font-size="15" font-weight="600" fill="#1f2328">Docker</text>
+  </g>
+  <g class="chip" style="animation-delay:0.94s">
+    <rect x="714.8" y="52" width="119.2" height="40" rx="20" fill="#67e8f9" fill-opacity="0.13" stroke="#67e8f9" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="735.8" cy="72" r="5" fill="#67e8f9" style="animation-delay:-3.72s"/>
+    <text class="sans" x="750.8" y="77.4" font-size="15" font-weight="600" fill="#1f2328">Electron</text>
+  </g>
+  <g class="chip" style="animation-delay:1.01s">
+    <rect x="0" y="104" width="127.6" height="40" rx="20" fill="#34d399" fill-opacity="0.13" stroke="#34d399" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="21" cy="124" r="5" fill="#34d399" style="animation-delay:-4.03s"/>
+    <text class="sans" x="36" y="129.4" font-size="15" font-weight="600" fill="#1f2328">REST APIs</text>
+  </g>
+  <g class="chip" style="animation-delay:1.08s">
+    <rect x="139.60000000000002" y="104" width="77.2" height="40" rx="20" fill="#fb923c" fill-opacity="0.13" stroke="#fb923c" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="160.60000000000002" cy="124" r="5" fill="#fb923c" style="animation-delay:-4.34s"/>
+    <text class="sans" x="175.60000000000002" y="129.4" font-size="15" font-weight="600" fill="#1f2328">Git</text>
+  </g>
+  <g class="chip" style="animation-delay:1.15s">
+    <rect x="228.8" y="104" width="110.8" height="40" rx="20" fill="#0ea5e9" fill-opacity="0.13" stroke="#0ea5e9" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle class="dot" cx="249.8" cy="124" r="5" fill="#0ea5e9" style="animation-delay:-4.65s"/>
+    <text class="sans" x="264.8" y="129.4" font-size="15" font-weight="600" fill="#1f2328">VS Code</text>
+  </g>
+  <g clip-path="url(#chips)"><rect class="sheen" x="0" y="-10" width="140" height="166" fill="url(#sh)"/></g>
+</svg>
