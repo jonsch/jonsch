@@ -86,7 +86,7 @@ const BRAND = { red: "#ca1c21", blue: "#3390e3", yellow: "#fccd26", green: "#2aa
 function hero(theme = "dark") {
   const W = 900, H = 300, dark = theme === "dark";
   const T = dark
-    ? { bg0: BRAND.stage, bg1: BRAND.stage2, ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 1, veil: BRAND.stage, veilOp: [0.85, 0.45, 0], op: 1 }
+    ? { bg0: BRAND.stage, bg1: BRAND.stage2, ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 1, veil: BRAND.stage, veilOp: [0.85, 0.45, 0], op: 1.25 }
     : { bg0: "#ffffff", bg1: "#f5f7f8", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0.9, veil: "#ffffff", veilOp: [0.88, 0.5, 0], op: 0.95, speed: 0.55, sway: 60 };
   T.speed ??= 1; T.sway ??= 30;
 
@@ -107,18 +107,30 @@ function hero(theme = "dark") {
     const back = [...bot].reverse();
     return `M${top[0][0]} ${top[0][1]} ${curve(top)} L${back[0][0]} ${back[0][1]} ${curve(back)} Z`;
   };
-  // Each curtain is drawn twice: a wide soft glow and a tighter, brighter core.
+  // No SVG filters: WebKit does not repaint filtered elements while they animate
+  // inside an <img>. Softness comes from vertical gradients instead, and motion is
+  // CSS transforms + opacity (which WebKit handles) plus a SMIL shape morph on top.
+  let rib = 0;
   const ribbon = (color, yTop, yBot, amp, tilt, op, dur, seed) => {
-    const phases = [0, 2.1, 4.2].map((ph) => band(ph + seed, yTop, yBot, amp, tilt));
+    // N nested slices, each a morphing band; their opacities accumulate toward the
+    // core so the glow falls off along the curtain's own shape (a filter-free blur).
+    const N = 7, EXT = 30, t = yBot - yTop;
     const d = r(dur * T.speed);
-    const anim = `<animate attributeName="d" dur="${d}s" repeatCount="indefinite" values="${[...phases, phases[0]].join(";")}"/>`;
-    // slow brightness pulse so the curtains visibly breathe, not only drift
-    const pulse = (o) => `<animate attributeName="opacity" dur="${r(d * 0.45)}s" repeatCount="indefinite" values="${r(o)};${r(o * 0.45)};${r(o)}" begin="${r(-seed)}s"/>`;
-    return `<path class="glow" fill="url(#g-${color})" opacity="${r(op * T.op)}">${anim}${pulse(op * T.op)}</path>
-      <path class="core" fill="url(#g-${color})" opacity="${r(op * T.op * 0.55)}">${anim}${pulse(op * T.op * 0.55)}</path>`;
+    const alpha = r(1 - Math.pow(1 - Math.min(0.97, op * T.op), 1 / N));
+    const slices = Array.from({ length: N }, (_, j) => {
+      const k = j / (N - 1);
+      const yT = yTop - EXT + k * (EXT + t * 0.42), yB = yBot + EXT - k * (EXT + t * 0.42);
+      const ps = [0, 2.1, 4.2].map((ph) => band(ph + seed, yT, yB, amp, tilt));
+      return `<path fill="${BRAND[color]}" opacity="${alpha}"><animate attributeName="d" dur="${d}s" repeatCount="indefinite" values="${[...ps, ps[0]].join(";")}"/></path>`;
+    }).join("");
+    const i = rib++;
+    return `<g class="curtain" style="animation-duration:${r(d * 0.6)}s,${r(d * 0.45)}s;animation-delay:${r(-i * 3.7)}s,${r(-i * 2.9)}s">${slices}</g>`;
   };
   const grad = (name, hex) => `<linearGradient id="g-${name}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="${hex}" stop-opacity="0"/><stop offset=".72" stop-color="${hex}" stop-opacity="1"/><stop offset="1" stop-color="${hex}" stop-opacity=".2"/>
+      <stop offset="0" stop-color="${hex}" stop-opacity="0"/><stop offset=".55" stop-color="${hex}" stop-opacity=".55"/><stop offset=".8" stop-color="${hex}" stop-opacity="1"/><stop offset="1" stop-color="${hex}" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="g-${name}-soft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${hex}" stop-opacity="0"/><stop offset=".5" stop-color="${hex}" stop-opacity=".45"/><stop offset="1" stop-color="${hex}" stop-opacity="0"/>
     </linearGradient>`;
 
   const stars = Array.from({ length: 26 }, (_, i) => {
@@ -176,42 +188,35 @@ function hero(theme = "dark") {
     @keyframes blink{to{opacity:0}}
     .star{fill:#fff;animation:tw ease-in-out infinite;display:${dark ? "inline" : "none"}}
     @keyframes tw{0%,100%{opacity:.2}50%{opacity:.95}}
-    .glow{filter:url(#soft)}
-    .core{filter:url(#tight)}
-    .sway{animation:sway ${r(18 * T.speed)}s ease-in-out infinite alternate}
-    @keyframes sway{from{transform:translateX(-${T.sway}px)}to{transform:translateX(${T.sway}px)}}
-    .rays{animation:rays ${r(40 * T.speed)}s linear infinite}
-    @keyframes rays{to{transform:translateX(-120px)}}
+    .curtain{transform-origin:450px 150px;animation-name:drift,breathe;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
+    @keyframes drift{from{transform:translate(-${T.sway}px,-6px) scaleY(.94)}to{transform:translate(${T.sway}px,6px) scaleY(1.08)}}
+    @keyframes breathe{from{opacity:1}to{opacity:.45}}
+    .rays{animation:rays ${r(30 * T.speed)}s linear infinite}
+    @keyframes rays{to{transform:translateX(-136px)}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}}
   </style>
   <defs>
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
-    <filter id="soft" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="20"/></filter>
-    <filter id="tight" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
     <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.bg0}"/><stop offset="1" stop-color="${T.bg1}"/></linearGradient>
     ${grad("green", BRAND.green)}${grad("blue", BRAND.blue)}${grad("red", BRAND.red)}${grad("yellow", BRAND.yellow)}
     <linearGradient id="veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${T.veil}" stop-opacity="${T.veilOp[0]}"/><stop offset=".45" stop-color="${T.veil}" stop-opacity="${T.veilOp[1]}"/><stop offset=".75" stop-color="${T.veil}" stop-opacity="${T.veilOp[2]}"/></linearGradient>
+    <linearGradient id="rayfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="0"/><stop offset=".35" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="1"/><stop offset=".7" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="0"/></linearGradient>
     <pattern id="ray" width="34" height="${H}" patternUnits="userSpaceOnUse">
-      <rect x="0" width="3" height="${H}" fill="#fff" fill-opacity=".9"/><rect x="13" width="1.5" height="${H}" fill="#fff" fill-opacity=".45"/><rect x="24" width="2" height="${H}" fill="#fff" fill-opacity=".65"/>
+      <rect x="0" width="3" height="${H}" fill="url(#rayfade)"/><rect x="13" width="1.5" height="${H}" fill="url(#rayfade)" opacity=".5"/><rect x="24" width="2" height="${H}" fill="url(#rayfade)" opacity=".7"/>
     </pattern>
-    <mask id="raymask"><rect class="rays" x="0" y="0" width="${W + 120}" height="${H}" fill="url(#ray)"/></mask>
     <linearGradient id="quadbar" x1="0" x2="1"><stop offset="0" stop-color="${BRAND.red}"/><stop offset=".25" stop-color="${BRAND.red}"/><stop offset=".25" stop-color="${BRAND.blue}"/><stop offset=".5" stop-color="${BRAND.blue}"/><stop offset=".5" stop-color="${BRAND.yellow}"/><stop offset=".75" stop-color="${BRAND.yellow}"/><stop offset=".75" stop-color="${BRAND.green}"/><stop offset="1" stop-color="${BRAND.green}"/></linearGradient>
   </defs>
 
   <g class="card" clip-path="url(#card)">
     <rect width="${W}" height="${H}" fill="url(#stage)"/>
     ${stars}
-    <!-- aurora: soft blurred curtains -->
-    <g class="sway">
-      ${ribbon("yellow", -14, 30, 22, 95, 0.22, 27, 3.2)}
-      ${ribbon("green", 18, 96, 40, 110, 0.62, 17, 0)}
-      ${ribbon("blue", 92, 162, 46, 80, 0.42, 23, 1.6)}
-      ${ribbon("red", 168, 218, 28, 50, 0.2, 20, 4.5)}
-    </g>
-    <!-- faint vertical rays through the brightest curtain -->
-    <g mask="url(#raymask)" opacity=".18">
-      ${ribbon("green", 18, 96, 40, 110, 1, 17, 0)}
-    </g>
+    <!-- aurora curtains (gradient-softened, no filters) -->
+    ${ribbon("yellow", -14, 30, 22, 95, 0.22, 27, 3.2)}
+    ${ribbon("green", 18, 96, 40, 110, 0.62, 17, 0)}
+    ${ribbon("blue", 92, 162, 46, 80, 0.42, 23, 1.6)}
+    ${ribbon("red", 168, 218, 28, 50, 0.2, 20, 4.5)}
+    <!-- faint drifting rays -->
+    <g class="rays" opacity="${dark ? 0.08 : 0.05}"><rect x="0" y="0" width="${W + 136}" height="${H}" fill="url(#ray)"/></g>
     <!-- keep the left side readable -->
     <rect width="${W}" height="${H}" fill="url(#veil)"/>
 
