@@ -121,6 +121,14 @@ function hero(theme = "dark") {
 
   const letters = [...CONFIG.name].map((ch, i) =>
     `<tspan class="l" style="animation-delay:${r(0.35 + i * 0.04)}s">${ch === " " ? " " : esc(ch)}</tspan>`).join("");
+  // Soft white halo behind the name: three stroked copies (no filter, so it
+  // renders in WebKit), each fading in per letter on the same schedule.
+  const haloLetters = (k) => [...CONFIG.name].map((ch, i) =>
+    `<tspan class="h${k}" style="animation-delay:${r(0.35 + i * 0.04)}s">${ch === " " ? " " : esc(ch)}</tspan>`).join("")
+    + `<tspan class="h${k}" style="animation-delay:1.15s">.</tspan>`;
+  const HALO = dark ? [[36, 0.04], [26, 0.06], [17, 0.09], [10, 0.13], [5, 0.2]] : [[36, 0.1], [26, 0.14], [17, 0.2], [10, 0.28], [5, 0.4]];
+  const halo = HALO.map(([w, o], k) =>
+    `<text class="sans nameh" x="54" y="150" stroke="#ffffff" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round">${haloLetters(k + 1)}</text>`).join("");
 
   // Typing line (per-character SMIL fades; see earlier note on WebKit and clip paths).
   const FS = 20, CW = 12, TX = 84, TY = 216;
@@ -161,6 +169,9 @@ function hero(theme = "dark") {
     .name{font-size:54px;font-weight:700;fill:${T.ink};letter-spacing:-.025em}
     .l{fill-opacity:0;animation:lin .55s cubic-bezier(.2,.8,.2,1) forwards}
     @keyframes lin{to{fill-opacity:1}}
+    .nameh{font-size:54px;font-weight:700;fill:none;letter-spacing:-.025em}
+    .h1,.h2,.h3,.h4,.h5{stroke-opacity:0;animation:.55s cubic-bezier(.2,.8,.2,1) forwards}
+    ${HALO.map(([w, o], k) => `.h${k + 1}{animation-name:h${k + 1}}@keyframes h${k + 1}{to{stroke-opacity:${o}}}`).join("\n    ")}
     .period{fill:${BRAND.red};fill-opacity:0;animation:lin .5s 1.15s cubic-bezier(.2,.8,.2,1) forwards}
     .q{transform-box:fill-box;transform-origin:left center;transform:scaleX(0);animation:q .5s cubic-bezier(.2,.8,.2,1) forwards}
     @keyframes q{to{transform:scaleX(1)}}
@@ -176,7 +187,7 @@ function hero(theme = "dark") {
     @keyframes sky{from{transform:translateX(-${T.sway}px)}to{transform:translateX(${T.sway}px)}}
     .rays{animation:rays ${r(30 * T.speed)}s linear infinite}
     @keyframes rays{to{transform:translateX(-136px)}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}${HALO.map(([w, o], k) => `.h${k + 1}{stroke-opacity:${o}}`).join("")}.hi{opacity:1}.q{transform:none}}
   </style>
   <defs>
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
@@ -211,6 +222,7 @@ function hero(theme = "dark") {
 
     <g class="enter">
       <text class="sans hi" x="56" y="92">${esc(CONFIG.greeting)}</text>
+      ${halo}
       <text class="sans name" x="54" y="150">${letters}<tspan class="period">.</tspan></text>
       ${quad}
       <path d="M58 ${TY - 15} l7 7 -7 7" fill="none" stroke="${BRAND.blue}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
