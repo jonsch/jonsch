@@ -30,23 +30,17 @@ const CONFIG = {
     { id: "connect", n: "05", title: "Let's connect" },
   ],
   stack: [
-    ["C#", "#a78bfa"],
-    [".NET", "#8b5cf6"],
-    ["TypeScript", "#3b82f6"],
-    ["JavaScript", "#facc15"],
-    ["React", "#22d3ee"],
-    ["Node.js", "#4ade80"],
-    ["Azure", "#38bdf8"],
-    ["Azure Functions", "#fbbf24"],
-    ["SQL Server", "#f87171"],
-    ["PostgreSQL", "#60a5fa"],
-    ["LLM APIs", "#f472b6"],
-    ["Stripe", "#818cf8"],
-    ["Docker", "#2dd4bf"],
-    ["Electron", "#67e8f9"],
-    ["REST APIs", "#34d399"],
-    ["Git", "#fb923c"],
-    ["VS Code", "#0ea5e9"],
+    { group: "Core", items: [
+      ["C#", "#a78bfa"], [".NET", "#8b5cf6"], ["TypeScript", "#3b82f6"], ["JavaScript", "#facc15"],
+      ["React", "#22d3ee"], ["Node.js", "#4ade80"], ["Azure", "#38bdf8"], ["Azure Functions", "#fbbf24"],
+      ["SQL Server", "#f87171"], ["PostgreSQL", "#60a5fa"], ["Stripe", "#818cf8"], ["Docker", "#2dd4bf"],
+      ["Electron", "#67e8f9"], ["REST APIs", "#34d399"], ["Git", "#f05032"], ["VS Code", "#0ea5e9"],
+    ]},
+    { group: "AI & edge", items: [
+      ["OpenAI", "#10a37f"], ["Azure AI Foundry", "#0ea5e9"], ["Amazon Bedrock", "#ff9900"], ["Claude", "#d97757"],
+      ["Ollama", "#e2e8f0"], ["Semantic Kernel", "#a78bfa"], ["MCP", "#c084fc"], ["RAG + pgvector", "#60a5fa"],
+      ["AI agents", "#f472b6"], ["Vector search", "#2dd4bf"], ["Edge functions", "#fbbf24"],
+    ]},
   ],
 };
 
@@ -233,39 +227,52 @@ function section({ n, title }, theme) {
 function stack(theme) {
   const W = 900, dark = theme === "dark";
   const text = dark ? "#e6edf3" : "#1f2328";
-  const H_CHIP = 40, GAP = 12, PAD = 16, FS = 15, CHAR = 8.4;
-  let x = 0, y = 0;
-  const chips = [], clips = [];
-  CONFIG.stack.forEach(([label, color], i) => {
-    const tw = label.length * CHAR;
-    const w = PAD + 10 + 10 + tw + PAD;
-    if (x + w > W) { x = 0; y += H_CHIP + GAP; }
-    const delay = r(0.1 + i * 0.07);
-    clips.push(`<rect x="${x}" y="${y}" width="${r(w)}" height="${H_CHIP}" rx="20"/>`);
-    chips.push(`
+  const label = dark ? "#8b949e" : "#656d76";
+  const H_CHIP = 40, GAP = 12, PAD = 16, FS = 15, CHAR = 8.4, LABEL_H = 26, GROUP_GAP = 22;
+  let x = 0, y = 0, i = 0;
+  const chips = [], clips = [], labels = [], all = [];
+  CONFIG.stack.forEach((g, gi) => {
+    if (gi > 0) y += H_CHIP + GROUP_GAP;
+    labels.push(`<text class="mono lbl" x="2" y="${y + 13}" font-size="11" font-weight="600" fill="${label}" letter-spacing=".16em" style="animation-delay:${r(0.05 + i * 0.07)}s">${esc(g.group.toUpperCase())}</text>`);
+    y += LABEL_H; x = 0;
+    g.items.forEach(([name, color]) => {
+      all.push(name);
+      const tw = name.length * CHAR;
+      const w = PAD + 10 + 10 + tw + PAD;
+      if (x + w > W) { x = 0; y += H_CHIP + GAP; }
+      const delay = r(0.1 + i * 0.06);
+      // light theme: keep near-white chip colors legible
+      const c = !dark && color === "#e2e8f0" ? "#64748b" : color;
+      clips.push(`<rect x="${x}" y="${y}" width="${r(w)}" height="${H_CHIP}" rx="20"/>`);
+      chips.push(`
   <g class="chip" style="animation-delay:${delay}s">
-    <rect x="${x}" y="${y}" width="${r(w)}" height="${H_CHIP}" rx="20" fill="${color}" fill-opacity="${dark ? 0.16 : 0.13}" stroke="${color}" stroke-opacity="${dark ? 0.6 : 0.5}" stroke-width="1.2"/>
-    <circle class="dot" cx="${x + PAD + 5}" cy="${y + H_CHIP / 2}" r="5" fill="${color}" style="animation-delay:${r(-i * 0.31)}s"/>
-    <text class="sans" x="${x + PAD + 20}" y="${y + H_CHIP / 2 + FS * 0.36}" font-size="${FS}" font-weight="600" fill="${text}">${esc(label)}</text>
+    <rect x="${x}" y="${y}" width="${r(w)}" height="${H_CHIP}" rx="20" fill="${c}" fill-opacity="${dark ? 0.16 : 0.13}" stroke="${c}" stroke-opacity="${dark ? 0.6 : 0.5}" stroke-width="1.2"/>
+    <circle class="dot" cx="${x + PAD + 5}" cy="${y + H_CHIP / 2}" r="5" fill="${c}" style="animation-delay:${r(-i * 0.31)}s"/>
+    <text class="sans" x="${x + PAD + 20}" y="${y + H_CHIP / 2 + FS * 0.36}" font-size="${FS}" font-weight="600" fill="${text}">${esc(name)}</text>
   </g>`);
-    x += w + GAP;
+      x += w + GAP; i++;
+    });
   });
   const H = y + H_CHIP + 2;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Toolbox: ${esc(CONFIG.stack.map((s) => s[0]).join(", "))}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Toolbox: ${esc(all.join(", "))}">
   <style>
     .sans{font-family:${SANS}}
+    .mono{font-family:${MONO}}
+    .lbl{opacity:0;animation:fade .6s ease-out forwards}
+    @keyframes fade{to{opacity:1}}
     .chip{opacity:0;animation:pop .6s cubic-bezier(.2,.8,.2,1.25) forwards;transform-box:fill-box;transform-origin:center}
     @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.8)}to{opacity:1;transform:none}}
     .dot{animation:breathe 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
     @keyframes breathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.35);opacity:1}}
     .sheen{animation:sheen 5.5s 1.6s ease-in-out infinite both}
     @keyframes sheen{0%{transform:translateX(-260px) skewX(-18deg)}35%,100%{transform:translateX(${W + 260}px) skewX(-18deg)}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}.chip{opacity:1}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.chip,.lbl{opacity:1}}
   </style>
   <defs>
     <clipPath id="chips">${clips.join("")}</clipPath>
     <linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity="${dark ? 0.22 : 0.55}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
   </defs>
+  ${labels.join("\n  ")}
   ${chips.join("")}
   <g clip-path="url(#chips)"><rect class="sheen" x="0" y="-10" width="140" height="${H + 20}" fill="url(#sh)"/></g>
 </svg>`;

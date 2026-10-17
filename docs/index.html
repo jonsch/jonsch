@@ -87,6 +87,8 @@
   .stat small{color:var(--muted)}
 
   /* chips */
+  .chip-group{margin-top:22px}
+  .chip-group .eyebrow{margin-bottom:10px;font-size:.7rem}
   .chips{display:flex;flex-wrap:wrap;gap:10px}
   .chip{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;font-weight:600;font-size:.95rem;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);background:color-mix(in srgb,var(--c) 14%,transparent);transition:transform .25s,box-shadow .25s}
   .chip:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 30px -14px var(--c)}
@@ -174,7 +176,8 @@
     <div class="eyebrow" data-reveal>What</div>
     <h2 data-reveal style="--d:80ms"><span class="num">02</span>Toolbox</h2>
     <p class="lead" data-reveal style="--d:160ms">The things I reach for most. Hover around.</p>
-    <div class="chips" data-reveal-group data-stagger="60"></div>
+    <div class="chip-group"><div class="eyebrow" data-reveal>Core</div><div class="chips" data-group="0" data-reveal-group data-stagger="50"></div></div>
+    <div class="chip-group"><div class="eyebrow" data-reveal>AI &amp; edge</div><div class="chips" data-group="1" data-reveal-group data-stagger="50"></div></div>
   </section>
 
   <section id="strengths">
@@ -247,9 +250,13 @@
   }
 
   // chips
-  const stack = [['C#','#a78bfa'],['.NET','#8b5cf6'],['TypeScript','#3b82f6'],['JavaScript','#facc15'],['React','#22d3ee'],['Node.js','#4ade80'],['Azure','#38bdf8'],['Azure Functions','#fbbf24'],['SQL Server','#f87171'],['PostgreSQL','#60a5fa'],['LLM APIs','#f472b6'],['Stripe','#818cf8'],['Docker','#2dd4bf'],['Electron','#67e8f9'],['REST APIs','#34d399'],['Git','#fb923c'],['VS Code','#0ea5e9']];
-  const chips = document.querySelector('.chips');
-  stack.forEach(([l, c]) => { const s = document.createElement('span'); s.className = 'chip'; s.style.setProperty('--c', c); s.dataset.reveal = 'scale'; s.innerHTML = '<i></i>' + l; chips.appendChild(s); });
+  const stack = [
+    [['C#','#a78bfa'],['.NET','#8b5cf6'],['TypeScript','#3b82f6'],['JavaScript','#facc15'],['React','#22d3ee'],['Node.js','#4ade80'],['Azure','#38bdf8'],['Azure Functions','#fbbf24'],['SQL Server','#f87171'],['PostgreSQL','#60a5fa'],['Stripe','#818cf8'],['Docker','#2dd4bf'],['Electron','#67e8f9'],['REST APIs','#34d399'],['Git','#f05032'],['VS Code','#0ea5e9']],
+    [['OpenAI','#10a37f'],['Azure AI Foundry','#0ea5e9'],['Amazon Bedrock','#ff9900'],['Claude','#d97757'],['Ollama','#94a3b8'],['Semantic Kernel','#a78bfa'],['MCP','#c084fc'],['RAG + pgvector','#60a5fa'],['AI agents','#f472b6'],['Vector search','#2dd4bf'],['Edge functions','#fbbf24']],
+  ];
+  document.querySelectorAll('.chips[data-group]').forEach(el => {
+    stack[+el.dataset.group].forEach(([l, c]) => { const s = document.createElement('span'); s.className = 'chip'; s.style.setProperty('--c', c); s.dataset.reveal = 'scale'; s.innerHTML = '<i></i>' + l; el.appendChild(s); });
+  });
 
   // stagger delays inside groups
   document.querySelectorAll('[data-reveal-group]').forEach(g => {
