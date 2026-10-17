@@ -87,32 +87,58 @@ function hero(theme = "dark") {
   const W = 900, H = 300, dark = theme === "dark";
   const T = dark
     // Backgrounds match GitHub's own page colors so the edges can fade into them.
-    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.8, 0.34, 0], op: 1 }
-    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.84, 0.38, 0], op: 1, speed: 0.7, sway: 40 };
+    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.35, 0.12, 0], op: 1 }
+    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.35, 0.12, 0], op: 1, speed: 0.7, sway: 40 };
   T.speed ??= 1; T.sway ??= 30;
 
-  // Aurora from light, not shapes: each curtain is a row of elongated ellipses
-  // filled with a radial gradient (smooth falloff, no filter), drifting and
-  // breathing on their own eased CSS timings. Nothing here needs SMIL or filters,
-  // so it renders and animates identically in WebKit, Blink and Gecko.
-  const mix = (hex, amt) => "#" + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * (1 - amt) + 255 * amt).toString(16).padStart(2, "0")).join("");
-  const orbGrad = (name) => {
-    const hex = BRAND[name], core = mix(hex, dark ? 0.3 : 0.05);
-    return `<radialGradient id="o-${name}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${core}" stop-opacity="1"/><stop offset=".35" stop-color="${hex}" stop-opacity=".75"/><stop offset=".7" stop-color="${hex}" stop-opacity=".22"/><stop offset="1" stop-color="${hex}" stop-opacity="0"/></radialGradient>`;
-  };
-  let orbId = 0;
-  const curtain = (color, yBase, amp, tilt, rx, ry, op, seed, count = 12) => {
-    const orbs = [];
-    for (let i = 0; i < count; i++) {
-      const x = -80 + (i / (count - 1)) * (W + 160);
-      const y = yBase + (x / W) * tilt + Math.sin(i * 0.9 + seed) * amp;
-      const n = orbId++;
-      const dur = r((7 + ((n * 37) % 70) / 10) * T.speed), dur2 = r((5 + ((n * 53) % 60) / 10) * T.speed);
-      const dx = r(10 + ((n * 17) % 14)), dy = r(5 + ((n * 11) % 9)), sc = r(1.06 + ((n * 7) % 12) / 100);
-      orbs.push(`<ellipse class="orb" cx="${r(x)}" cy="${r(y)}" rx="${rx}" ry="${ry}" fill="url(#o-${color})" style="--dx:${dx}px;--dy:${dy}px;--sc:${sc};animation-duration:${dur}s,${dur2}s;animation-delay:${r(-(n * 1.9) % dur)}s,${r(-(n * 1.3) % dur2)}s"/>`);
+  // Constellation: clusters of 2-3 brand-colored data points that pop in, get
+  // joined by lines drawing between them, hold, then fade while other clusters
+  // form. Pure CSS transform / opacity / stroke-dashoffset, so WebKit is happy.
+  let seed = 7;
+  const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+  const QUAD = ["red", "blue", "yellow", "green"];
+  const CLUSTERS = 9, PERIOD = 16;
+  // Free zones around the type: right column, the strip above the name, and the
+  // strip below the tagline. Each cluster is compact: points within ~110px of a center.
+  const zones = { A: [630, 860, 40, 258], B: [90, 600, 34, 64], C: [470, 860, 240, 272] };
+  // Deterministic spread: zone pattern plus stratified centers so clusters don't pile up.
+  const pattern = ["A", "B", "A", "C", "A", "B", "A", "C", "A"];
+  const used = { A: 0, B: 0, C: 0 }, totals = { A: 5, B: 2, C: 2 };
+  const clusters = [];
+  for (let c = 0; c < CLUSTERS; c++) {
+    const n = rnd() < 0.4 ? 2 : 3;
+    const key = pattern[c], z = zones[key], k = used[key]++, m = totals[key];
+    let cx, cy;
+    if (key === "A") { cy = z[2] + ((k + 0.5) / m) * (z[3] - z[2]); cx = z[0] + rnd() * (z[1] - z[0]); }
+    else { cx = z[0] + ((k + 0.5) / m) * (z[1] - z[0]) + (rnd() - 0.5) * 80; cy = z[2] + rnd() * (z[3] - z[2]); }
+    const spreadX = key === "A" ? 110 : 120, spreadY = key === "A" ? 40 : 18;
+    const pts = [];
+    let col = Math.floor(rnd() * 4);
+    for (let i = 0; i < n; i++) {
+      let x, y, tries = 0;
+      do {
+        x = Math.max(z[0], Math.min(z[1], cx + (rnd() * 2 - 1) * spreadX));
+        y = Math.max(z[2], Math.min(z[3], cy + (rnd() * 2 - 1) * spreadY));
+        tries++;
+      } while (tries < 30 && pts.some((q) => Math.hypot(q.x - x, q.y - y) < 40));
+      pts.push({ x: r(x), y: r(y), color: QUAD[col] });
+      col = (col + 1 + Math.floor(rnd() * 3)) % 4; // always a different color than the last
     }
-    return `<g opacity="${r(Math.min(1, op * T.op))}">${orbs.join("")}</g>`;
-  };
+    clusters.push({ pts, delay: r(-(c * PERIOD) / CLUSTERS), drift: r(4 + rnd() * 8) });
+  }
+  const constellation = clusters.map((cl, ci) => {
+    const lines = cl.pts.slice(1).map((p, i) => {
+      const q = cl.pts[i], id = `ln${ci}-${i}`;
+      return { q, p, id };
+    });
+    const gradDefs = lines.map(({ q, p, id }) =>
+      `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${q.x}" y1="${q.y}" x2="${p.x}" y2="${p.y}"><stop offset="0" stop-color="${BRAND[q.color]}"/><stop offset="1" stop-color="${BRAND[p.color]}"/></linearGradient>`).join("");
+    const lineEls = lines.map(({ q, p, id }, i) =>
+      `<line class="ln l${i + 1}" x1="${q.x}" y1="${q.y}" x2="${p.x}" y2="${p.y}" pathLength="1" stroke="url(#${id})"/>`).join("");
+    const ptEls = cl.pts.map((p, i) =>
+      `<g class="pt p${i + 1}" style="transform-origin:${p.x}px ${p.y}px"><circle class="ring" cx="${p.x}" cy="${p.y}" r="9" fill="none" stroke="${BRAND[p.color]}" style="transform-origin:${p.x}px ${p.y}px"/><circle cx="${p.x}" cy="${p.y}" r="5.5" fill="${BRAND[p.color]}"/><circle cx="${p.x}" cy="${p.y}" r="5.5" fill="none" stroke="${T.bg0}" stroke-width="1.5"/></g>`).join("");
+    return `<defs>${gradDefs}</defs><g class="cl" style="animation-delay:${cl.delay}s;--drift:${cl.drift}px">${lineEls}${ptEls}</g>`;
+  }).join("\n    ");
 
   const stars = Array.from({ length: 26 }, (_, i) => {
     const x = 30 + ((i * 211) % 840), y = 18 + ((i * 97) % 150), rr = 0.7 + (i % 3) * 0.45;
@@ -121,15 +147,6 @@ function hero(theme = "dark") {
 
   const letters = [...CONFIG.name].map((ch, i) =>
     `<tspan class="l" style="animation-delay:${r(0.35 + i * 0.04)}s">${ch === " " ? " " : esc(ch)}</tspan>`).join("");
-  // Soft white halo behind the name: three stroked copies (no filter, so it
-  // renders in WebKit), each fading in per letter on the same schedule.
-  const haloLetters = (k) => [...CONFIG.name].map((ch, i) =>
-    `<tspan class="h${k}" style="animation-delay:${r(0.35 + i * 0.04)}s">${ch === " " ? " " : esc(ch)}</tspan>`).join("")
-    + `<tspan class="h${k}" style="animation-delay:1.15s">.</tspan>`;
-  const HALO = dark ? [[36, 0.04], [26, 0.06], [17, 0.09], [10, 0.13], [5, 0.2]] : [[36, 0.1], [26, 0.14], [17, 0.2], [10, 0.28], [5, 0.4]];
-  const halo = HALO.map(([w, o], k) =>
-    `<text class="sans nameh" x="54" y="150" stroke="#ffffff" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round">${haloLetters(k + 1)}</text>`).join("");
-
   // Typing line (per-character SMIL fades; see earlier note on WebKit and clip paths).
   const FS = 20, CW = 12, TX = 84, TY = 216;
   const TYPE = 0.07, HOLD = 1.7, DEL = 0.035, GAP = 0.45;
@@ -169,9 +186,6 @@ function hero(theme = "dark") {
     .name{font-size:54px;font-weight:700;fill:${T.ink};letter-spacing:-.025em}
     .l{fill-opacity:0;animation:lin .55s cubic-bezier(.2,.8,.2,1) forwards}
     @keyframes lin{to{fill-opacity:1}}
-    .nameh{font-size:54px;font-weight:700;fill:none;letter-spacing:-.025em}
-    .h1,.h2,.h3,.h4,.h5{stroke-opacity:0;animation:.55s cubic-bezier(.2,.8,.2,1) forwards}
-    ${HALO.map(([w, o], k) => `.h${k + 1}{animation-name:h${k + 1}}@keyframes h${k + 1}{to{stroke-opacity:${o}}}`).join("\n    ")}
     .period{fill:${BRAND.red};fill-opacity:0;animation:lin .5s 1.15s cubic-bezier(.2,.8,.2,1) forwards}
     .q{transform-box:fill-box;transform-origin:left center;transform:scaleX(0);animation:q .5s cubic-bezier(.2,.8,.2,1) forwards}
     @keyframes q{to{transform:scaleX(1)}}
@@ -180,41 +194,38 @@ function hero(theme = "dark") {
     @keyframes blink{to{opacity:0}}
     .star{fill:#fff;animation:tw ease-in-out infinite;display:${dark ? "inline" : "none"}}
     @keyframes tw{0%,100%{opacity:.2}50%{opacity:.95}}
-    .orb{transform-box:fill-box;transform-origin:center;animation-name:drift,breathe;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
-    @keyframes drift{from{transform:translate(calc(var(--dx) * -1),calc(var(--dy) * -1)) scale(1)}to{transform:translate(var(--dx),var(--dy)) scale(var(--sc))}}
-    @keyframes breathe{from{opacity:.55}to{opacity:1}}
-    .sky{animation:sky ${r(26 * T.speed)}s ease-in-out infinite alternate}
-    @keyframes sky{from{transform:translateX(-${T.sway}px)}to{transform:translateX(${T.sway}px)}}
-    .rays{animation:rays ${r(30 * T.speed)}s linear infinite}
-    @keyframes rays{to{transform:translateX(-136px)}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}${HALO.map(([w, o], k) => `.h${k + 1}{stroke-opacity:${o}}`).join("")}.hi{opacity:1}.q{transform:none}}
+    .cl{animation:cl ${PERIOD}s ease-in-out infinite}
+    @keyframes cl{0%{opacity:0;transform:translateY(0)}6%{opacity:1}58%{opacity:1}72%{opacity:0}100%{opacity:0;transform:translateY(calc(var(--drift) * -1))}}
+    .pt{transform:scale(0);animation:pt ${PERIOD}s cubic-bezier(.2,.8,.2,1.3) infinite;animation-delay:inherit}
+    .p1{animation-name:pt1}.p2{animation-name:pt2}.p3{animation-name:pt3}
+    @keyframes pt1{0%{transform:scale(0)}5%{transform:scale(1)}100%{transform:scale(1)}}
+    @keyframes pt2{0%,16%{transform:scale(0)}21%{transform:scale(1)}100%{transform:scale(1)}}
+    @keyframes pt3{0%,30%{transform:scale(0)}35%{transform:scale(1)}100%{transform:scale(1)}}
+    .ring{opacity:0;animation:ring ${PERIOD}s ease-out infinite;animation-delay:inherit}
+    .p1 .ring{animation-name:ring1}.p2 .ring{animation-name:ring2}.p3 .ring{animation-name:ring3}
+    @keyframes ring1{0%,5%{opacity:.6;transform:scale(.6)}14%{opacity:0;transform:scale(2.4)}100%{opacity:0}}
+    @keyframes ring2{0%,21%{opacity:.6;transform:scale(.6)}30%{opacity:0;transform:scale(2.4)}100%{opacity:0}}
+    @keyframes ring3{0%,35%{opacity:.6;transform:scale(.6)}44%{opacity:0;transform:scale(2.4)}100%{opacity:0}}
+    .ln{fill:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:${dark ? 0.85 : 0.8};animation:${PERIOD}s ease-in-out infinite;animation-delay:inherit}
+    .l1{animation-name:ln1}.l2{animation-name:ln2}
+    @keyframes ln1{0%,6%{stroke-dashoffset:1}20%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+    @keyframes ln2{0%,21%{stroke-dashoffset:1}34%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}.cl{opacity:.8}.pt{transform:none}.ln{stroke-dashoffset:0}}
   </style>
   <defs>
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
     <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.bg0}"/><stop offset="1" stop-color="${T.bg1}"/></linearGradient>
-    ${orbGrad("green")}${orbGrad("blue")}${orbGrad("red")}${orbGrad("yellow")}
     <linearGradient id="veilR" x1="0" y1="0" x2="1" y2="0"><stop offset=".66" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".86" stop-color="${T.veil}" stop-opacity=".55"/><stop offset="1" stop-color="${T.veil}" stop-opacity="1"/></linearGradient>
-    <linearGradient id="veilT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.veil}" stop-opacity=".9"/><stop offset=".22" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".8" stop-color="${T.veil}" stop-opacity="0"/><stop offset="1" stop-color="${T.veil}" stop-opacity=".7"/></linearGradient>
+    <linearGradient id="veilT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.veil}" stop-opacity=".9"/><stop offset=".09" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".9" stop-color="${T.veil}" stop-opacity="0"/><stop offset="1" stop-color="${T.veil}" stop-opacity=".7"/></linearGradient>
     <linearGradient id="veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${T.veil}" stop-opacity="${T.veilOp[0]}"/><stop offset=".45" stop-color="${T.veil}" stop-opacity="${T.veilOp[1]}"/><stop offset=".75" stop-color="${T.veil}" stop-opacity="${T.veilOp[2]}"/></linearGradient>
-    <linearGradient id="rayfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="0"/><stop offset=".35" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="1"/><stop offset=".7" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="0"/></linearGradient>
-    <pattern id="ray" width="34" height="${H}" patternUnits="userSpaceOnUse">
-      <rect x="0" width="3" height="${H}" fill="url(#rayfade)"/><rect x="13" width="1.5" height="${H}" fill="url(#rayfade)" opacity=".5"/><rect x="24" width="2" height="${H}" fill="url(#rayfade)" opacity=".7"/>
-    </pattern>
     <linearGradient id="quadbar" x1="0" x2="1"><stop offset="0" stop-color="${BRAND.red}"/><stop offset=".25" stop-color="${BRAND.red}"/><stop offset=".25" stop-color="${BRAND.blue}"/><stop offset=".5" stop-color="${BRAND.blue}"/><stop offset=".5" stop-color="${BRAND.yellow}"/><stop offset=".75" stop-color="${BRAND.yellow}"/><stop offset=".75" stop-color="${BRAND.green}"/><stop offset="1" stop-color="${BRAND.green}"/></linearGradient>
   </defs>
 
   <g class="card" clip-path="url(#card)">
     <rect width="${W}" height="${H}" fill="url(#stage)"/>
     ${stars}
-    <!-- aurora: curtains of drifting radial-gradient light -->
-    <g class="sky">
-      ${curtain("yellow", 10, 18, 95, 170, 34, 0.6, 3.2, 12)}
-      ${curtain("green", 60, 30, 110, 200, 48, 1, 0, 16)}
-      ${curtain("blue", 132, 34, 80, 190, 46, 0.95, 1.6, 16)}
-      ${curtain("red", 200, 22, 50, 170, 36, 0.55, 4.5, 12)}
-    </g>
-    <!-- faint drifting rays -->
-    <g class="rays" opacity="${dark ? 0.08 : 0.05}"><rect x="0" y="0" width="${W + 136}" height="${H}" fill="url(#ray)"/></g>
+    <!-- constellation of connecting data points -->
+    ${constellation}
     <!-- keep the left side readable, and fade the right, top and bottom into the page -->
     <rect width="${W}" height="${H}" fill="url(#veil)"/>
     <rect width="${W}" height="${H}" fill="url(#veilR)"/>
@@ -222,7 +233,6 @@ function hero(theme = "dark") {
 
     <g class="enter">
       <text class="sans hi" x="56" y="92">${esc(CONFIG.greeting)}</text>
-      ${halo}
       <text class="sans name" x="54" y="150">${letters}<tspan class="period">.</tspan></text>
       ${quad}
       <path d="M58 ${TY - 15} l7 7 -7 7" fill="none" stroke="${BRAND.blue}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
