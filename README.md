@@ -4,7 +4,7 @@
   Edit the config block at the top of scripts/build-assets.mjs and run `node scripts/build-assets.mjs` to regenerate them.
 -->
 
-<img src="assets/hero.svg" width="100%" alt="Hi, I'm Jonathan Schroeder — full-stack engineer">
+<img src="assets/hero.svg?v=11f365e4" width="100%" alt="Hi, I'm Jonathan Schroeder — full-stack engineer">
 
 <!--
   Once GitHub Pages is enabled for this repo (Settings → Pages → Deploy from branch → main, /docs),
@@ -14,8 +14,8 @@
 -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg">
-  <img src="assets/section-about-light.svg" width="600" alt="01 · About me">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg?v=ac311588">
+  <img src="assets/section-about-light.svg?v=cea9569d" width="600" alt="01 · About me">
 </picture>
 
 - 🧑‍💻 Full-stack engineer who likes owning the whole thing: data model, API, payments, and the UI on top
@@ -36,18 +36,18 @@
 </details>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-toolbox-dark.svg">
-  <img src="assets/section-toolbox-light.svg" width="600" alt="02 · Toolbox">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-toolbox-dark.svg?v=76ae5221">
+  <img src="assets/section-toolbox-light.svg?v=776c7640" width="600" alt="02 · Toolbox">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-  <img src="assets/stack-light.svg" width="100%" alt="Core: C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, Edge functions, Stripe, Docker, Electron, REST APIs, Git, VS Code. AI: OpenAI, Azure AI Foundry, Amazon Bedrock, Claude, Ollama, Semantic Kernel, MCP, RAG + pgvector, AI agents, Vector search. Databases: PostgreSQL, SQL Server, MySQL, MariaDB, SQLite, MongoDB, Cosmos DB, DynamoDB, Redis, Elasticsearch">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg?v=c637f8ec">
+  <img src="assets/stack-light.svg?v=a298984a" width="100%" alt="Core: C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, Edge functions, Stripe, Docker, Electron, REST APIs, Git, VS Code. AI: OpenAI, Azure AI Foundry, Amazon Bedrock, Claude, Ollama, Semantic Kernel, MCP, RAG + pgvector, AI agents, Vector search. Databases: PostgreSQL, SQL Server, MySQL, MariaDB, SQLite, MongoDB, Cosmos DB, DynamoDB, Redis, Elasticsearch">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg">
-  <img src="assets/section-strengths-light.svg" width="600" alt="03 · Strengths">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg?v=20581181">
+  <img src="assets/section-strengths-light.svg?v=ccbfef25" width="600" alt="03 · Strengths">
 </picture>
 
 <table>
@@ -68,8 +68,8 @@
 </table>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg">
-  <img src="assets/section-now-light.svg" width="600" alt="04 · What I'm building">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=8c551da6">
+  <img src="assets/section-now-light.svg?v=c6de8774" width="600" alt="04 · What I'm building">
 </picture>
 
 <table>
@@ -86,8 +86,8 @@
 </table>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg">
-  <img src="assets/section-connect-light.svg" width="600" alt="05 · Let's connect">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg?v=33ecc5b2">
+  <img src="assets/section-connect-light.svg?v=d96fe34e" width="600" alt="05 · Let's connect">
 </picture>
 
 <p>
@@ -99,4 +99,4 @@
   -->
 </p>
 
-<img src="assets/wave.svg" width="100%" alt="Thanks for stopping by">
+<img src="assets/wave.svg?v=f130450e" width="100%" alt="Thanks for stopping by">

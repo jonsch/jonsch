@@ -3,7 +3,8 @@
 // Everything that GitHub renders in a README is sanitized (no CSS/JS in markdown),
 // but CSS keyframes + SMIL *inside* an SVG image are allowed, so all motion lives here.
 
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -328,3 +329,16 @@ for (const [name, svg] of Object.entries(files)) {
   writeFileSync(join(OUT, name), svg.trim() + "\n");
   console.log("wrote assets/" + name);
 }
+
+// Cache-bust README image URLs. GitHub proxies README images through its camo
+// cache keyed on the full URL, so a changed SVG at the same path keeps showing
+// the old render for a long time. Appending a content hash makes every
+// regeneration a fresh URL.
+const readmePath = join(ROOT, "README.md");
+let readme = readFileSync(readmePath, "utf8");
+for (const [name, svg] of Object.entries(files)) {
+  const hash = createHash("sha1").update(svg).digest("hex").slice(0, 8);
+  readme = readme.replace(new RegExp(`assets/${name.replace(".", "\\.")}(\\?v=[0-9a-f]+)?`, "g"), `assets/${name}?v=${hash}`);
+}
+writeFileSync(readmePath, readme);
+console.log("updated README.md image versions");
