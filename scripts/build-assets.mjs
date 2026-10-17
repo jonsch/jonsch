@@ -87,54 +87,32 @@ function hero(theme = "dark") {
   const W = 900, H = 300, dark = theme === "dark";
   const T = dark
     // Backgrounds match GitHub's own page colors so the edges can fade into them.
-    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.8, 0.34, 0], op: 1.6 }
-    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.84, 0.38, 0], op: 1.15, speed: 0.55, sway: 60 };
+    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.8, 0.34, 0], op: 1 }
+    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.84, 0.38, 0], op: 1, speed: 0.7, sway: 40 };
   T.speed ??= 1; T.sway ??= 30;
 
-  // Aurora ribbons: wavy bands whose path data morphs between three phases via SMIL.
-  // Every phase shares the same command structure so the morph is smooth.
-  const band = (phase, yTop, yBot, amp, tilt) => {
-    const pts = 7, step = (W + 300) / (pts - 1);
-    const top = [], bot = [];
-    for (let i = 0; i < pts; i++) {
-      const x = -150 + i * step, slope = (x / W) * tilt;
-      top.push([r(x), r(yTop + slope + Math.sin(i * 1.15 + phase) * amp)]);
-      bot.push([r(x), r(yBot + slope + Math.sin(i * 0.85 + phase + 1.9) * amp * 0.7)]);
+  // Aurora from light, not shapes: each curtain is a row of elongated ellipses
+  // filled with a radial gradient (smooth falloff, no filter), drifting and
+  // breathing on their own eased CSS timings. Nothing here needs SMIL or filters,
+  // so it renders and animates identically in WebKit, Blink and Gecko.
+  const mix = (hex, amt) => "#" + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * (1 - amt) + 255 * amt).toString(16).padStart(2, "0")).join("");
+  const orbGrad = (name) => {
+    const hex = BRAND[name], core = mix(hex, dark ? 0.3 : 0.05);
+    return `<radialGradient id="o-${name}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${core}" stop-opacity="1"/><stop offset=".35" stop-color="${hex}" stop-opacity=".75"/><stop offset=".7" stop-color="${hex}" stop-opacity=".22"/><stop offset="1" stop-color="${hex}" stop-opacity="0"/></radialGradient>`;
+  };
+  let orbId = 0;
+  const curtain = (color, yBase, amp, tilt, rx, ry, op, seed, count = 12) => {
+    const orbs = [];
+    for (let i = 0; i < count; i++) {
+      const x = -80 + (i / (count - 1)) * (W + 160);
+      const y = yBase + (x / W) * tilt + Math.sin(i * 0.9 + seed) * amp;
+      const n = orbId++;
+      const dur = r((7 + ((n * 37) % 70) / 10) * T.speed), dur2 = r((5 + ((n * 53) % 60) / 10) * T.speed);
+      const dx = r(10 + ((n * 17) % 14)), dy = r(5 + ((n * 11) % 9)), sc = r(1.06 + ((n * 7) % 12) / 100);
+      orbs.push(`<ellipse class="orb" cx="${r(x)}" cy="${r(y)}" rx="${rx}" ry="${ry}" fill="url(#o-${color})" style="--dx:${dx}px;--dy:${dy}px;--sc:${sc};animation-duration:${dur}s,${dur2}s;animation-delay:${r(-(n * 1.9) % dur)}s,${r(-(n * 1.3) % dur2)}s"/>`);
     }
-    const curve = (arr) => arr.slice(1).map((p, i) => {
-      const prev = arr[i], cx = r((prev[0] + p[0]) / 2);
-      return `C${cx} ${prev[1]} ${cx} ${p[1]} ${p[0]} ${p[1]}`;
-    }).join(" ");
-    const back = [...bot].reverse();
-    return `M${top[0][0]} ${top[0][1]} ${curve(top)} L${back[0][0]} ${back[0][1]} ${curve(back)} Z`;
+    return `<g opacity="${r(Math.min(1, op * T.op))}">${orbs.join("")}</g>`;
   };
-  // No SVG filters: WebKit does not repaint filtered elements while they animate
-  // inside an <img>. Softness comes from vertical gradients instead, and motion is
-  // CSS transforms + opacity (which WebKit handles) plus a SMIL shape morph on top.
-  let rib = 0;
-  const ribbon = (color, yTop, yBot, amp, tilt, op, dur, seed) => {
-    // N nested slices, each a morphing band; their opacities accumulate toward the
-    // core so the glow falls off along the curtain's own shape (a filter-free blur).
-    const N = 7, EXT = 30, t = yBot - yTop;
-    const d = r(dur * T.speed);
-    const alpha = r(1 - Math.pow(1 - Math.min(0.97, op * T.op), 1 / N));
-    const mix = (hex, amt) => "#" + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * (1 - amt) + 255 * amt).toString(16).padStart(2, "0")).join("");
-    const slices = Array.from({ length: N }, (_, j) => {
-      const k = j / (N - 1);
-      const yT = yTop - EXT + k * (EXT + t * 0.42), yB = yBot + EXT - k * (EXT + t * 0.42);
-      const ps = [0, 2.1, 4.2].map((ph) => band(ph + seed, yT, yB, amp, tilt));
-      const fill = j === N - 1 ? mix(BRAND[color], dark ? 0.35 : 0.1) : BRAND[color];
-      return `<path fill="${fill}" opacity="${alpha}"><animate attributeName="d" dur="${d}s" repeatCount="indefinite" values="${[...ps, ps[0]].join(";")}"/></path>`;
-    }).join("");
-    const i = rib++;
-    return `<g class="curtain" style="animation-duration:${r(d * 0.6)}s,${r(d * 0.45)}s;animation-delay:${r(-i * 3.7)}s,${r(-i * 2.9)}s">${slices}</g>`;
-  };
-  const grad = (name, hex) => `<linearGradient id="g-${name}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="${hex}" stop-opacity="0"/><stop offset=".55" stop-color="${hex}" stop-opacity=".55"/><stop offset=".8" stop-color="${hex}" stop-opacity="1"/><stop offset="1" stop-color="${hex}" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="g-${name}-soft" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="${hex}" stop-opacity="0"/><stop offset=".5" stop-color="${hex}" stop-opacity=".45"/><stop offset="1" stop-color="${hex}" stop-opacity="0"/>
-    </linearGradient>`;
 
   const stars = Array.from({ length: 26 }, (_, i) => {
     const x = 30 + ((i * 211) % 840), y = 18 + ((i * 97) % 150), rr = 0.7 + (i % 3) * 0.45;
@@ -191,9 +169,11 @@ function hero(theme = "dark") {
     @keyframes blink{to{opacity:0}}
     .star{fill:#fff;animation:tw ease-in-out infinite;display:${dark ? "inline" : "none"}}
     @keyframes tw{0%,100%{opacity:.2}50%{opacity:.95}}
-    .curtain{transform-origin:450px 150px;animation-name:drift,breathe;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
-    @keyframes drift{from{transform:translate(-${T.sway}px,-6px) scaleY(.94)}to{transform:translate(${T.sway}px,6px) scaleY(1.08)}}
-    @keyframes breathe{from{opacity:1}to{opacity:.6}}
+    .orb{transform-box:fill-box;transform-origin:center;animation-name:drift,breathe;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
+    @keyframes drift{from{transform:translate(calc(var(--dx) * -1),calc(var(--dy) * -1)) scale(1)}to{transform:translate(var(--dx),var(--dy)) scale(var(--sc))}}
+    @keyframes breathe{from{opacity:.55}to{opacity:1}}
+    .sky{animation:sky ${r(26 * T.speed)}s ease-in-out infinite alternate}
+    @keyframes sky{from{transform:translateX(-${T.sway}px)}to{transform:translateX(${T.sway}px)}}
     .rays{animation:rays ${r(30 * T.speed)}s linear infinite}
     @keyframes rays{to{transform:translateX(-136px)}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}}
@@ -201,7 +181,7 @@ function hero(theme = "dark") {
   <defs>
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
     <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.bg0}"/><stop offset="1" stop-color="${T.bg1}"/></linearGradient>
-    ${grad("green", BRAND.green)}${grad("blue", BRAND.blue)}${grad("red", BRAND.red)}${grad("yellow", BRAND.yellow)}
+    ${orbGrad("green")}${orbGrad("blue")}${orbGrad("red")}${orbGrad("yellow")}
     <linearGradient id="veilR" x1="0" y1="0" x2="1" y2="0"><stop offset=".66" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".86" stop-color="${T.veil}" stop-opacity=".55"/><stop offset="1" stop-color="${T.veil}" stop-opacity="1"/></linearGradient>
     <linearGradient id="veilT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.veil}" stop-opacity=".9"/><stop offset=".22" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".8" stop-color="${T.veil}" stop-opacity="0"/><stop offset="1" stop-color="${T.veil}" stop-opacity=".7"/></linearGradient>
     <linearGradient id="veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${T.veil}" stop-opacity="${T.veilOp[0]}"/><stop offset=".45" stop-color="${T.veil}" stop-opacity="${T.veilOp[1]}"/><stop offset=".75" stop-color="${T.veil}" stop-opacity="${T.veilOp[2]}"/></linearGradient>
@@ -215,11 +195,13 @@ function hero(theme = "dark") {
   <g class="card" clip-path="url(#card)">
     <rect width="${W}" height="${H}" fill="url(#stage)"/>
     ${stars}
-    <!-- aurora curtains (gradient-softened, no filters) -->
-    ${ribbon("yellow", -14, 36, 24, 95, 0.6, 27, 3.2)}
-    ${ribbon("green", 18, 102, 40, 110, 1, 17, 0)}
-    ${ribbon("blue", 92, 168, 46, 80, 0.95, 23, 1.6)}
-    ${ribbon("red", 168, 224, 28, 50, 0.55, 20, 4.5)}
+    <!-- aurora: curtains of drifting radial-gradient light -->
+    <g class="sky">
+      ${curtain("yellow", 10, 18, 95, 170, 34, 0.6, 3.2, 12)}
+      ${curtain("green", 60, 30, 110, 200, 48, 1, 0, 16)}
+      ${curtain("blue", 132, 34, 80, 190, 46, 0.95, 1.6, 16)}
+      ${curtain("red", 200, 22, 50, 170, 36, 0.55, 4.5, 12)}
+    </g>
     <!-- faint drifting rays -->
     <g class="rays" opacity="${dark ? 0.08 : 0.05}"><rect x="0" y="0" width="${W + 136}" height="${H}" fill="url(#ray)"/></g>
     <!-- keep the left side readable, and fade the right, top and bottom into the page -->
