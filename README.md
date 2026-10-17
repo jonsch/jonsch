@@ -42,7 +42,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-  <img src="assets/stack-light.svg" width="100%" alt="Core: C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, SQL Server, PostgreSQL, Stripe, Docker, Electron, REST APIs, Git, VS Code. AI and edge: OpenAI, Azure AI Foundry, Amazon Bedrock, Claude, Ollama, Semantic Kernel, MCP, RAG + pgvector, AI agents, Vector search, Edge functions">
+  <img src="assets/stack-light.svg" width="100%" alt="Core: C#, .NET, TypeScript, JavaScript, React, Node.js, Azure, Azure Functions, Edge functions, Stripe, Docker, Electron, REST APIs, Git, VS Code. AI: OpenAI, Azure AI Foundry, Amazon Bedrock, Claude, Ollama, Semantic Kernel, MCP, RAG + pgvector, AI agents, Vector search. Databases: PostgreSQL, SQL Server, MySQL, MariaDB, SQLite, MongoDB, Cosmos DB, DynamoDB, Redis, Elasticsearch">
 </picture>
 
 <picture>

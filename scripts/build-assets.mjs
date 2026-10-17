@@ -33,13 +33,18 @@ const CONFIG = {
     { group: "Core", items: [
       ["C#", "#a78bfa"], [".NET", "#8b5cf6"], ["TypeScript", "#3b82f6"], ["JavaScript", "#facc15"],
       ["React", "#22d3ee"], ["Node.js", "#4ade80"], ["Azure", "#38bdf8"], ["Azure Functions", "#fbbf24"],
-      ["SQL Server", "#f87171"], ["PostgreSQL", "#60a5fa"], ["Stripe", "#818cf8"], ["Docker", "#2dd4bf"],
-      ["Electron", "#67e8f9"], ["REST APIs", "#34d399"], ["Git", "#f05032"], ["VS Code", "#0ea5e9"],
+      ["Edge functions", "#fb923c"], ["Stripe", "#818cf8"], ["Docker", "#2dd4bf"], ["Electron", "#67e8f9"],
+      ["REST APIs", "#34d399"], ["Git", "#f05032"], ["VS Code", "#0ea5e9"],
     ]},
-    { group: "AI & edge", items: [
+    { group: "AI", items: [
       ["OpenAI", "#10a37f"], ["Azure AI Foundry", "#0ea5e9"], ["Amazon Bedrock", "#ff9900"], ["Claude", "#d97757"],
       ["Ollama", "#e2e8f0"], ["Semantic Kernel", "#a78bfa"], ["MCP", "#c084fc"], ["RAG + pgvector", "#60a5fa"],
-      ["AI agents", "#f472b6"], ["Vector search", "#2dd4bf"], ["Edge functions", "#fbbf24"],
+      ["AI agents", "#f472b6"], ["Vector search", "#2dd4bf"],
+    ]},
+    { group: "Databases", items: [
+      ["PostgreSQL", "#60a5fa"], ["SQL Server", "#f87171"], ["MySQL", "#38bdf8"], ["MariaDB", "#a16207"],
+      ["SQLite", "#7dd3fc"], ["MongoDB", "#4ade80"], ["Cosmos DB", "#22d3ee"], ["DynamoDB", "#818cf8"],
+      ["Redis", "#ef4444"], ["Elasticsearch", "#fbbf24"],
     ]},
   ],
 };
@@ -240,7 +245,7 @@ function stack(theme) {
       const tw = name.length * CHAR;
       const w = PAD + 10 + 10 + tw + PAD;
       if (x + w > W) { x = 0; y += H_CHIP + GAP; }
-      const delay = r(0.1 + i * 0.06);
+      const delay = r(0.1 + i * 0.045);
       // light theme: keep near-white chip colors legible
       const c = !dark && color === "#e2e8f0" ? "#64748b" : color;
       clips.push(`<rect x="${x}" y="${y}" width="${r(w)}" height="${H_CHIP}" rx="20"/>`);
