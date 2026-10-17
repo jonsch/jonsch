@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 191" width="900" height="191" role="img" aria-label="Distributed systems: Services that stay fast and correct when traffic, data, and failure modes all grow at once. Systems integration: Getting APIs, databases, payment providers, and legacy systems to agree with each other. AI inference &amp; architecture: Choosing the right model, grounding it in real data, and keeping it fast, observable, and affordable.">
+  <style>
+    .sans{font-family:'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif}
+    .card{opacity:0;animation:up .7s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    .top{stroke-dasharray:289.333;stroke-dashoffset:289.333;animation:draw 1s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+    .glow{animation:glow 3.2s ease-in-out infinite}
+    @keyframes glow{0%,100%{opacity:.35}50%{opacity:1}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.card{opacity:1}.top{stroke-dashoffset:0}}
+  </style>
+  <defs>
+    <linearGradient id="acc" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+  </defs>
+  <g class="card" style="animation-delay:0.1s">
+    <rect x="0" y="0" width="289.333" height="190" rx="16" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.12"/>
+    <path class="top" d="M16 0.5 H273.333" stroke="url(#acc)" stroke-width="2" stroke-linecap="round" style="animation-delay:0.35s"/>
+    <rect x="22" y="22" width="40" height="40" rx="11" fill="url(#acc)" fill-opacity="0.18"/>
+    <rect class="glow" x="22" y="22" width="40" height="40" rx="11" fill="none" stroke="url(#acc)" stroke-opacity=".7" style="animation-delay:0s"/>
+    <g transform="translate(30 30)" fill="none" stroke="#c4b5fd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.3 11l9.4-4M7.3 13l9.4 4"/></g>
+    <text class="sans" x="22" y="93" font-size="17" font-weight="700" fill="#e6edf3">Distributed systems</text><text class="sans" x="22" y="132" font-size="14" fill="#9da7b3">Services that stay fast and correct</text><text class="sans" x="22" y="153" font-size="14" fill="#9da7b3">when traffic, data, and failure</text><text class="sans" x="22" y="174" font-size="14" fill="#9da7b3">modes all grow at once.</text>
+  </g>
+  <g class="card" style="animation-delay:0.24s">
+    <rect x="305.333" y="0" width="289.333" height="190" rx="16" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.12"/>
+    <path class="top" d="M321.333 0.5 H578.667" stroke="url(#acc)" stroke-width="2" stroke-linecap="round" style="animation-delay:0.49s"/>
+    <rect x="327.333" y="22" width="40" height="40" rx="11" fill="url(#acc)" fill-opacity="0.18"/>
+    <rect class="glow" x="327.333" y="22" width="40" height="40" rx="11" fill="none" stroke="url(#acc)" stroke-opacity=".7" style="animation-delay:-0.9s"/>
+    <g transform="translate(335.333 30)" fill="none" stroke="#c4b5fd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.1 0l3-3a5 5 0 0 0-7.1-7.1l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.1 0l-3 3a5 5 0 0 0 7.1 7.1l1.7-1.7"/></g>
+    <text class="sans" x="327.333" y="93" font-size="17" font-weight="700" fill="#e6edf3">Systems integration</text><text class="sans" x="327.333" y="132" font-size="14" fill="#9da7b3">Getting APIs, databases, payment</text><text class="sans" x="327.333" y="153" font-size="14" fill="#9da7b3">providers, and legacy systems to</text><text class="sans" x="327.333" y="174" font-size="14" fill="#9da7b3">agree with each other.</text>
+  </g>
+  <g class="card" style="animation-delay:0.38s">
+    <rect x="610.667" y="0" width="289.333" height="190" rx="16" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.12"/>
+    <path class="top" d="M626.667 0.5 H884" stroke="url(#acc)" stroke-width="2" stroke-linecap="round" style="animation-delay:0.63s"/>
+    <rect x="632.667" y="22" width="40" height="40" rx="11" fill="url(#acc)" fill-opacity="0.18"/>
+    <rect class="glow" x="632.667" y="22" width="40" height="40" rx="11" fill="none" stroke="url(#acc)" stroke-opacity=".7" style="animation-delay:-1.8s"/>
+    <g transform="translate(640.667 30)" fill="none" stroke="#c4b5fd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 1.5v3.5M15 1.5v3.5M9 19v3.5M15 19v3.5M1.5 9h3.5M1.5 15h3.5M19 9h3.5M19 15h3.5"/></g>
+    <text class="sans" x="632.667" y="93" font-size="17" font-weight="700" fill="#e6edf3">AI inference &amp; architecture</text><text class="sans" x="632.667" y="132" font-size="14" fill="#9da7b3">Choosing the right model, grounding</text><text class="sans" x="632.667" y="153" font-size="14" fill="#9da7b3">it in real data, and keeping it</text><text class="sans" x="632.667" y="174" font-size="14" fill="#9da7b3">fast, observable, and affordable.</text>
+  </g>
+</svg>

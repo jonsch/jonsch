@@ -25,9 +25,9 @@ const CONFIG = {
   ],
   sections: [
     { id: "about", n: "01", title: "About me" },
-    { id: "toolbox", n: "02", title: "Toolbox" },
-    { id: "strengths", n: "03", title: "Strengths" },
-    { id: "now", n: "04", title: "What I'm building" },
+    { id: "strengths", n: "02", title: "Strengths" },
+    { id: "now", n: "03", title: "What I'm building" },
+    { id: "toolbox", n: "04", title: "Toolbox" },
     { id: "connect", n: "05", title: "Let's connect" },
   ],
   stack: [
@@ -47,6 +47,18 @@ const CONFIG = {
       ["SQLite", "#7dd3fc"], ["MongoDB", "#4ade80"], ["Cosmos DB", "#22d3ee"], ["DynamoDB", "#818cf8"],
       ["Redis", "#ef4444"], ["Elasticsearch", "#fbbf24"],
     ]},
+  ],
+};
+
+const CARDS = {
+  strengths: [
+    { icon: "network", title: "Distributed systems", text: "Services that stay fast and correct when traffic, data, and failure modes all grow at once." },
+    { icon: "link", title: "Systems integration", text: "Getting APIs, databases, payment providers, and legacy systems to agree with each other." },
+    { icon: "cpu", title: "AI inference & architecture", text: "Choosing the right model, grounding it in real data, and keeping it fast, observable, and affordable." },
+  ],
+  building: [
+    { icon: "sparkles", title: "AI inference apps", text: "Products built around model inference: LLM-powered features, pipelines, and automations that do real work instead of demos." },
+    { icon: "briefcase", title: "Tools for small businesses & solopreneurs", text: "Focused products that give small teams and one-person companies the leverage usually reserved for big ones." },
   ],
 };
 
@@ -284,33 +296,92 @@ function stack(theme) {
 </svg>`;
 }
 
-// ───────────────────────────── wave footer ─────────────────────────────
-function wave() {
-  const W = 900, H = 110;
-  const path = (a) => `M0 ${55 + a} C150 ${15 + a} 300 ${95 - a} 450 ${55} S750 ${15 + a} 900 55 S1200 ${95 - a} 1350 55 S1650 ${15 + a} 1800 55 V${H} H0 Z`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Thanks for stopping by">
+// ───────────────────────────── cards ─────────────────────────────
+const ICONS = {
+  network: `<circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.3 11l9.4-4M7.3 13l9.4 4"/>`,
+  link: `<path d="M10 13a5 5 0 0 0 7.1 0l3-3a5 5 0 0 0-7.1-7.1l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.1 0l-3 3a5 5 0 0 0 7.1 7.1l1.7-1.7"/>`,
+  cpu: `<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 1.5v3.5M15 1.5v3.5M9 19v3.5M15 19v3.5M1.5 9h3.5M1.5 15h3.5M19 9h3.5M19 15h3.5"/>`,
+  sparkles: `<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19.5 16.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>`,
+  briefcase: `<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16M2 13h20"/>`,
+};
+
+function wrap(text, maxChars) {
+  const words = text.split(" "), lines = [];
+  let line = "";
+  for (const w of words) {
+    if ((line + " " + w).trim().length > maxChars) { lines.push(line.trim()); line = w; }
+    else line = (line + " " + w).trim();
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function cards(items, theme) {
+  const W = 900, GAP = 16, PAD = 22, dark = theme === "dark";
+  const n = items.length, CW = (W - GAP * (n - 1)) / n;
+  const fg = dark ? "#e6edf3" : "#1f2328", muted = dark ? "#9da7b3" : "#59636e";
+  const fill = dark ? "#ffffff" : "#0f172a", fillOp = dark ? 0.04 : 0.03;
+  const line = dark ? "#ffffff" : "#0f172a", lineOp = dark ? 0.12 : 0.12;
+  const TITLE = 17, BODY = 14, LH = 21;
+  const titleChars = Math.floor((CW - PAD * 2) / (TITLE * 0.52));
+  const bodyChars = Math.floor((CW - PAD * 2) / (BODY * 0.5));
+  const laid = items.map((it) => ({ ...it, t: wrap(it.title, titleChars), b: wrap(it.text, bodyChars) }));
+  const maxT = Math.max(...laid.map((c) => c.t.length)), maxB = Math.max(...laid.map((c) => c.b.length));
+  const H = PAD + 40 + 18 + maxT * (TITLE + 4) + 8 + maxB * LH + PAD - 4;
+  const body = laid.map((c, i) => {
+    const x = i * (CW + GAP);
+    let y = PAD + 40 + 18 + TITLE - 4;
+    const title = c.t.map((l, j) => `<text class="sans" x="${r(x + PAD)}" y="${y + j * (TITLE + 4)}" font-size="${TITLE}" font-weight="700" fill="${fg}">${esc(l)}</text>`).join("");
+    y += c.t.length * (TITLE + 4) + 8 + BODY - 4;
+    const text = c.b.map((l, j) => `<text class="sans" x="${r(x + PAD)}" y="${y + j * LH}" font-size="${BODY}" fill="${muted}">${esc(l)}</text>`).join("");
+    return `
+  <g class="card" style="animation-delay:${r(0.1 + i * 0.14)}s">
+    <rect x="${r(x)}" y="0" width="${r(CW)}" height="${H}" rx="16" fill="${fill}" fill-opacity="${fillOp}" stroke="${line}" stroke-opacity="${lineOp}"/>
+    <path class="top" d="M${r(x + 16)} 0.5 H${r(x + CW - 16)}" stroke="url(#acc)" stroke-width="2" stroke-linecap="round" style="animation-delay:${r(0.35 + i * 0.14)}s"/>
+    <rect x="${r(x + PAD)}" y="${PAD}" width="40" height="40" rx="11" fill="url(#acc)" fill-opacity="${dark ? 0.18 : 0.14}"/>
+    <rect class="glow" x="${r(x + PAD)}" y="${PAD}" width="40" height="40" rx="11" fill="none" stroke="url(#acc)" stroke-opacity=".7" style="animation-delay:${r(-i * 0.9)}s"/>
+    <g transform="translate(${r(x + PAD + 8)} ${PAD + 8})" fill="none" stroke="${dark ? "#c4b5fd" : "#6d28d9"}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[c.icon]}</g>
+    ${title}${text}
+  </g>`;
+  }).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H + 1}" width="${W}" height="${H + 1}" role="img" aria-label="${esc(items.map((c) => c.title + ": " + c.text).join(" "))}">
   <style>
-    .w{animation:w linear infinite}
-    @keyframes w{to{transform:translateX(-900px)}}
     .sans{font-family:${SANS}}
-    .txt{animation:fade 1s .3s both}
-    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    .arrow{animation:bob 1.6s ease-in-out infinite}
-    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+    .card{opacity:0;animation:up .7s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    .top{stroke-dasharray:${r(CW)};stroke-dashoffset:${r(CW)};animation:draw 1s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes draw{to{stroke-dashoffset:0}}
+    .glow{animation:glow 3.2s ease-in-out infinite}
+    @keyframes glow{0%,100%{opacity:.35}50%{opacity:1}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.card{opacity:1}.top{stroke-dashoffset:0}}
   </style>
   <defs>
-    <linearGradient id="w1" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".5" stop-color="#22d3ee"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
-    <linearGradient id="w2" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
-    <clipPath id="c"><rect width="${W}" height="${H}" rx="18"/></clipPath>
+    <linearGradient id="acc" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+  </defs>${body}
+</svg>`;
+}
+
+// ───────────────────────────── footer ─────────────────────────────
+function footer(theme) {
+  const W = 900, H = 56, dark = theme === "dark";
+  const muted = dark ? "#8b949e" : "#656d76";
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="github.com/jonsch">
+  <style>
+    .mono{font-family:${MONO}}
+    .flow{animation:flow 4s linear infinite}
+    @keyframes flow{to{transform:translateX(${W}px)}}
+    .txt{opacity:0;animation:fade 1s .4s forwards}
+    @keyframes fade{to{opacity:1}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.txt{opacity:1}}
+  </style>
+  <defs>
+    <linearGradient id="base" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity="0"/><stop offset=".5" stop-color="#8b5cf6" stop-opacity=".5"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+    <linearGradient id="pulse" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity="0"/><stop offset=".5" stop-color="#ffffff" stop-opacity="${dark ? 0.9 : 0.6}"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+    <clipPath id="c"><rect width="${W}" height="${H}"/></clipPath>
   </defs>
-  <g clip-path="url(#c)">
-    <path class="w" d="${path(8)}" fill="url(#w2)" opacity=".45" style="animation-duration:11s"/>
-    <path class="w" d="${path(0)}" fill="url(#w1)" opacity=".9" style="animation-duration:7s"/>
-    <g class="txt">
-      <text class="sans" x="${W / 2}" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" fill-opacity=".95" letter-spacing=".08em">THANKS FOR STOPPING BY</text>
-    </g>
-  </g>
+  <rect y="12" width="${W}" height="1.5" fill="url(#base)"/>
+  <g clip-path="url(#c)"><rect class="flow" x="-${W}" y="11.5" width="${W}" height="2.5" rx="1" fill="url(#pulse)"/></g>
+  <text class="mono txt" x="${W / 2}" y="42" text-anchor="middle" font-size="12" letter-spacing=".12em" fill="${muted}">GITHUB.COM/JONSCH</text>
 </svg>`;
 }
 
@@ -319,7 +390,12 @@ const files = {
   "hero.svg": hero(),
   "stack-dark.svg": stack("dark"),
   "stack-light.svg": stack("light"),
-  "wave.svg": wave(),
+  "cards-strengths-dark.svg": cards(CARDS.strengths, "dark"),
+  "cards-strengths-light.svg": cards(CARDS.strengths, "light"),
+  "cards-building-dark.svg": cards(CARDS.building, "dark"),
+  "cards-building-light.svg": cards(CARDS.building, "light"),
+  "footer-dark.svg": footer("dark"),
+  "footer-light.svg": footer("light"),
 };
 for (const s of CONFIG.sections) {
   files[`section-${s.id}-dark.svg`] = section(s, "dark");

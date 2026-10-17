@@ -1,16 +1,18 @@
 <!--
   Profile README for github.com/jonsch
   GitHub strips CSS/JS from markdown, so every animation lives inside the SVGs in assets/.
-  Edit the config block at the top of scripts/build-assets.mjs and run `node scripts/build-assets.mjs` to regenerate them.
+  Edit the config at the top of scripts/build-assets.mjs and run `node scripts/build-assets.mjs`
+  to regenerate them. The script also stamps the image URLs below with a content hash so
+  GitHub's image cache picks up changes.
 -->
 
-<img src="assets/hero.svg?v=11f365e4" width="100%" alt="Hi, I'm Jonathan Schroeder — full-stack engineer">
+<img src="assets/hero.svg?v=11f365e4" width="100%" alt="Hi, I'm Jonathan Schroeder, full-stack engineer">
 
 <!--
   Once GitHub Pages is enabled for this repo (Settings → Pages → Deploy from branch → main, /docs),
   uncomment this line to link the scroll-animated version of the page:
 
-<p align="center"><a href="https://jonsch.github.io/jonsch/">✨ See the scroll-animated version of this page →</a></p>
+<p align="center"><a href="https://jonsch.github.io/jonsch/">See the scroll-animated version of this page</a></p>
 -->
 
 <picture>
@@ -18,26 +20,36 @@
   <img src="assets/section-about-light.svg?v=cea9569d" width="600" alt="01 · About me">
 </picture>
 
-- 🧑‍💻 Full-stack engineer who likes owning the whole thing: data model, API, payments, and the UI on top
-- 🛠️ Happiest in **.NET** and **TypeScript**, deployed to **Azure**, usually with Stripe wired in somewhere
-- 🤖 Lately building apps around AI inference: models doing real work inside real products
-- 🧩 Weakness for small, sharp tools: CLI utilities, integrations, and anything that makes a workflow one click shorter
-- 💬 Ask me about shipping a SaaS MVP solo, wiring systems together, or wrangling SQL Server
+Full-stack engineer who likes owning the whole thing: the data model, the API, the payments, and the interface on top. I build products end to end, mostly in .NET and TypeScript on Azure, and lately around AI inference. Most of that work lives in private repositories, which is why the activity graph here is quiet.
 
-<details>
-  <summary>⚡ A few more things</summary>
-  <br>
-
-  - 📅 On GitHub since 2012
-  - 🍴 Most of my public repos are forks of tools I wanted to understand, fix, or bend to my will
-  - 🔒 The interesting stuff lives in private repos, so the activity graph is intentionally quiet
-  - ☕ Debugging is best done with coffee and a very long stack trace
-
-</details>
+**Focus**&nbsp;&nbsp; AI inference apps and products for small businesses and solopreneurs<br>
+**Stack**&nbsp;&nbsp;&nbsp; .NET and TypeScript on Azure, with Stripe wired in where money changes hands<br>
+**Approach**&nbsp; Ship the MVP solo, integrate the systems nobody wants to touch, keep it observable<br>
+**Since**&nbsp;&nbsp;&nbsp; 2012 on GitHub
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-toolbox-dark.svg?v=76ae5221">
-  <img src="assets/section-toolbox-light.svg?v=776c7640" width="600" alt="02 · Toolbox">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg?v=3e61f439">
+  <img src="assets/section-strengths-light.svg?v=4c72342d" width="600" alt="02 · Strengths">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/cards-strengths-dark.svg?v=7b5080ce">
+  <img src="assets/cards-strengths-light.svg?v=22b775e9" width="100%" alt="Distributed systems. Systems integration. AI inference and architecture.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=9ac2e86e">
+  <img src="assets/section-now-light.svg?v=19de9b93" width="600" alt="03 · What I'm building">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/cards-building-dark.svg?v=da71d32a">
+  <img src="assets/cards-building-light.svg?v=f31f5cc2" width="100%" alt="AI inference apps. Tools for small businesses and solopreneurs.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-toolbox-dark.svg?v=5202201b">
+  <img src="assets/section-toolbox-light.svg?v=fe3aeafe" width="600" alt="04 · Toolbox">
 </picture>
 
 <picture>
@@ -46,57 +58,22 @@
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg?v=20581181">
-  <img src="assets/section-strengths-light.svg?v=ccbfef25" width="600" alt="03 · Strengths">
-</picture>
-
-<table>
-  <tr>
-    <td width="33%" valign="top">
-      <h3>🕸️ Distributed systems</h3>
-      Services that stay fast and correct when the traffic, the data, and the failure modes all grow at once.
-    </td>
-    <td width="33%" valign="top">
-      <h3>🔌 Systems integration</h3>
-      Getting APIs, databases, payment providers, and legacy systems to agree with each other.
-    </td>
-    <td width="33%" valign="top">
-      <h3>🧠 AI inference &amp; architecture</h3>
-      Designing systems around model inference: picking the right model, grounding it in real data, and keeping it fast, observable, and affordable.
-    </td>
-  </tr>
-</table>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=8c551da6">
-  <img src="assets/section-now-light.svg?v=c6de8774" width="600" alt="04 · What I'm building">
-</picture>
-
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>🤖 AI inference apps</h3>
-      Products built around model inference: LLM-powered features, pipelines, and automations that do real work instead of demos.
-    </td>
-    <td width="50%" valign="top">
-      <h3>🏪 Tools for small businesses &amp; solopreneurs</h3>
-      Focused products that give small teams and one-person companies the leverage usually reserved for big ones.
-    </td>
-  </tr>
-</table>
-
-<picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg?v=33ecc5b2">
   <img src="assets/section-connect-light.svg?v=d96fe34e" width="600" alt="05 · Let's connect">
 </picture>
+
+Interesting problem, odd integration, or a tool that should exist but doesn't? I'd like to hear about it.
 
 <p>
   <a href="https://github.com/jonsch"><img src="https://img.shields.io/badge/GitHub-jonsch-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
   <!-- Drop in whichever of these you want to be public:
   <a href="https://www.linkedin.com/in/YOUR-HANDLE/"><img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-  <a href="mailto:you@example.com"><img src="https://img.shields.io/badge/Email-Say%20hi-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
+  <a href="mailto:you@example.com"><img src="https://img.shields.io/badge/Email-Say%20hello-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
   <a href="https://your-site.example"><img src="https://img.shields.io/badge/Website-Visit-8B5CF6?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website"></a>
   -->
 </p>
 
-<img src="assets/wave.svg?v=f130450e" width="100%" alt="Thanks for stopping by">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/footer-dark.svg?v=3531a876">
+  <img src="assets/footer-light.svg?v=40a6a200" width="100%" alt="github.com/jonsch">
+</picture>

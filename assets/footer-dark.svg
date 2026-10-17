@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 56" width="900" height="56" role="img" aria-label="github.com/jonsch">
+  <style>
+    .mono{font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, 'Courier New', monospace}
+    .flow{animation:flow 4s linear infinite}
+    @keyframes flow{to{transform:translateX(900px)}}
+    .txt{opacity:0;animation:fade 1s .4s forwards}
+    @keyframes fade{to{opacity:1}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.txt{opacity:1}}
+  </style>
+  <defs>
+    <linearGradient id="base" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity="0"/><stop offset=".5" stop-color="#8b5cf6" stop-opacity=".5"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+    <linearGradient id="pulse" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity="0"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0.9"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+    <clipPath id="c"><rect width="900" height="56"/></clipPath>
+  </defs>
+  <rect y="12" width="900" height="1.5" fill="url(#base)"/>
+  <g clip-path="url(#c)"><rect class="flow" x="-900" y="11.5" width="900" height="2.5" rx="1" fill="url(#pulse)"/></g>
+  <text class="mono txt" x="450" y="42" text-anchor="middle" font-size="12" letter-spacing=".12em" fill="#8b949e">GITHUB.COM/JONSCH</text>
+</svg>

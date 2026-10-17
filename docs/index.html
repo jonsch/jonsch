@@ -78,8 +78,11 @@
   /* about */
   .about{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
   @media (max-width:760px){.about{grid-template-columns:1fr}}
-  .facts{list-style:none;padding:0;margin:0;display:grid;gap:12px}
-  .facts li{display:flex;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+  .facts{margin:22px 0 0;display:grid;gap:10px}
+  .facts div{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:13px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card);align-items:baseline}
+  .facts dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);font-weight:600}
+  .facts dd{margin:0;color:var(--fg)}
+  @media (max-width:480px){.facts div{grid-template-columns:1fr;gap:4px}}
   .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
   .stat{padding:22px 18px;border-radius:18px;border:1px solid var(--line);background:var(--card);position:relative;overflow:hidden}
   .stat::after{content:"";position:absolute;inset:auto -30% -60% auto;width:140px;height:140px;border-radius:50%;background:radial-gradient(var(--accent),transparent 70%);opacity:.35}
@@ -103,7 +106,9 @@
   .card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 22%,transparent),transparent 45%);opacity:0;transition:opacity .3s}
   .card:hover::before{opacity:1}
   .card:hover{border-color:color-mix(in srgb,var(--accent2) 60%,transparent)}
-  .card .icon{font-size:1.9rem;margin-bottom:12px;display:block}
+  .card .icon{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 16%,transparent);border:1px solid color-mix(in srgb,var(--accent2) 45%,transparent)}
+  .card .icon svg{width:22px;height:22px;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  @media (prefers-color-scheme: dark){.card .icon svg{stroke:#c4b5fd}}
   .card h3{margin:0 0 8px;font-size:1.2rem;letter-spacing:-.01em}
   .card p{margin:0;color:var(--muted)}
 
@@ -155,49 +160,50 @@
     <h2 data-reveal style="--d:80ms"><span class="num">01</span>About me</h2>
     <div class="about">
       <div>
-        <p class="lead" data-reveal style="--d:160ms">Full-stack engineer who likes owning the whole thing: data model, API, payments, and the UI on top. Happiest in .NET and TypeScript, deployed to Azure, usually with Stripe wired in somewhere.</p>
-        <ul class="facts" data-reveal-group>
-          <li data-reveal="left">🤖 <span>Lately building apps around AI inference: models doing real work inside real products.</span></li>
-          <li data-reveal="left">🧩 <span>Weakness for small, sharp tools: CLI utilities, integrations, and anything that makes a workflow one click shorter.</span></li>
-          <li data-reveal="left">💬 <span>Ask me about shipping a SaaS MVP solo, wiring systems together, or wrangling SQL Server.</span></li>
-          <li data-reveal="left">🔒 <span>The interesting work lives in private repos, so the contribution graph stays intentionally quiet.</span></li>
-        </ul>
+        <p class="lead" data-reveal style="--d:160ms">Full-stack engineer who likes owning the whole thing: the data model, the API, the payments, and the interface on top. I build products end to end, mostly in .NET and TypeScript on Azure, and lately around AI inference. Most of that work lives in private repositories, which is why the activity graph is quiet.</p>
+        <dl class="facts" data-reveal-group>
+          <div data-reveal="left"><dt>Focus</dt><dd>AI inference apps and products for small businesses and solopreneurs</dd></div>
+          <div data-reveal="left"><dt>Stack</dt><dd>.NET and TypeScript on Azure, with Stripe wired in where money changes hands</dd></div>
+          <div data-reveal="left"><dt>Approach</dt><dd>Ship the MVP solo, integrate the systems nobody wants to touch, keep it observable</dd></div>
+          <div data-reveal="left"><dt>Since</dt><dd>2012 on GitHub</dd></div>
+        </dl>
       </div>
       <div class="stats" data-reveal-group>
         <div class="stat" data-reveal="scale"><b data-count="2012" data-years>0</b><small>years on GitHub</small></div>
         <div class="stat" data-reveal="scale"><b data-count="47">0</b><small>public repos</small></div>
         <div class="stat" data-reveal="scale"><b data-count="2">0</b><small>main languages, many side quests</small></div>
-        <div class="stat" data-reveal="scale"><b>∞</b><small>stack traces read</small></div>
+        <div class="stat" data-reveal="scale"><b data-count="3">0</b><small>database families in production</small></div>
       </div>
     </div>
   </section>
 
-  <section id="toolbox">
-    <div class="eyebrow" data-reveal>What</div>
-    <h2 data-reveal style="--d:80ms"><span class="num">02</span>Toolbox</h2>
-    <p class="lead" data-reveal style="--d:160ms">The things I reach for most. Hover around.</p>
-    <div class="chip-group"><div class="eyebrow" data-reveal>Core</div><div class="chips" data-group="0" data-reveal-group data-stagger="50"></div></div>
-    <div class="chip-group"><div class="eyebrow" data-reveal>AI</div><div class="chips" data-group="1" data-reveal-group data-stagger="50"></div></div>
-    <div class="chip-group"><div class="eyebrow" data-reveal>Databases</div><div class="chips" data-group="2" data-reveal-group data-stagger="50"></div></div>
-  </section>
 
   <section id="strengths">
     <div class="eyebrow" data-reveal>Where I'm strongest</div>
-    <h2 data-reveal style="--d:80ms"><span class="num">03</span>Strengths</h2>
+    <h2 data-reveal style="--d:80ms"><span class="num">02</span>Strengths</h2>
     <div class="cards" data-reveal-group data-stagger="120">
-      <article class="card" data-reveal="scale"><span class="icon">🕸️</span><h3>Distributed systems</h3><p>Services that stay fast and correct when the traffic, the data, and the failure modes all grow at once.</p></article>
-      <article class="card" data-reveal="scale"><span class="icon">🔌</span><h3>Systems integration</h3><p>Getting APIs, databases, payment providers, and legacy systems to agree with each other.</p></article>
-      <article class="card" data-reveal="scale"><span class="icon">🧠</span><h3>AI inference &amp; architecture</h3><p>Designing systems around model inference: picking the right model, grounding it in real data, and keeping it fast, observable, and affordable.</p></article>
+      <article class="card" data-reveal="scale"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.3 11l9.4-4M7.3 13l9.4 4"/></svg></span><h3>Distributed systems</h3><p>Services that stay fast and correct when traffic, data, and failure modes all grow at once.</p></article>
+      <article class="card" data-reveal="scale"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1 0l3-3a5 5 0 0 0-7.1-7.1l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.1 0l-3 3a5 5 0 0 0 7.1 7.1l1.7-1.7"/></svg></span><h3>Systems integration</h3><p>Getting APIs, databases, payment providers, and legacy systems to agree with each other.</p></article>
+      <article class="card" data-reveal="scale"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 1.5v3.5M15 1.5v3.5M9 19v3.5M15 19v3.5M1.5 9h3.5M1.5 15h3.5M19 9h3.5M19 15h3.5"/></svg></span><h3>AI inference &amp; architecture</h3><p>Choosing the right model, grounding it in real data, and keeping it fast, observable, and affordable.</p></article>
     </div>
   </section>
 
   <section id="now">
     <div class="eyebrow" data-reveal>Now</div>
-    <h2 data-reveal style="--d:80ms"><span class="num">04</span>What I'm building</h2>
+    <h2 data-reveal style="--d:80ms"><span class="num">03</span>What I'm building</h2>
     <div class="cards two" data-reveal-group data-stagger="120">
-      <article class="card" data-reveal="scale"><span class="icon">🤖</span><h3>AI inference apps</h3><p>Products built around model inference: LLM-powered features, pipelines, and automations that do real work instead of demos.</p></article>
-      <article class="card" data-reveal="scale"><span class="icon">🏪</span><h3>Tools for small businesses &amp; solopreneurs</h3><p>Focused products that give small teams and one-person companies the leverage usually reserved for big ones.</p></article>
+      <article class="card" data-reveal="scale"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19.5 16.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg></span><h3>AI inference apps</h3><p>Products built around model inference: LLM-powered features, pipelines, and automations that do real work instead of demos.</p></article>
+      <article class="card" data-reveal="scale"><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16M2 13h20"/></svg></span><h3>Tools for small businesses &amp; solopreneurs</h3><p>Focused products that give small teams and one-person companies the leverage usually reserved for big ones.</p></article>
     </div>
+  </section>
+
+  <section id="toolbox">
+    <div class="eyebrow" data-reveal>What</div>
+    <h2 data-reveal style="--d:80ms"><span class="num">04</span>Toolbox</h2>
+    <p class="lead" data-reveal style="--d:160ms">The tools I reach for most.</p>
+    <div class="chip-group"><div class="eyebrow" data-reveal>Core</div><div class="chips" data-group="0" data-reveal-group data-stagger="50"></div></div>
+    <div class="chip-group"><div class="eyebrow" data-reveal>AI</div><div class="chips" data-group="1" data-reveal-group data-stagger="50"></div></div>
+    <div class="chip-group"><div class="eyebrow" data-reveal>Databases</div><div class="chips" data-group="2" data-reveal-group data-stagger="50"></div></div>
   </section>
 
   <section id="connect" class="connect">
@@ -218,7 +224,7 @@
     <path style="animation-duration:11s" opacity=".4" fill="url(#wg)" d="M0 63 C150 23 300 87 450 55 S750 23 900 55 S1200 87 1350 55 S1650 23 1800 55 V110 H0 Z"/>
     <path style="animation-duration:7s" opacity=".9" fill="url(#wg)" d="M0 55 C150 15 300 95 450 55 S750 15 900 55 S1200 95 1350 55 S1650 15 1800 55 V110 H0 Z"/>
   </svg>
-  <div class="wrap" style="margin-top:22px">thanks for scrolling · built with vanilla html, css, and a little js</div>
+  <div class="wrap" style="margin-top:22px">github.com/jonsch</div>
 </footer>
 
 <script>
