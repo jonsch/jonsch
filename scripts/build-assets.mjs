@@ -82,136 +82,149 @@ const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, 
 const r = (n) => Math.round(n * 1000) / 1000;
 
 // ───────────────────────────── hero ─────────────────────────────
+// SwitchCase Studios brand: clover quad (red, blue, yellow, green) on a dark stage.
+const BRAND = { red: "#ca1c21", blue: "#3390e3", yellow: "#fccd26", green: "#2aa04a",
+  stage: "#0b1016", stage2: "#151d26", onStage: "#f5f7f8", onStageMuted: "#a3afba", stageLine: "#2c3946" };
+
 function hero() {
   const W = 900, H = 300;
 
-  // Name: each letter is a <tspan> that fades in (fill-opacity, since plain
-  // opacity does not apply to tspans). Whole text group also rises in.
-  const letters = [...CONFIG.name]
-    .map((ch, i) =>
-      ch === " "
-        ? `<tspan class="l" style="animation-delay:${r(0.35 + i * 0.045)}s"> </tspan>`
-        : `<tspan class="l" style="animation-delay:${r(0.35 + i * 0.045)}s">${esc(ch)}</tspan>`
-    )
-    .join("");
+  // Aurora ribbons: wavy bands whose path data morphs between three phases via SMIL.
+  // Every phase shares the same command structure so the morph is smooth.
+  const band = (phase, yTop, yBot, amp, tilt) => {
+    const pts = 7, step = (W + 300) / (pts - 1);
+    const top = [], bot = [];
+    for (let i = 0; i < pts; i++) {
+      const x = -150 + i * step, slope = (x / W) * tilt;
+      top.push([r(x), r(yTop + slope + Math.sin(i * 1.15 + phase) * amp)]);
+      bot.push([r(x), r(yBot + slope + Math.sin(i * 0.85 + phase + 1.9) * amp * 0.7)]);
+    }
+    const curve = (arr) => arr.slice(1).map((p, i) => {
+      const prev = arr[i], cx = r((prev[0] + p[0]) / 2);
+      return `C${cx} ${prev[1]} ${cx} ${p[1]} ${p[0]} ${p[1]}`;
+    }).join(" ");
+    const back = [...bot].reverse();
+    return `M${top[0][0]} ${top[0][1]} ${curve(top)} L${back[0][0]} ${back[0][1]} ${curve(back)} Z`;
+  };
+  // Each curtain is drawn twice: a wide soft glow and a tighter, brighter core.
+  const ribbon = (color, yTop, yBot, amp, tilt, op, dur, seed) => {
+    const phases = [0, 2.1, 4.2].map((ph) => band(ph + seed, yTop, yBot, amp, tilt));
+    const anim = `<animate attributeName="d" dur="${dur}s" repeatCount="indefinite" values="${[...phases, phases[0]].join(";")}"/>`;
+    return `<path class="glow" fill="url(#g-${color})" opacity="${op}">${anim}</path>
+      <path class="core" fill="url(#g-${color})" opacity="${r(op * 0.55)}">${anim}</path>`;
+  };
+  const grad = (name, hex) => `<linearGradient id="g-${name}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${hex}" stop-opacity="0"/><stop offset=".72" stop-color="${hex}" stop-opacity="1"/><stop offset="1" stop-color="${hex}" stop-opacity=".2"/>
+    </linearGradient>`;
 
-  // Typing effect. Every character is its own <tspan> whose fill-opacity is
-  // switched on/off by SMIL, so no animated clip-path is needed (WebKit does not
-  // repaint those reliably). textLength pins every glyph to exactly CW units so
-  // the cursor position is predictable regardless of which monospace font loads.
-  const FS = 21, CW = 12.6, TX = 82, TY = 212;
+  const stars = Array.from({ length: 26 }, (_, i) => {
+    const x = 30 + ((i * 211) % 840), y = 18 + ((i * 97) % 150), rr = 0.7 + (i % 3) * 0.45;
+    return `<circle class="star" cx="${x}" cy="${y}" r="${rr}" style="animation-duration:${r(2.4 + (i % 5) * 0.9)}s;animation-delay:${r(-(i * 0.73) % 4)}s"/>`;
+  }).join("\n    ");
+
+  const letters = [...CONFIG.name].map((ch, i) =>
+    `<tspan class="l" style="animation-delay:${r(0.35 + i * 0.04)}s">${ch === " " ? " " : esc(ch)}</tspan>`).join("");
+
+  // Typing line (per-character SMIL fades; see earlier note on WebKit and clip paths).
+  const FS = 20, CW = 12, TX = 84, TY = 216;
   const TYPE = 0.07, HOLD = 1.7, DEL = 0.035, GAP = 0.45;
   const slots = CONFIG.phrases.map((p) => ({ p, total: p.length * (TYPE + DEL) + HOLD + GAP }));
   const cycle = slots.reduce((a, s) => a + s.total, 0);
   const k = (time) => r(Math.min(1, time / cycle));
-
   let t = 0;
   const cursorEvents = [[0, 0]];
   const phraseSvgs = [];
   slots.forEach((s) => {
     const n = s.p.length;
     const spans = [...s.p].map((ch, i) => {
-      const on = t + (i + 1) * TYPE;                       // appears when typed
-      const off = t + n * TYPE + HOLD + (n - i) * DEL;     // disappears on backspace (last char first)
+      const on = t + (i + 1) * TYPE, off = t + n * TYPE + HOLD + (n - i) * DEL;
       cursorEvents.push([on, (i + 1) * CW], [off, i * CW]);
       return `<tspan fill-opacity="0">${esc(ch)}<animate attributeName="fill-opacity" calcMode="discrete" values="0;1;0;0" keyTimes="0;${k(on)};${k(off)};1" dur="${r(cycle)}s" repeatCount="indefinite"/></tspan>`;
     }).join("");
-    phraseSvgs.push(`<text class="type" x="${TX}" y="${TY}" textLength="${r(n * CW)}" lengthAdjust="spacing">${spans}</text>`);
+    phraseSvgs.push(`<text class="mono type" x="${TX}" y="${TY}" textLength="${r(n * CW)}" lengthAdjust="spacing">${spans}</text>`);
     t += s.total;
   });
   cursorEvents.sort((a, b) => a[0] - b[0]);
   const cv = cursorEvents.map((e) => e[1]), ck = cursorEvents.map((e) => k(e[0]));
   if (ck[ck.length - 1] !== 1) { cv.push(0); ck.push(1); }
 
-  const particles = Array.from({ length: 14 }, (_, i) => {
-    const x = 40 + ((i * 173) % 820), d = 7 + (i % 5) * 1.7, delay = -(i * 1.37) % d, rr = 1.2 + (i % 3) * 0.8;
-    return `<circle class="p" cx="${x}" cy="${H + 10}" r="${rr}" style="animation-duration:${r(d)}s;animation-delay:${r(delay)}s"/>`;
-  }).join("\n    ");
+  const quad = [BRAND.red, BRAND.blue, BRAND.yellow, BRAND.green].map((c, i) =>
+    `<rect class="q" x="${56 + i * 16}" y="172" width="12" height="3" rx="1.5" fill="${c}" style="animation-delay:${r(1.0 + i * 0.1)}s"/>`).join("");
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(CONFIG.greeting)} ${esc(CONFIG.name)}">
   <style>
     .sans{font-family:${SANS}}
     .mono{font-family:${MONO}}
-    .enter{animation:enter .9s cubic-bezier(.2,.8,.2,1) both}
-    @keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-    .hi{fill:#67e8f9;font-size:17px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:0;animation:fade .7s .15s ease-out forwards}
-    @keyframes fade{to{opacity:1}}
-    .name{font-size:54px;font-weight:700;fill:url(#nameGrad);letter-spacing:-.01em}
-    .l{fill-opacity:0;animation:lin .55s cubic-bezier(.2,.8,.2,1) forwards}
-    @keyframes lin{from{fill-opacity:0}to{fill-opacity:1}}
-    .type{fill:#e2e8f0;font-size:${FS}px}
-    .cursor{fill:#67e8f9;animation:blink 1.1s steps(2,start) infinite}
-    @keyframes blink{to{opacity:0}}
-    .p{fill:#fff;opacity:0;animation:rise linear infinite}
-    @keyframes rise{0%{transform:translateY(0);opacity:0}10%{opacity:.5}90%{opacity:.35}100%{transform:translateY(-${H + 40}px);opacity:0}}
-    .ring{fill:none;stroke:#8b5cf6;stroke-opacity:.45;stroke-width:1.2;stroke-dasharray:4 6}
-    .spin{transform-origin:772px 150px;animation:spin linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .rev{animation-direction:reverse}
-    .core{animation:pulse 3s ease-in-out infinite;transform-origin:772px 150px}
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
-    .bar{animation:slide 3s linear infinite}
-    @keyframes slide{to{transform:translateX(${W}px)}}
-    .card{animation:card 1s cubic-bezier(.2,.8,.2,1) both}
+    .card{animation:card 1s cubic-bezier(.2,.8,.2,1) both;transform-origin:center}
     @keyframes card{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
-    .blob{filter:url(#blur)}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}.l{fill-opacity:1}.hi{opacity:1}}
+    .enter{animation:enter .9s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+    .hi{fill:${BRAND.onStageMuted};font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;opacity:0;animation:fade .7s .15s ease-out forwards}
+    @keyframes fade{to{opacity:1}}
+    .name{font-size:54px;font-weight:700;fill:${BRAND.onStage};letter-spacing:-.025em}
+    .l{fill-opacity:0;animation:lin .55s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes lin{to{fill-opacity:1}}
+    .period{fill:${BRAND.red};fill-opacity:0;animation:lin .5s 1.15s cubic-bezier(.2,.8,.2,1) forwards}
+    .q{transform-box:fill-box;transform-origin:left center;transform:scaleX(0);animation:q .5s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes q{to{transform:scaleX(1)}}
+    .type{fill:${BRAND.onStage};font-size:${FS}px}
+    .cursor{fill:${BRAND.blue};animation:blink 1.1s steps(2,start) infinite}
+    @keyframes blink{to{opacity:0}}
+    .star{fill:#fff;animation:tw ease-in-out infinite}
+    @keyframes tw{0%,100%{opacity:.2}50%{opacity:.95}}
+    .glow{filter:url(#soft)}
+    .core{filter:url(#tight)}
+    .sway{animation:sway 18s ease-in-out infinite alternate}
+    @keyframes sway{from{transform:translateX(-30px)}to{transform:translateX(30px)}}
+    .rays{animation:rays 40s linear infinite}
+    @keyframes rays{to{transform:translateX(-120px)}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}}
   </style>
   <defs>
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
-    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="42"/></filter>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#101a33"/>
-    </linearGradient>
-    <linearGradient id="nameGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#c4b5fd"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#67e8f9"/>
-      <animate attributeName="x1" values="-1;1" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="x2" values="0;2" dur="4s" repeatCount="indefinite"/>
-    </linearGradient>
-    <linearGradient id="barGrad" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity="0"/><stop offset=".5" stop-color="#67e8f9"/><stop offset="1" stop-color="#ec4899" stop-opacity="0"/></linearGradient>
-    <radialGradient id="coreGrad"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#c4b5fd"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></radialGradient>
-    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
-      <path d="M36 0H0V36" fill="none" stroke="#ffffff" stroke-opacity=".05"/>
+    <filter id="soft" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="20"/></filter>
+    <filter id="tight" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+    <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${BRAND.stage}"/><stop offset="1" stop-color="${BRAND.stage2}"/></linearGradient>
+    ${grad("green", BRAND.green)}${grad("blue", BRAND.blue)}${grad("red", BRAND.red)}${grad("yellow", BRAND.yellow)}
+    <linearGradient id="veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${BRAND.stage}" stop-opacity=".85"/><stop offset=".45" stop-color="${BRAND.stage}" stop-opacity=".45"/><stop offset=".75" stop-color="${BRAND.stage}" stop-opacity="0"/></linearGradient>
+    <pattern id="ray" width="34" height="${H}" patternUnits="userSpaceOnUse">
+      <rect x="0" width="3" height="${H}" fill="#fff" fill-opacity=".9"/><rect x="13" width="1.5" height="${H}" fill="#fff" fill-opacity=".45"/><rect x="24" width="2" height="${H}" fill="#fff" fill-opacity=".65"/>
     </pattern>
+    <mask id="raymask"><rect class="rays" x="0" y="0" width="${W + 120}" height="${H}" fill="url(#ray)"/></mask>
+    <linearGradient id="quadbar" x1="0" x2="1"><stop offset="0" stop-color="${BRAND.red}"/><stop offset=".25" stop-color="${BRAND.red}"/><stop offset=".25" stop-color="${BRAND.blue}"/><stop offset=".5" stop-color="${BRAND.blue}"/><stop offset=".5" stop-color="${BRAND.yellow}"/><stop offset=".75" stop-color="${BRAND.yellow}"/><stop offset=".75" stop-color="${BRAND.green}"/><stop offset="1" stop-color="${BRAND.green}"/></linearGradient>
   </defs>
 
-  <g class="card" style="transform-origin:center" clip-path="url(#card)">
-    <rect width="${W}" height="${H}" fill="url(#bg)"/>
-    <g class="blob" opacity=".6">
-      <circle r="150" fill="#7c3aed"><animate attributeName="cx" values="120;260;80;120" dur="16s" repeatCount="indefinite"/><animate attributeName="cy" values="60;200;140;60" dur="16s" repeatCount="indefinite"/></circle>
-      <circle r="130" fill="#06b6d4"><animate attributeName="cx" values="560;420;640;560" dur="19s" repeatCount="indefinite"/><animate attributeName="cy" values="300;120;260;300" dur="19s" repeatCount="indefinite"/></circle>
-      <circle r="120" fill="#ec4899"><animate attributeName="cx" values="860;720;880;860" dur="21s" repeatCount="indefinite"/><animate attributeName="cy" values="40;160;240;40" dur="21s" repeatCount="indefinite"/></circle>
+  <g class="card" clip-path="url(#card)">
+    <rect width="${W}" height="${H}" fill="url(#stage)"/>
+    ${stars}
+    <!-- aurora: soft blurred curtains -->
+    <g class="sway">
+      ${ribbon("yellow", -14, 30, 22, 95, 0.22, 27, 3.2)}
+      ${ribbon("green", 18, 96, 40, 110, 0.62, 17, 0)}
+      ${ribbon("blue", 92, 162, 46, 80, 0.42, 23, 1.6)}
+      ${ribbon("red", 168, 218, 28, 50, 0.2, 20, 4.5)}
     </g>
-    <rect width="${W}" height="${H}" fill="url(#grid)"/>
-    ${particles}
-    <rect width="${W}" height="${H}" rx="22" fill="none" stroke="#ffffff" stroke-opacity=".12"/>
-
-    <!-- orbit decoration -->
-    <g>
-      <circle class="ring" cx="772" cy="150" r="42"/>
-      <circle class="ring" cx="772" cy="150" r="68" stroke="#22d3ee"/>
-      <circle class="ring" cx="772" cy="150" r="94" stroke="#ec4899"/>
-      <g class="spin" style="animation-duration:9s"><circle cx="814" cy="150" r="4" fill="#c4b5fd"/></g>
-      <g class="spin rev" style="animation-duration:14s"><circle cx="840" cy="150" r="4.5" fill="#67e8f9"/></g>
-      <g class="spin" style="animation-duration:22s"><circle cx="866" cy="150" r="3.5" fill="#f9a8d4"/></g>
-      <circle class="core" cx="772" cy="150" r="22" fill="url(#coreGrad)"/>
+    <!-- faint vertical rays through the brightest curtain -->
+    <g mask="url(#raymask)" opacity=".18">
+      ${ribbon("green", 18, 96, 40, 110, 1, 17, 0)}
     </g>
+    <!-- keep the left side readable -->
+    <rect width="${W}" height="${H}" fill="url(#veil)"/>
 
     <g class="enter">
-      <text class="sans hi" x="56" y="96">${esc(CONFIG.greeting)}</text>
-      <text class="sans name" x="54" y="152">${letters}</text>
-      <path class="chev" d="M58 ${TY - 15} l7 7 -7 7" fill="none" stroke="#a78bfa" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text class="sans hi" x="56" y="92">${esc(CONFIG.greeting)}</text>
+      <text class="sans name" x="54" y="150">${letters}<tspan class="period">.</tspan></text>
+      ${quad}
+      <path d="M58 ${TY - 15} l7 7 -7 7" fill="none" stroke="${BRAND.blue}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
       ${phraseSvgs.join("")}
-      <rect class="cursor" x="${TX}" y="${TY - FS + 3}" width="10" height="${FS + 2}" rx="1.5">
-        <animate attributeName="x" calcMode="discrete" dur="${r(cycle)}s" repeatCount="indefinite"
-          values="${cv.map((v) => r(TX + v)).join(";")}" keyTimes="${ck.join(";")}"/>
+      <rect class="cursor" x="${TX}" y="${TY - FS + 3}" width="9" height="${FS + 2}" rx="1.5">
+        <animate attributeName="x" calcMode="discrete" dur="${r(cycle)}s" repeatCount="indefinite" values="${cv.map((v) => r(TX + v)).join(";")}" keyTimes="${ck.join(";")}"/>
       </rect>
-      <text class="mono" x="56" y="262" fill="#94a3b8" font-size="13" letter-spacing=".06em">@jonsch  ·  building things for the web since 2012</text>
+      <text class="mono" x="56" y="262" fill="${BRAND.onStageMuted}" font-size="12" letter-spacing=".06em">@jonsch  ·  switchcasestudios.com</text>
     </g>
 
-    <g clip-path="url(#card)">
-      <rect class="bar" x="-${W}" y="${H - 3}" width="${W}" height="3" fill="url(#barGrad)"/>
-    </g>
+    <rect width="${W}" height="${H}" rx="22" fill="none" stroke="${BRAND.stageLine}"/>
+    <rect x="0" y="${H - 3}" width="${W}" height="3" fill="url(#quadbar)"/>
   </g>
 </svg>`;
 }
