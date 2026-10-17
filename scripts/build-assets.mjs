@@ -218,7 +218,7 @@ function hero(theme = "dark") {
       <rect class="cursor" x="${TX}" y="${TY - FS + 3}" width="9" height="${FS + 2}" rx="1.5">
         <animate attributeName="x" calcMode="discrete" dur="${r(cycle)}s" repeatCount="indefinite" values="${cv.map((v) => r(TX + v)).join(";")}" keyTimes="${ck.join(";")}"/>
       </rect>
-      <text class="mono" x="56" y="262" fill="${T.muted}" font-size="12" letter-spacing=".06em">@jonsch  ·  switchcasestudios.com</text>
+      <text class="mono" x="56" y="262" fill="${T.muted}" font-size="12" letter-spacing=".06em">@jonsch</text>
     </g>
 
     <rect width="${W}" height="${H}" rx="22" fill="none" stroke="${T.line}" stroke-opacity="${T.lineOp}"/>
