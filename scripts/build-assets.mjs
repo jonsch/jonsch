@@ -86,8 +86,9 @@ const BRAND = { red: "#ca1c21", blue: "#3390e3", yellow: "#fccd26", green: "#2aa
 function hero(theme = "dark") {
   const W = 900, H = 300, dark = theme === "dark";
   const T = dark
-    ? { bg0: BRAND.stage, bg1: BRAND.stage2, ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 1, veil: BRAND.stage, veilOp: [0.85, 0.45, 0], op: 1.25 }
-    : { bg0: "#ffffff", bg1: "#f5f7f8", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0.9, veil: "#ffffff", veilOp: [0.88, 0.5, 0], op: 0.95, speed: 0.55, sway: 60 };
+    // Backgrounds match GitHub's own page colors so the edges can fade into them.
+    ? { bg0: "#0d1117", bg1: "#0d1117", ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 0, veil: "#0d1117", veilOp: [0.85, 0.45, 0], op: 1.4 }
+    : { bg0: "#ffffff", bg1: "#ffffff", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0, veil: "#ffffff", veilOp: [0.88, 0.5, 0], op: 1.0, speed: 0.55, sway: 60 };
   T.speed ??= 1; T.sway ??= 30;
 
   // Aurora ribbons: wavy bands whose path data morphs between three phases via SMIL.
@@ -199,6 +200,8 @@ function hero(theme = "dark") {
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
     <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.bg0}"/><stop offset="1" stop-color="${T.bg1}"/></linearGradient>
     ${grad("green", BRAND.green)}${grad("blue", BRAND.blue)}${grad("red", BRAND.red)}${grad("yellow", BRAND.yellow)}
+    <linearGradient id="veilR" x1="0" y1="0" x2="1" y2="0"><stop offset=".58" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".82" stop-color="${T.veil}" stop-opacity=".55"/><stop offset="1" stop-color="${T.veil}" stop-opacity="1"/></linearGradient>
+    <linearGradient id="veilT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.veil}" stop-opacity=".9"/><stop offset=".22" stop-color="${T.veil}" stop-opacity="0"/><stop offset=".8" stop-color="${T.veil}" stop-opacity="0"/><stop offset="1" stop-color="${T.veil}" stop-opacity=".7"/></linearGradient>
     <linearGradient id="veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${T.veil}" stop-opacity="${T.veilOp[0]}"/><stop offset=".45" stop-color="${T.veil}" stop-opacity="${T.veilOp[1]}"/><stop offset=".75" stop-color="${T.veil}" stop-opacity="${T.veilOp[2]}"/></linearGradient>
     <linearGradient id="rayfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="0"/><stop offset=".35" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="1"/><stop offset=".7" stop-color="${dark ? "#fff" : BRAND.green}" stop-opacity="0"/></linearGradient>
     <pattern id="ray" width="34" height="${H}" patternUnits="userSpaceOnUse">
@@ -217,8 +220,10 @@ function hero(theme = "dark") {
     ${ribbon("red", 168, 218, 28, 50, 0.2, 20, 4.5)}
     <!-- faint drifting rays -->
     <g class="rays" opacity="${dark ? 0.08 : 0.05}"><rect x="0" y="0" width="${W + 136}" height="${H}" fill="url(#ray)"/></g>
-    <!-- keep the left side readable -->
+    <!-- keep the left side readable, and fade the right, top and bottom into the page -->
     <rect width="${W}" height="${H}" fill="url(#veil)"/>
+    <rect width="${W}" height="${H}" fill="url(#veilR)"/>
+    <rect width="${W}" height="${H}" fill="url(#veilT)"/>
 
     <g class="enter">
       <text class="sans hi" x="56" y="92">${esc(CONFIG.greeting)}</text>
