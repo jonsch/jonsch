@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 232" width="900" height="232" role="img" aria-label="Where the time goes. Product &amp; APIs 40%, AI inference 30%, Integrations &amp; data 20%, Infra &amp; ops 10%.">
+  <style>
+    .sans{font-family:'Segoe UI', Ubuntu, 'Helvetica Neue', Helvetica, Arial, sans-serif}
+    .mono{font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, 'Courier New', monospace}
+    .arc{animation:sweep ease-out forwards}
+    @keyframes sweep{to{stroke-dashoffset:0}}
+    .center{opacity:0;animation:fade .6s 1.5s ease-out forwards}
+    .row{opacity:0;animation:rowin .6s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes rowin{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+    .hd{opacity:0;animation:fade .6s .1s ease-out forwards}
+    @keyframes fade{to{opacity:1}}
+    .panel{animation:up .7s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.arc{stroke-dashoffset:0!important}.center,.row,.hd{opacity:1}}
+  </style>
+  <defs><linearGradient id="facc" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+  <g class="panel">
+    <rect x="0.5" y="0.5" width="899" height="231" rx="16" fill="#0f172a" fill-opacity="0.03" stroke="#0f172a" stroke-opacity=".12"/>
+    <circle cx="150" cy="116" r="72" fill="none" stroke="#0f172a" stroke-opacity=".06" stroke-width="18"/>
+    <path class="arc" d="M151.508 44.016 A72 72 0 0 1 193.531 173.35" fill="none" stroke="#7c3aed" stroke-width="18" style="stroke-dasharray:177.94;stroke-dashoffset:177.94;animation-duration:0.64s;animation-delay:0.25s"><title>Product &amp; APIs: 40%</title></path>
+    <path class="arc" d="M191.091 175.123 A72 72 0 0 1 82.005 139.678" fill="none" stroke="#d97706" stroke-width="18" style="stroke-dasharray:132.701;stroke-dashoffset:132.701;animation-duration:0.48s;animation-delay:0.89s"><title>AI inference: 30%</title></path>
+    <path class="arc" d="M81.073 136.81 A72 72 0 0 1 106.469 58.65" fill="none" stroke="#0891b2" stroke-width="18" style="stroke-dasharray:87.462;stroke-dashoffset:87.462;animation-duration:0.32s;animation-delay:1.37s"><title>Integrations &amp; data: 20%</title></path>
+    <path class="arc" d="M108.909 56.877 A72 72 0 0 1 148.492 44.016" fill="none" stroke="#db2777" stroke-width="18" style="stroke-dasharray:42.223;stroke-dashoffset:42.223;animation-duration:0.16s;animation-delay:1.69s"><title>Infra &amp; ops: 10%</title></path>
+    <g class="center">
+      <text class="sans" x="150" y="120" text-anchor="middle" font-size="30" font-weight="700" fill="#1f2328">40%</text>
+      <text class="sans" x="150" y="140" text-anchor="middle" font-size="12" fill="#59636e">Product &amp; APIs</text>
+    </g>
+    <g class="hd">
+      <text class="sans" x="330" y="48" font-size="18" font-weight="700" fill="#1f2328">Where the time goes</text>
+      <text class="sans" x="330" y="70" font-size="13" fill="#59636e">Rough split of a typical month</text>
+    </g>
+    <g class="row" style="animation-delay:0.5s">
+      <rect x="330" y="96" width="11" height="11" rx="3" fill="#7c3aed"/>
+      <text class="sans" x="352" y="106" font-size="14" font-weight="500" fill="#1f2328">Product &amp; APIs</text>
+      <text class="mono" x="870" y="106" text-anchor="end" font-size="13" fill="#424a53">40%</text>
+      <path d="M330 117 H870" stroke="#0f172a" stroke-opacity=".1"/>
+    </g>
+    <g class="row" style="animation-delay:0.62s">
+      <rect x="330" y="127" width="11" height="11" rx="3" fill="#d97706"/>
+      <text class="sans" x="352" y="137" font-size="14" font-weight="500" fill="#1f2328">AI inference</text>
+      <text class="mono" x="870" y="137" text-anchor="end" font-size="13" fill="#424a53">30%</text>
+      <path d="M330 148 H870" stroke="#0f172a" stroke-opacity=".1"/>
+    </g>
+    <g class="row" style="animation-delay:0.74s">
+      <rect x="330" y="158" width="11" height="11" rx="3" fill="#0891b2"/>
+      <text class="sans" x="352" y="168" font-size="14" font-weight="500" fill="#1f2328">Integrations &amp; data</text>
+      <text class="mono" x="870" y="168" text-anchor="end" font-size="13" fill="#424a53">20%</text>
+      <path d="M330 179 H870" stroke="#0f172a" stroke-opacity=".1"/>
+    </g>
+    <g class="row" style="animation-delay:0.86s">
+      <rect x="330" y="189" width="11" height="11" rx="3" fill="#db2777"/>
+      <text class="sans" x="352" y="199" font-size="14" font-weight="500" fill="#1f2328">Infra &amp; ops</text>
+      <text class="mono" x="870" y="199" text-anchor="end" font-size="13" fill="#424a53">10%</text>
+      
+    </g>
+  </g>
+</svg>

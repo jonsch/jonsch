@@ -50,6 +50,20 @@ const CONFIG = {
   ],
 };
 
+// Rough split of where the working time goes. Hand-maintained; edit freely.
+// Colors are validated for colorblind-safe adjacency in both modes, including the
+// pair that meets at the ring's seam, so keep the order if you change the labels.
+const FOCUS = {
+  title: "Where the time goes",
+  subtitle: "Rough split of a typical month",
+  items: [
+    { label: "Product & APIs", value: 40, light: "#7c3aed", dark: "#8b5cf6" },
+    { label: "AI inference", value: 30, light: "#d97706", dark: "#c98500" },
+    { label: "Integrations & data", value: 20, light: "#0891b2", dark: "#0891b2" },
+    { label: "Infra & ops", value: 10, light: "#db2777", dark: "#db2777" },
+  ],
+};
+
 const CARDS = {
   strengths: [
     { icon: "network", title: "Distributed systems", text: "Services that stay fast and correct when traffic, data, and failure modes all grow at once." },
@@ -361,6 +375,71 @@ function cards(items, theme) {
 </svg>`;
 }
 
+// ───────────────────────────── focus donut ─────────────────────────────
+function focus(theme, idp = "f") {
+  const W = 900, H = 232, dark = theme === "dark";
+  const fg = dark ? "#e6edf3" : "#1f2328", muted = dark ? "#9da7b3" : "#59636e", sub = dark ? "#c9d1d9" : "#424a53";
+  const fill = dark ? "#ffffff" : "#0f172a", fillOp = dark ? 0.04 : 0.03, line = dark ? "#ffffff" : "#0f172a";
+  const CX = 150, CY = 116, R = 72, SW = 18, GAP_DEG = 2.4;
+  const total = FOCUS.items.reduce((a, i) => a + i.value, 0);
+  const pol = (deg) => { const a = (deg - 90) * Math.PI / 180; return [r(CX + R * Math.cos(a)), r(CY + R * Math.sin(a))]; };
+  let cum = 0, delay = 0.25;
+  const TOTAL_DUR = 1.6;
+  const arcs = FOCUS.items.map((it, i) => {
+    const share = it.value / total;
+    const a0 = cum * 360 + GAP_DEG / 2, a1 = (cum + share) * 360 - GAP_DEG / 2;
+    const [x0, y0] = pol(a0), [x1, y1] = pol(a1);
+    const len = r(R * (a1 - a0) * Math.PI / 180), large = a1 - a0 > 180 ? 1 : 0;
+    const dur = r(TOTAL_DUR * share);
+    const color = dark ? it.dark : it.light;
+    const el = `<path class="arc" d="M${x0} ${y0} A${R} ${R} 0 ${large} 1 ${x1} ${y1}" fill="none" stroke="${color}" stroke-width="${SW}" style="stroke-dasharray:${len};stroke-dashoffset:${len};animation-duration:${dur}s;animation-delay:${r(delay)}s"><title>${esc(it.label)}: ${it.value}%</title></path>`;
+    cum += share; delay += dur;
+    return el;
+  }).join("\n    ");
+  const top = FOCUS.items[0];
+  const LX = 330, LW = 540, rowY = 106, rowH = 31;
+  const rows = FOCUS.items.map((it, i) => {
+    const y = rowY + i * rowH, color = dark ? it.dark : it.light;
+    return `<g class="row" style="animation-delay:${r(0.5 + i * 0.12)}s">
+      <rect x="${LX}" y="${y - 10}" width="11" height="11" rx="3" fill="${color}"/>
+      <text class="sans" x="${LX + 22}" y="${y}" font-size="14" font-weight="500" fill="${fg}">${esc(it.label)}</text>
+      <text class="mono" x="${LX + LW}" y="${y}" text-anchor="end" font-size="13" fill="${sub}">${it.value}%</text>
+      ${i < FOCUS.items.length - 1 ? `<path d="M${LX} ${y + 11} H${LX + LW}" stroke="${line}" stroke-opacity=".1"/>` : ""}
+    </g>`;
+  }).join("\n    ");
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(FOCUS.title)}. ${esc(FOCUS.items.map((i) => i.label + " " + i.value + "%").join(", "))}.">
+  <style>
+    .sans{font-family:${SANS}}
+    .mono{font-family:${MONO}}
+    .arc{animation:sweep ease-out forwards}
+    @keyframes sweep{to{stroke-dashoffset:0}}
+    .center{opacity:0;animation:fade .6s 1.5s ease-out forwards}
+    .row{opacity:0;animation:rowin .6s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes rowin{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+    .hd{opacity:0;animation:fade .6s .1s ease-out forwards}
+    @keyframes fade{to{opacity:1}}
+    .panel{animation:up .7s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.arc{stroke-dashoffset:0!important}.center,.row,.hd{opacity:1}}
+  </style>
+  <defs><linearGradient id="${idp}acc" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+  <g class="panel">
+    <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="16" fill="${fill}" fill-opacity="${fillOp}" stroke="${line}" stroke-opacity=".12"/>
+    <circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${line}" stroke-opacity=".06" stroke-width="${SW}"/>
+    ${arcs}
+    <g class="center">
+      <text class="sans" x="${CX}" y="${CY + 4}" text-anchor="middle" font-size="30" font-weight="700" fill="${fg}">${top.value}%</text>
+      <text class="sans" x="${CX}" y="${CY + 24}" text-anchor="middle" font-size="12" fill="${muted}">${esc(top.label)}</text>
+    </g>
+    <g class="hd">
+      <text class="sans" x="${LX}" y="48" font-size="18" font-weight="700" fill="${fg}">${esc(FOCUS.title)}</text>
+      <text class="sans" x="${LX}" y="70" font-size="13" fill="${muted}">${esc(FOCUS.subtitle)}</text>
+    </g>
+    ${rows}
+  </g>
+</svg>`;
+}
+
 // ───────────────────────────── footer ─────────────────────────────
 function footer(theme) {
   const W = 900, H = 56, dark = theme === "dark";
@@ -394,6 +473,8 @@ const files = {
   "cards-strengths-light.svg": cards(CARDS.strengths, "light"),
   "cards-building-dark.svg": cards(CARDS.building, "dark"),
   "cards-building-light.svg": cards(CARDS.building, "light"),
+  "focus-dark.svg": focus("dark"),
+  "focus-light.svg": focus("light"),
   "footer-dark.svg": footer("dark"),
   "footer-light.svg": footer("light"),
 };
@@ -418,3 +499,12 @@ for (const [name, svg] of Object.entries(files)) {
 }
 writeFileSync(readmePath, readme);
 console.log("updated README.md image versions");
+
+// Inline the focus chart into the Pages site (between the markers) so hover works there.
+const sitePath = join(ROOT, "docs", "index.html");
+let site = readFileSync(sitePath, "utf8");
+const inlineSvg = (svg) => svg.replace(/^<svg /, '<svg width="100%" height="auto" ').replace(/ width="900" height="232"/, "");
+site = site.replace(/(<!-- focus-chart:start -->)[\s\S]*?(<!-- focus-chart:end -->)/,
+  `$1\n<div class="chart chart-dark">${inlineSvg(focus("dark", "fd"))}</div>\n<div class="chart chart-light">${inlineSvg(focus("light", "fl"))}</div>\n$2`);
+writeFileSync(sitePath, site);
+console.log("injected focus chart into docs/index.html");

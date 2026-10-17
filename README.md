@@ -28,6 +28,11 @@ Full-stack engineer who likes owning the whole thing: the data model, the API, t
 **Since**&nbsp;&nbsp;&nbsp; 2012 on GitHub
 
 <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/focus-dark.svg?v=835e2772">
+  <img src="assets/focus-light.svg?v=54a72c74" width="100%" alt="Where the time goes, rough split of a typical month: Product and APIs 40%, AI inference 30%, Integrations and data 20%, Infra and ops 10%">
+</picture>
+
+<picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/section-strengths-dark.svg?v=3e61f439">
   <img src="assets/section-strengths-light.svg?v=4c72342d" width="600" alt="02 · Strengths">
 </picture>
