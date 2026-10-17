@@ -87,7 +87,8 @@ function hero(theme = "dark") {
   const W = 900, H = 300, dark = theme === "dark";
   const T = dark
     ? { bg0: BRAND.stage, bg1: BRAND.stage2, ink: BRAND.onStage, muted: BRAND.onStageMuted, line: BRAND.stageLine, lineOp: 1, veil: BRAND.stage, veilOp: [0.85, 0.45, 0], op: 1 }
-    : { bg0: "#ffffff", bg1: "#f5f7f8", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0.9, veil: "#ffffff", veilOp: [0.9, 0.55, 0], op: 0.62 };
+    : { bg0: "#ffffff", bg1: "#f5f7f8", ink: "#050709", muted: "#5b6773", line: "#d8dfe6", lineOp: 0.9, veil: "#ffffff", veilOp: [0.88, 0.5, 0], op: 0.95, speed: 0.55, sway: 60 };
+  T.speed ??= 1; T.sway ??= 30;
 
   // Aurora ribbons: wavy bands whose path data morphs between three phases via SMIL.
   // Every phase shares the same command structure so the morph is smooth.
@@ -109,9 +110,12 @@ function hero(theme = "dark") {
   // Each curtain is drawn twice: a wide soft glow and a tighter, brighter core.
   const ribbon = (color, yTop, yBot, amp, tilt, op, dur, seed) => {
     const phases = [0, 2.1, 4.2].map((ph) => band(ph + seed, yTop, yBot, amp, tilt));
-    const anim = `<animate attributeName="d" dur="${dur}s" repeatCount="indefinite" values="${[...phases, phases[0]].join(";")}"/>`;
-    return `<path class="glow" fill="url(#g-${color})" opacity="${r(op * T.op)}">${anim}</path>
-      <path class="core" fill="url(#g-${color})" opacity="${r(op * T.op * 0.55)}">${anim}</path>`;
+    const d = r(dur * T.speed);
+    const anim = `<animate attributeName="d" dur="${d}s" repeatCount="indefinite" values="${[...phases, phases[0]].join(";")}"/>`;
+    // slow brightness pulse so the curtains visibly breathe, not only drift
+    const pulse = (o) => `<animate attributeName="opacity" dur="${r(d * 0.45)}s" repeatCount="indefinite" values="${r(o)};${r(o * 0.45)};${r(o)}" begin="${r(-seed)}s"/>`;
+    return `<path class="glow" fill="url(#g-${color})" opacity="${r(op * T.op)}">${anim}${pulse(op * T.op)}</path>
+      <path class="core" fill="url(#g-${color})" opacity="${r(op * T.op * 0.55)}">${anim}${pulse(op * T.op * 0.55)}</path>`;
   };
   const grad = (name, hex) => `<linearGradient id="g-${name}" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="${hex}" stop-opacity="0"/><stop offset=".72" stop-color="${hex}" stop-opacity="1"/><stop offset="1" stop-color="${hex}" stop-opacity=".2"/>
@@ -174,9 +178,9 @@ function hero(theme = "dark") {
     @keyframes tw{0%,100%{opacity:.2}50%{opacity:.95}}
     .glow{filter:url(#soft)}
     .core{filter:url(#tight)}
-    .sway{animation:sway 18s ease-in-out infinite alternate}
-    @keyframes sway{from{transform:translateX(-30px)}to{transform:translateX(30px)}}
-    .rays{animation:rays 40s linear infinite}
+    .sway{animation:sway ${r(18 * T.speed)}s ease-in-out infinite alternate}
+    @keyframes sway{from{transform:translateX(-${T.sway}px)}to{transform:translateX(${T.sway}px)}}
+    .rays{animation:rays ${r(40 * T.speed)}s linear infinite}
     @keyframes rays{to{transform:translateX(-120px)}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}}
   </style>
