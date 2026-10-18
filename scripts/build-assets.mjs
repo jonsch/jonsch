@@ -97,7 +97,7 @@ function hero(theme = "dark") {
   let seed = 7;
   const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
   const QUAD = ["red", "blue", "yellow", "green"];
-  const CLUSTERS = 12, PERIOD = 12;
+  const CLUSTERS = 12, PERIOD = 18;
   // Free zones around the type: right column, the strip above the name, and the
   // strip below the tagline. Each cluster is compact: points within ~110px of a center.
   const zones = { A: [630, 860, 40, 258], B: [90, 600, 34, 64], C: [470, 860, 240, 272] };
@@ -126,10 +126,10 @@ function hero(theme = "dark") {
     }
     clusters.push({ pts, delay: r(-(c * PERIOD) / CLUSTERS), drift: r(4 + rnd() * 8) });
   }
-  // Timeline per cluster (percent of PERIOD): p1 pops 0-5, line 1 draws 6-22 and p2
-  // pops as it lands, both ends shock at 22; line 2 draws 24-40 and p3 pops as it
-  // lands, p2 and p3 shock at 40; the set holds briefly, then fades (3 points:
-  // 50-58, 2 points: 33-41) and stays hidden until the next cycle.
+  // Timeline per cluster (percent of an 18s PERIOD): p1 eases in 0-6, line 1 draws
+  // 7-23 and p2 eases in as it lands, both ends ripple from 23; line 2 draws 26-42
+  // and p3 eases in as it lands, p2 and p3 ripple from 42; the set holds briefly,
+  // then fades (3 points: 54-62, 2 points: 36-44) and stays hidden until the next cycle.
   const constellation = clusters.map((cl, ci) => {
     const n = cl.pts.length;
     const lines = cl.pts.slice(1).map((p, i) => ({ q: cl.pts[i], p, id: `ln${ci}-${i}` }));
@@ -139,7 +139,7 @@ function hero(theme = "dark") {
     const lineEls = lines.map(({ q, p, id }, i) =>
       `<line class="ln l${i + 1}" x1="${q.x}" y1="${q.y}" x2="${p.x}" y2="${p.y}" pathLength="1" stroke="url(#${id})"/>`).join("");
     const shock = (p, which) => [1, 2].map((k) =>
-      `<circle class="sk ${which}${k}" cx="${p.x}" cy="${p.y}" r="6" fill="none" stroke="${BRAND[p.color]}" stroke-width="1.8" style="transform-origin:${p.x}px ${p.y}px"/>`).join("");
+      `<circle class="sk ${which}${k}" cx="${p.x}" cy="${p.y}" r="6" fill="none" stroke="${BRAND[p.color]}" stroke-width="${k === 1 ? 1.6 : 1.1}" vector-effect="non-scaling-stroke" style="transform-origin:${p.x}px ${p.y}px"/>`).join("");
     const ptEls = cl.pts.map((p, i) => {
       // shocks fire when a line reaches the point: A at 22% (p1, p2), B at 40% (p2, p3)
       const shocks = (i === 0 ? shock(p, "a") : "") + (i === 1 ? shock(p, "a") + (n === 3 ? shock(p, "b") : "") : "") + (i === 2 ? shock(p, "b") : "");
@@ -202,26 +202,26 @@ function hero(theme = "dark") {
     @keyframes blink{to{opacity:0}}
     .star{fill:#fff;animation:tw ease-in-out infinite;display:${dark ? "inline" : "none"}}
     @keyframes tw{0%,100%{opacity:.2}50%{opacity:.95}}
-    .cl{animation:${PERIOD}s ease-in-out infinite}
+    .cl{animation:${PERIOD}s cubic-bezier(.4,0,.2,1) infinite}
     .n3{animation-name:cl3}.n2{animation-name:cl2}
-    @keyframes cl3{0%{opacity:0;transform:translateY(0)}4%{opacity:1}50%{opacity:1}58%{opacity:0}100%{opacity:0;transform:translateY(calc(var(--drift) * -1))}}
-    @keyframes cl2{0%{opacity:0;transform:translateY(0)}4%{opacity:1}33%{opacity:1}41%{opacity:0}100%{opacity:0;transform:translateY(calc(var(--drift) * -1))}}
-    .pt{transform:scale(0);animation:${PERIOD}s cubic-bezier(.2,.8,.2,1.3) infinite;animation-delay:inherit}
+    @keyframes cl3{0%{opacity:0;transform:translateY(0)}4%{opacity:1}54%{opacity:1}62%{opacity:0}100%{opacity:0;transform:translateY(calc(var(--drift) * -1))}}
+    @keyframes cl2{0%{opacity:0;transform:translateY(0)}4%{opacity:1}36%{opacity:1}44%{opacity:0}100%{opacity:0;transform:translateY(calc(var(--drift) * -1))}}
+    .pt{transform:scale(0);opacity:0;animation:${PERIOD}s cubic-bezier(.34,1.25,.64,1) infinite;animation-delay:inherit}
     .p1{animation-name:pt1}.p2{animation-name:pt2}.p3{animation-name:pt3}
-    @keyframes pt1{0%{transform:scale(0)}5%{transform:scale(1)}100%{transform:scale(1)}}
-    @keyframes pt2{0%,19%{transform:scale(0)}23%{transform:scale(1)}100%{transform:scale(1)}}
-    @keyframes pt3{0%,37%{transform:scale(0)}41%{transform:scale(1)}100%{transform:scale(1)}}
-    .sk{opacity:0;transform:scale(1);animation:${PERIOD}s cubic-bezier(.1,.6,.3,1) infinite;animation-delay:inherit}
+    @keyframes pt1{0%{transform:scale(0);opacity:0}6%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}
+    @keyframes pt2{0%,19%{transform:scale(0);opacity:0}25%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}
+    @keyframes pt3{0%,38%{transform:scale(0);opacity:0}44%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}
+    .sk{opacity:0;transform:scale(1);animation:${PERIOD}s linear infinite;animation-delay:inherit}
     .a1{animation-name:ska1}.a2{animation-name:ska2}.b1{animation-name:skb1}.b2{animation-name:skb2}
-    @keyframes ska1{0%,21.9%{opacity:0;transform:scale(1)}22%{opacity:.9}31%{opacity:0;transform:scale(4.6)}100%{opacity:0;transform:scale(4.6)}}
-    @keyframes ska2{0%,24.4%{opacity:0;transform:scale(1)}24.5%{opacity:.7}33.5%{opacity:0;transform:scale(3.6)}100%{opacity:0;transform:scale(3.6)}}
-    @keyframes skb1{0%,39.9%{opacity:0;transform:scale(1)}40%{opacity:.9}49%{opacity:0;transform:scale(4.6)}100%{opacity:0;transform:scale(4.6)}}
-    @keyframes skb2{0%,42.4%{opacity:0;transform:scale(1)}42.5%{opacity:.7}51.5%{opacity:0;transform:scale(3.6)}100%{opacity:0;transform:scale(3.6)}}
-    .ln{fill:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:${dark ? 0.9 : 0.85};animation:${PERIOD}s ease-in-out infinite;animation-delay:inherit}
+    @keyframes ska1{0%,22.9%{opacity:0;transform:scale(1)}23%{opacity:.85;transform:scale(1);animation-timing-function:cubic-bezier(.2,.6,.3,1)}29%{opacity:.4;transform:scale(3.4);animation-timing-function:cubic-bezier(.3,.5,.5,1)}35%{opacity:0;transform:scale(5.2)}100%{opacity:0;transform:scale(5.2)}}
+    @keyframes ska2{0%,24.9%{opacity:0;transform:scale(1)}25%{opacity:.6;transform:scale(1);animation-timing-function:cubic-bezier(.2,.6,.3,1)}31%{opacity:.3;transform:scale(2.8);animation-timing-function:cubic-bezier(.3,.5,.5,1)}37%{opacity:0;transform:scale(4.2)}100%{opacity:0;transform:scale(4.2)}}
+    @keyframes skb1{0%,41.9%{opacity:0;transform:scale(1)}42%{opacity:.85;transform:scale(1);animation-timing-function:cubic-bezier(.2,.6,.3,1)}48%{opacity:.4;transform:scale(3.4);animation-timing-function:cubic-bezier(.3,.5,.5,1)}54%{opacity:0;transform:scale(5.2)}100%{opacity:0;transform:scale(5.2)}}
+    @keyframes skb2{0%,43.9%{opacity:0;transform:scale(1)}44%{opacity:.6;transform:scale(1);animation-timing-function:cubic-bezier(.2,.6,.3,1)}50%{opacity:.3;transform:scale(2.8);animation-timing-function:cubic-bezier(.3,.5,.5,1)}56%{opacity:0;transform:scale(4.2)}100%{opacity:0;transform:scale(4.2)}}
+    .ln{fill:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:${dark ? 0.9 : 0.85};animation:${PERIOD}s cubic-bezier(.45,0,.2,1) infinite;animation-delay:inherit}
     .l1{animation-name:ln1}.l2{animation-name:ln2}
-    @keyframes ln1{0%,6%{stroke-dashoffset:1}22%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-    @keyframes ln2{0%,24%{stroke-dashoffset:1}40%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}.cl{opacity:.8}.pt{transform:none}.ln{stroke-dashoffset:0}.sk{opacity:0}}
+    @keyframes ln1{0%,7%{stroke-dashoffset:1}23%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+    @keyframes ln2{0%,26%{stroke-dashoffset:1}42%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.l,.period{fill-opacity:1}.hi{opacity:1}.q{transform:none}.cl{opacity:.8}.pt{transform:none;opacity:1}.ln{stroke-dashoffset:0}.sk{opacity:0}}
   </style>
   <defs>
     <clipPath id="card"><rect width="${W}" height="${H}" rx="22"/></clipPath>
