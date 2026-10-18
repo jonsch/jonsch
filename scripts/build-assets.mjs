@@ -267,7 +267,7 @@ function section({ n, title }, theme, idx = 0) {
   // Alternate the brand quad: odd sections red -> yellow, even sections green -> blue.
   const warm = idx % 2 === 0;
   const c1 = warm ? BRAND.red : BRAND.green, c2 = warm ? BRAND.yellow : BRAND.blue;
-  const numInk = warm ? "#0b1016" : "#ffffff";
+  const numInk = "#ffffff";
   const text = dark ? "#e6edf3" : "#1f2328";
   const sub = dark ? "#8b949e" : "#656d76";
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(title)}">

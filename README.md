@@ -19,8 +19,8 @@
 -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg?v=1ce5b0f6">
-  <img src="assets/section-about-light.svg?v=74a5fc19" width="600" alt="01 · About me">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg?v=0d1d7a45">
+  <img src="assets/section-about-light.svg?v=10942b49" width="600" alt="01 · About me">
 </picture>
 
 Full-stack engineer who likes owning the whole thing: the data model, the API, the payments, and the interface on top. I build products end to end, mostly in .NET and TypeScript on Azure, and lately around AI inference. Most of that work lives in private repositories, which is why the activity graph here is quiet.
@@ -46,8 +46,8 @@ Full-stack engineer who likes owning the whole thing: the data model, the API, t
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=be7b46a9">
-  <img src="assets/section-now-light.svg?v=8f8d77a8" width="600" alt="03 · What I'm building">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-now-dark.svg?v=7611f728">
+  <img src="assets/section-now-light.svg?v=d782fba0" width="600" alt="03 · What I'm building">
 </picture>
 
 <picture>
@@ -66,8 +66,8 @@ Full-stack engineer who likes owning the whole thing: the data model, the API, t
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg?v=14cf6585">
-  <img src="assets/section-connect-light.svg?v=0cda5869" width="600" alt="05 · Let's connect">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/section-connect-dark.svg?v=8130accc">
+  <img src="assets/section-connect-light.svg?v=1658b6e0" width="600" alt="05 · Let's connect">
 </picture>
 
 Interesting problem, odd integration, or a tool that should exist but doesn't? I'd like to hear about it.
